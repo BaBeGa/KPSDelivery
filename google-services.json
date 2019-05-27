@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "758832171241",
+    "firebase_url": "https://kpsdlocate.firebaseio.com",
+    "project_id": "kpsdlocate",
+    "storage_bucket": "kpsdlocate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758832171241:android:33011c63d09038cd",
+        "android_client_info": {
+          "package_name": "io.ionic.kpsdelivery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "758832171241-lil470lfjmkbj5es7pasc88195q7m1tk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGgt_UPZwpi7hLWJJ58V81AbiZKgsDzyU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "758832171241-lil470lfjmkbj5es7pasc88195q7m1tk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

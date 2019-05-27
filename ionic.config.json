@@ -1,6 +1,8 @@
 {
   "name": "KPSD",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "8ceba82e"
 }
