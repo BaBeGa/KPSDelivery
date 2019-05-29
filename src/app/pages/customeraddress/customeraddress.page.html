@@ -1,9 +1,17 @@
 <ion-header>
+
   <ion-toolbar>
     <ion-title>customeraddress</ion-title>
   </ion-toolbar>
+
 </ion-header>
 
-<ion-content>
+
+<ion-content padding>
+
+  <button ion-button (click)="locate()">หาที่อยู่ปัจจุบัน</button>
+  <p>
+    {{data}}
+  </p>
 
 </ion-content>

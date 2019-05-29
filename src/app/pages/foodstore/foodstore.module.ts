@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { FoodstorePage } from './foodstore.page';
 
 const routes: Routes = [
+  { path: 'food-add-remove', loadChildren: '../food-add-remove/food-add-remove.module#FoodAddRemovePageModule' },
   {
     path: '',
     component: FoodstorePage
@@ -18,6 +19,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],

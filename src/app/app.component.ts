@@ -54,12 +54,12 @@ export class AppComponent {
       }).catch(err=> console.log(err));
 
       this.firebase.onMessage().subscribe(payload=>{
-        console.log("New foreground FCM message: ", payload);
-        this.presentAlertConfirm("You have a message from foreground.",payload)
+        console.log("New foreground FCM message: ", payload.orderid);
+        this.presentAlertConfirm(payload)
       }),err=> console.log(err);
       this.firebase.onBackgroundMessage().subscribe(payload=>{
-        console.log("New background FCM message: ", payload);
-        this.presentAlertConfirm("You have a message from background.",payload)
+        console.log("New background FCM message: ", payload.orderid);
+        this.presentAlertConfirm(payload)
       }),err=> console.log(err);
 
     } 
@@ -76,11 +76,12 @@ export class AppComponent {
       }).catch(err=> console.log(err));
       
       this.firebase.onMessage().subscribe(payload=>{
-        this.presentAlertConfirm("You have a message from foreground.",payload)
+        console.log("New foreground FCM message: ", payload.orderid);
+        this.presentAlertConfirm(payload)
       }),err=> console.log(err);
       this.firebase.onBackgroundMessage().subscribe(payload=>{
-        console.log("New background FCM message: ", payload);
-        this.presentAlertConfirm("You have a message from background.",payload)
+        console.log("New background FCM message: ", payload.orderid);
+        this.presentAlertConfirm(payload)
       }),err=> console.log(err);
       
     }
@@ -123,17 +124,17 @@ export class AppComponent {
     await this.userService.apiSyncUserType();
   }
 
-  async presentAlertConfirm(title:string,message:any) {
+  async presentAlertConfirm(message:any) {
     const alert = await this.alertCtrl.create({
-      header: title,
-      message: message,
+      header: message.title,
+      message: message.body,
       buttons: [
         {
           text: 'Okay',
-          handler: (message) => {
-            console.log('Confirm Okay');
-            this.dataService.setData(message.google.message_id, message);
-            this.router.navigateByUrl('driverdialog');
+          handler: () => {
+            console.log('Confirm Okay',message);
+            this.dataService.setData(message.orderid, message);
+            this.router.navigateByUrl('driverdialog/'+message.orderid);
           }
         },{
           text: 'Cancel',

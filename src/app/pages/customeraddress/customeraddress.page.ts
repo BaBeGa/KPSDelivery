@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController, NavParams } from '@ionic/angular';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @Component({
   selector: 'app-customeraddress',
@@ -6,10 +8,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./customeraddress.page.scss'],
 })
 export class CustomeraddressPage implements OnInit {
+  data:string = '';
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private geolocation: Geolocation
+    ) { 
 
-  constructor() { }
+    }
 
   ngOnInit() {
+    console.log('ionViewDidLoad CustomeraddressPage');
+  }
+
+  locate() {
+    this.geolocation.getCurrentPosition().then((res) => {
+      this.data = 'Lat: ' + res.coords.latitude + ' <br>' + res.coords.longitude;
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+
   }
 
 }

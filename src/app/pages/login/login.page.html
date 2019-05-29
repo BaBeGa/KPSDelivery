@@ -1,9 +1,35 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Login</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
+
+  <div class="bg">
+    <div>
+      <ion-icon name="arrow-round-back" (click)="backToProfile()" class="backButton"></ion-icon>
+    </div>
+    <div class="head" text-center>
+      <h1>KU Delivery</h1>
+      <h5>From restaurant to you</h5>
+    </div>
+    <div class="inputs">
+      <ion-item>
+        <ion-label fixed>Email</ion-label>
+        <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+      </ion-item>
+      <ion-item class="pass">
+        <ion-label fixed>Password</ion-label>
+        <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+      </ion-item>
+      <button ion-button block margin-top clearInput (click)="doLogin(user)"><b>Login</b></button>
+      <button ion-button block (click)="goForgotPassword()"><b>Forgot your Login details?</b></button>
+      <button ion-button block margin-top (click)="goRegister()"><b>Register</b></button>
+    </div>
+  </div>
 
 </ion-content>

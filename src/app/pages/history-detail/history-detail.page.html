@@ -1,9 +1,32 @@
 <ion-header>
+
   <ion-toolbar>
-    <ion-title>history-detail</ion-title>
+    <ion-title>HistoryDetail</ion-title>
   </ion-toolbar>
+
 </ion-header>
 
+
 <ion-content>
+
+  <ion-list>
+    <ion-item *ngFor="let order of shippingOrder">
+      <ion-row>
+        {{ order.order_id }}
+      </ion-row>
+      <ion-row>
+        {{ order.restaurant_id }}
+      </ion-row>
+      <ion-row>
+        {{ order.driver_id }}
+      </ion-row>
+      <ion-row>
+        {{ order.status }}
+      </ion-row>
+      <ion-row>
+        {{ order.food_price }}
+      </ion-row>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

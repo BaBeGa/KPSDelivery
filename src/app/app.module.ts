@@ -14,7 +14,7 @@ import { AppRoutingModule } from './app-routing.module';//
 //---Plugin---//
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Camera } from '@ionic-native/camera/ngx';
 
@@ -32,14 +32,12 @@ import { CustomeraccountPage } from 'src/app/pages/customeraccount/customeraccou
 import { CustomeraddressPage } from 'src/app/pages/customeraddress/customeraddress.page';
 import { CustomeravatarPage } from 'src/app/pages/customeravatar/customeravatar.page';
 import { CustomerorderPage } from 'src/app/pages/customerorder/customerorder.page';
-import { CustomerprofilePage } from 'src/app/pages/customerprofile/customerprofile.page';
 import { CustomertabsPage } from 'src/app/pages/customertabs/customertabs.page';
 import { DriverregisterPage } from 'src/app/pages/driverregister/driverregister.page';
 import { EditProfileAddressPage } from 'src/app/pages/edit-profile-address/edit-profile-address.page';
 import { EditProfileNamePage } from 'src/app/pages/edit-profile-name/edit-profile-name.page';
 import { EditProfilePasswordPage } from 'src/app/pages/edit-profile-password/edit-profile-password.page';
 import { FoodAddRemovePage } from 'src/app/pages/food-add-remove/food-add-remove.page';
-import { FoodcenterPage } from 'src/app/pages/foodcenter/foodcenter.page';
 import { FoodstorePage } from 'src/app/pages/foodstore/foodstore.page';
 import { ForgotpasswordPage } from 'src/app/pages/forgotpassword/forgotpassword.page';
 import { HelpcenterPage } from 'src/app/pages/helpcenter/helpcenter.page';
@@ -62,14 +60,12 @@ import { RegisterPage } from 'src/app/pages/register/register.page';
     CustomeraddressPage,
     CustomeravatarPage,
     CustomerorderPage,
-    CustomerprofilePage,
     CustomertabsPage,
     DriverregisterPage,
     EditProfileAddressPage,
     EditProfileNamePage,
     EditProfilePasswordPage,
     FoodAddRemovePage,
-    FoodcenterPage,
     FoodstorePage,
     ForgotpasswordPage,
     HelpcenterPage,
@@ -91,14 +87,12 @@ import { RegisterPage } from 'src/app/pages/register/register.page';
     CustomeraddressPage,
     CustomeravatarPage,
     CustomerorderPage,
-    CustomerprofilePage,
     CustomertabsPage,
     DriverregisterPage,
     EditProfileAddressPage,
     EditProfileNamePage,
     EditProfilePasswordPage,
     FoodAddRemovePage,
-    FoodcenterPage,
     FoodstorePage,
     ForgotpasswordPage,
     HelpcenterPage,
@@ -117,6 +111,7 @@ import { RegisterPage } from 'src/app/pages/register/register.page';
     HttpModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule.forRoot(), 
     AppRoutingModule
   ],

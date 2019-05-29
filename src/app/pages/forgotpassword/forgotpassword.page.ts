@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { NavController, NavParams } from '@ionic/angular';
 @Component({
   selector: 'app-forgotpassword',
   templateUrl: './forgotpassword.page.html',
@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForgotpasswordPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams
+  ) { }
 
   ngOnInit() {
+    console.log('ionViewDidLoad ForgotpasswordPage');
   }
 
 }

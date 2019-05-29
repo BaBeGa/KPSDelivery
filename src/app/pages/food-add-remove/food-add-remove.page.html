@@ -1,9 +1,30 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>food-add-remove</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content padding #popoverContent class="popover-page" class="position-center">
+  <div #popoverText class="text-to-change">
+    <div>
+      <ion-row>
+        <h1>{{ product.name }}</h1>
+      </ion-row>
+      <ion-row>ราคา {{ product.price }} ฿</ion-row>
+    </div>
+    <div padding-top padding-bottom>
+      <ion-row>
+        <div padding>
+          <ion-icon name="remove" (click)="removeProduct()"></ion-icon>
+        </div>
+        <div class="qty" padding>
+          {{ quantity }}
+        </div>
+        <div padding>
+          <ion-icon name="add" (click)="addProduct()"></ion-icon>
+        </div>
+      </ion-row>
+    </div>
 
-<ion-content>
+    <div>
+      <button ion-button color="secondary" (click)="addToCart()">Add to cart</button>
+    </div>
 
+    <div>{{ noProduct }}</div>
+
+  </div>
 </ion-content>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
@@ -8,6 +8,9 @@ import { IonicModule } from '@ionic/angular';
 import { CustomeraccountPage } from './customeraccount.page';
 
 const routes: Routes = [
+  { path: 'edit-profile-address', loadChildren: '../edit-profile-address/edit-profile-address.module#EditProfileAddressPageModule' },
+  { path: 'edit-profile-name', loadChildren: '../edit-profile-name/edit-profile-name.module#EditProfileNamePageModule' },
+  { path: 'edit-profile-password', loadChildren: '../edit-profile-password/edit-profile-password.module#EditProfilePasswordPageModule' },
   {
     path: '',
     component: CustomeraccountPage
@@ -18,6 +21,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],

@@ -1,9 +1,25 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>customertabs</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="restaurants">
+      <ion-icon name="restaurant"></ion-icon>
+      <ion-label>ร้านอาหาร</ion-label>
+      <ion-badge></ion-badge>
+    </ion-tab-button>
 
-<ion-content>
+    <ion-tab-button tab="customerorder">
+      <ion-icon name="bicycle"></ion-icon>
+      <ion-label>รายการสั่งชื้อ</ion-label>
+    </ion-tab-button>
 
-</ion-content>
+    <ion-tab-button tab="history">
+      <ion-icon name="time"></ion-icon>
+      <ion-label>ประวัติการสั่งชื้อ</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="customerprofile">
+      <ion-icon name="person"></ion-icon>
+      <ion-label>โปรไฟล์</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>
+

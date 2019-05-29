@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController, NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-raterestaurant',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RaterestaurantPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams
+  ) { }
 
   ngOnInit() {
+    console.log('ionViewDidLoad RaterestaurantPage');
   }
 
 }

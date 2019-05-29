@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
@@ -14,8 +14,8 @@ const routes: Routes = [
     children:[
       { path: 'driver', loadChildren: '../driver/driver.module#DriverPageModule' },
       { path: 'my-wallet', loadChildren: '../my-wallet/my-wallet.module#MyWalletPageModule' },
-      { path: 'restaurants', loadChildren: '../restaurants/restaurants.module#RestaurantsPageModule' },
-      { path: 'my-profile', loadChildren: '../my-profile/my-profile.module#MyProfilePageModule' },
+      { path: 'foodcenter', loadChildren: '../foodcenter/foodcenter.module#FoodcenterPageModule' },
+      { path: 'customerprofile', loadChildren: '../customerprofile/customerprofile.module#CustomerprofilePageModule' },
     ]
   },
   {
@@ -29,6 +29,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],

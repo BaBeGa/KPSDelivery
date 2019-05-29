@@ -8,7 +8,7 @@ const routes: Routes = [
     resolve: {
       special: DataResolverService
     },
-    loadChildren: './driverdialog/driverdialog.module#DetailsPageModule'
+    loadChildren: './pages/driverdialog/driverdialog.module#DriverdialogPageModule'
   },
   //{ path: '', redirectTo: 'home', pathMatch: 'full' },
   //{ path: 'basket', loadChildren: './pages/basket/basket.module#BasketPageModule' },
@@ -17,7 +17,7 @@ const routes: Routes = [
   //{ path: 'customeravatar', loadChildren: './pages/customeravatar/customeravatar.module#CustomeravatarPageModule' },
   //{ path: 'customerorder', loadChildren: './pages/customerorder/customerorder.module#CustomerorderPageModule' },
   //{ path: 'customerprofile', loadChildren: './pages/customerprofile/customerprofile.module#CustomerprofilePageModule' },
-  //{ path: 'customertabs', loadChildren: './pages/customertabs/customertabs.module#CustomertabsPageModule' },
+  { path: 'customertabs', loadChildren: './pages/customertabs/customertabs.module#CustomertabsPageModule' },
   //{ path: 'driver', loadChildren: './pages/driver/driver.module#DriverPageModule' },
   { path: 'driverdialog', loadChildren: './pages/driverdialog/driverdialog.module#DriverdialogPageModule' },
   //{ path: 'driverregister', loadChildren: './pages/driverregister/driverregister.module#DriverregisterPageModule' },
@@ -40,7 +40,7 @@ const routes: Routes = [
   // { path: 'raterestaurant', loadChildren: './pages/raterestaurant/raterestaurant.module#RaterestaurantPageModule' },
   // { path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule' },
   // { path: 'restaurants', loadChildren: './pages/restaurants/restaurants.module#RestaurantsPageModule' },
-   { path: 'tabs-controller', loadChildren: './pages/tabs-controller/tabs-controller.module#TabsControllerPageModule' },
+  { path: 'tabs-controller', loadChildren: './pages/tabs-controller/tabs-controller.module#TabsControllerPageModule' },
   // { path: 'menu', loadChildren: './pages/menu/menu.module#MenuPageModule' },
 ];
 

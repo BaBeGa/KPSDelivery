@@ -1,9 +1,184 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>customerprofile</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+
+  <div no-padding *ngIf="userInfo == null">
+
+    <ion-grid class="bgheader">
+
+      <ion-row>
+        <ion-col col-2>
+          <ion-avatar>
+            <img src="/assets/imgs/nonloginavatar.png">
+          </ion-avatar>
+        </ion-col>
+        <ion-col col-7>
+          <ion-row>
+            <div class="font-size24">กรุณาเข้าสู่ระบบ</div>
+          </ion-row>
+        </ion-col>
+        <ion-col col-2>
+          <button ion-button clear id="notification-button" (click)="openCart()">
+            <ion-icon name="cart">
+              <ion-badge id="notifications-badge" *ngIf="cartLength > 0">{{ cartLength }}</ion-badge>
+            </ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <button ion-button block (click)="login()">
+      เข้าสู่ระบบ
+    </button>
+    <button ion-button block (click)="register()">
+      สมัครสมาชิกใหม่
+    </button>
+    <button ion-button block (click)="recoveryPassword()">
+      ลืมรหัสผ่าน
+    </button>
+
+  </div>
+
+  <div no-padding *ngIf="userInfo != null">
+    <ion-grid class="bgheader">
+
+      <ion-row>
+        <ion-col col-2>
+          <ion-avatar (click)="changeAvatar()">
+            <img src="http://158.108.207.4/delivery/public/images/profiles/{{userInfo.user.image}}">
+          </ion-avatar>
+        </ion-col>
+        <ion-col col-7>
+          <ion-row>
+            <div class="font-size24">{{ userInfo.user.name }}</div>
+          </ion-row>
+          <ion-row (click)="editProfile()">
+            <div class="font-size14">แก้ไขโปรไฟล์</div>
+          </ion-row>
+        </ion-col>
+        <ion-col col-2>
+          <button ion-button clear id="notification-button" (click)="openCart()">
+            <ion-icon name="cart">
+              <ion-badge id="notifications-badge" *ngIf="cartLength > 0">{{ cartLength }}</ion-badge>
+            </ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+
+    <ion-grid no-padding>
+
+      <ion-list no-margin no-padding>
+        <ion-item no-margin no-padding class="listheader">
+          <ion-row>
+            <ion-col col-8 padding-left>
+              การสั่งซื้อของฉัน
+            </ion-col>
+            <ion-col col-4 (click)="history()">
+              ดูประวัติการสั่งซื้อ
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item class="BGcard">
+          <ion-row>
+            <ion-col col-6>
+              <ion-card (click)="shipping()">
+                <ion-card-header no-padding>
+                  <ion-icon name="car"></ion-icon>
+                </ion-card-header>
+                <ion-card-content>
+                  ที่กำลังจัดส่ง
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+            <ion-col col-6>
+              <ion-card (click)="history()">
+                <ion-card-header>
+                  <ion-icon name="checkmark-circle-outline"></ion-icon>
+                </ion-card-header>
+                <ion-card-content>
+                  ที่ได้รับแล้ว
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-6>
+              <ion-card (click)="rateRestaurants()">
+                <ion-card-header>
+                  <ion-icon name="thumbs-up"></ion-icon>
+                </ion-card-header>
+                <ion-card-content>
+                  ให้คะแนนร้านค้า
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+            <ion-col col-6>
+              <ion-card (click)="rateDriver()">
+                <ion-card-header>
+                  <ion-icon name="star-outline"></ion-icon>
+                </ion-card-header>
+                <ion-card-content>
+                  ให้คะแนนคนส่งอาหาร
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+
+
+
+      <ion-list padding-top>
+        <ion-list-header no-margin class="listheader">
+          ตั้งค่าบัญชี
+        </ion-list-header>
+        <ion-item>
+          <ion-row>
+            <ion-col (click)="editProfile()">
+              ข้อมูลของฉัน
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item>
+          <ion-row>
+            <ion-col (click)="editAddress()">
+              ที่อยู่ของฉัน
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+
+      <ion-list padding-top>
+        <ion-list-header no-margin class="listheader">
+          ช่วยเหลือ
+        </ion-list-header>
+        <ion-item>
+          <ion-row>
+            <ion-col (click)="helpcenter()">
+              ศูนย์ช่วยเหลือ
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item>
+          <ion-row>
+            <ion-col (click)="legalnterm()">
+              กฏและข้อบังคับ
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+
+      <button ion-button color="danger" (click)="logout()">
+        ออกจากระบบ
+      </button>
+
+    </ion-grid>
+
+  </div>
+
+
+
+
+
 
 </ion-content>

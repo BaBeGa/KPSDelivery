@@ -13,3 +13,12 @@ export class DataResolverService implements Resolve<any> {
     return this.dataService.getData(id);
   }
 }
+export class OrderlistResolverService implements Resolve<any> {
+
+  constructor(private dataService: DataService) { }
+
+  resolve() {
+    return this.dataService.getOrderlist();
+  }
+}
+

@@ -1,9 +1,57 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>register</ion-title>
+    <ion-title>Register</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
 
+<ion-content padding>
+  <div>
+    <h1>Register</h1>
+  </div>
+  <div>
+    <form (ngSubmit)="onSubmit()" #f="ngForm">
+      <div id="user-data" ngModelGroup="userData">
+        <div class="form-group">
+          <ion-item>
+            <ion-label floating>Name</ion-label>
+            <ion-input type="text" id="name" class="form-control" name="name" ngModel required #name="ngModel" pattern="^[a-zA-Z]{3,30}$"></ion-input><br>
+          </ion-item>
+          <span padding-left *ngIf="(!name.valid && name.touched)">Please enter a valid name!</span>
+        </div>
+        <div class="form-group">
+          <ion-item>
+            <ion-label floating>Email</ion-label>
+            <ion-input type="email" id="email" class="form-control" name="email" ngModel required #email="ngModel" pattern="[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"></ion-input><br>
+          </ion-item>
+          <span padding-left *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
+        </div>
+      </div>
+      <div ngModelGroup="passwords" #passwords1="ngModelGroup" appCheckPassword>
+        <div class="form-group">
+          <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input type="password" class="form-control" id="password" #password="ngModel" name="password" required
+              ngModel pattern="^[a-zA-Z0-9]{6,15}$"></ion-input><br>
+          </ion-item>
+          <span padding-left *ngIf="(!password.valid && password.touched)">Password must be a-z,A-Z,0-9 and lenght 6-15 characters!</span>
+        </div>
+        <div class="form-group">
+          <ion-item>
+            <ion-label floating>Confirm Password</ion-label>
+            <ion-input type="password" class="form-control" id="c_password" #c_password="ngModel" name="c_password"
+              required ngModel></ion-input><br>
+          </ion-item>
+        </div>
+      </div>
+      <div padding-left *ngIf="c_password.invalid && (password.dirty || password.touched)">
+        Please confirm your password.
+      </div>
+      <div padding-left *ngIf="passwords1.errors?.passwordCheck && (c_password.dirty || c_password.touched)">
+        Passwords do not match.
+      </div>
+      <button ion-button block margin-top type="submit" [disabled]="!f.valid">Register</button>
+    </form>
+
+  </div>
 </ion-content>

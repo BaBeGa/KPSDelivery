@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css?family=Coiny');
+
+page-foodcenter {
+
+    .toolbar-background {
+        background-color: #9afaf5;
+        background-image: url("https://www.transparenttextures.com/patterns/black-linen.png");  
+        
+    }
+
+    .font {
+        font-family: 'Coiny', cursive;
+        color: white;
+    }
+
+    .hd {
+        height: 100%;
+        width: 100%;
+        $toolbar-background: #123456;
+    }
+
+    .bg {
+        height: 100%;
+        width: 100%;
+        background-color: linear-gradient(rgba(122, 235, 107, 0.568),#ffffff);
+        background-color: #a4dfdc;
+        background-image: url("https://www.transparenttextures.com/patterns/crissxcross.png");
+    }
+
+    ion-icon {
+      font-size: 30px;
+      text-align: center;
+    }
+
+    #notification-button {            
+      position: relative;
+      width: 42px;
+      top:1px;
+      right: 1px;
+      overflow: visible!important;
+      color: #1f1e1d;
+    }
+
+
+    #notifications-badge {
+      background-color: rgb(247, 48, 48);
+      position: absolute;
+      top: -3px;
+      right: -3px;
+      border-radius: 100%;
+    }
+
+    .card-background-page {
+
+        ion-card {
+          position: relative;
+          text-align: center;
+        }
+      
+        .card-title {
+          position: absolute;
+          top: 36%;
+          font-size: 16px;
+          width: 100%;
+          font-weight: bold;
+          color: #fff;
+        }
+      
+        .card-subtitle {
+          font-size: 16px;
+          position: absolute;
+          top: 52%;
+          width: 100%;
+          color: #fff;
+        }
+      
+    }
+
+    .icon-img {
+      width: 100%;
+      height: 100%;
+			border: 0;
+			padding: 0;
+    }
+
+    .categorySlide {
+      height: 230px;
+      background: #e5f5f4;
+    }
+
+    .swiper-pagination-bullet-active {
+      background: rgb(233, 71, 93);
+      opacity: 1;
+    }
+
+    ion-slide.swiper-slide {
+      align-items: flex-start;
+    }
+
+    .categoryHead {
+      background: #e5f5f4;
+    }
+    
+}
