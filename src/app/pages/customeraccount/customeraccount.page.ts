@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
@@ -12,7 +12,6 @@ export class CustomeraccountPage implements OnInit {
   constructor(
     private router:Router,
     public navCtrl: NavController, 
-    public navParams: NavParams
   ) { 
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
   }

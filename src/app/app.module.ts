@@ -24,7 +24,6 @@ import { AuthService, CartService } from 'src/app/config/authservice';
 
 //---Firebase---//
 import { FirebaseMessaging } from "@ionic-native/firebase-messaging/ngx";
-import { DriverdialogPage } from 'src/app/pages/driverdialog/driverdialog.page';
 
 //---Customer---//
 import { BasketPage } from 'src/app/pages/basket/basket.page';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { AuthService, CartService } from 'src/app/config/authservice';
@@ -12,7 +12,6 @@ import { AuthService, CartService } from 'src/app/config/authservice';
 export class FoodcenterPage implements OnInit {
 
   constructor(public navCtrl: NavController,
-     public navParams: NavParams,
      public inAppService: AuthService,
      public cartService: CartService,
      private router:Router,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @Component({
@@ -11,7 +11,6 @@ export class CustomeraddressPage implements OnInit {
   data:string = '';
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams, 
     private geolocation: Geolocation
     ) { 
 

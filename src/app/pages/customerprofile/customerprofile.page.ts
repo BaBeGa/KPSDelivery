@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { NavController, NavParams, ToastController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { User, CartService } from '../../config/authservice';
 import { Http, Headers } from '@angular/http';
 import { NgForm } from '@angular/forms';
@@ -19,7 +19,6 @@ export class CustomerprofilePage implements OnInit {
   constructor(
     private router:Router,
     public navCtrl: NavController, 
-    public navParams: NavParams, 
     public http: Http, 
     public toastCtrl: ToastController, 
     public cartService: CartService

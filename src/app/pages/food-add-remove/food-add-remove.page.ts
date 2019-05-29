@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { CartService } from '../../config/authservice';
 
 @Component({
@@ -13,11 +13,11 @@ export class FoodAddRemovePage implements OnInit {
   noProduct = null;
 
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams, 
+    public navCtrl: NavController,  
     private cartService: CartService
   ){
-    this.product = this.navParams.data;
+    //use extra type to pass data between pages let see customerprofile page forexample
+    //this.product = this.navParams.data;
    }
 
   ngOnInit() {

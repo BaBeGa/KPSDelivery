@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { AuthService } from '../../config/authservice';
 import { Headers } from '@angular/http';
 import { Router, NavigationExtras } from '@angular/router';
@@ -17,7 +17,6 @@ export class HistoryPage implements OnInit {
 
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams, 
     public orderService: AuthService,
     private router:Router,
   ) { }

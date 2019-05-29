@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { NavController, NavParams, PopoverController } from '@ionic/angular';
+import { NavController, PopoverController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { AuthService, CartService } from '../../config/authservice';
 
@@ -24,7 +24,6 @@ export class FoodstorePage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public navCtrl: NavController,
-    public navParams: NavParams,
     public http: HttpClient,
     public menuService: AuthService,
     public popoverCtrl: PopoverController,

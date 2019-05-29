@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
@@ -11,7 +11,6 @@ export class CustomeravatarPage implements OnInit {
   userInfo: any;
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams, 
     private camera: Camera
   ) {
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'));

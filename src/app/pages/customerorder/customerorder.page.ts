@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { AuthService } from '../../config/authservice';
 import { Headers } from '@angular/http';
 @Component({
@@ -13,7 +13,6 @@ export class CustomerorderPage implements OnInit {
   shippingOrder = [];
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams, 
     public orderService: AuthService
   ) { }
 

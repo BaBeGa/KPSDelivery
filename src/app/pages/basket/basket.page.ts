@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, AlertController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { CartService } from '../../config/authservice';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 @Component({
@@ -19,7 +19,6 @@ export class BasketPage implements OnInit {
   longitude: any;
   latitude: any;
   constructor(public navCtrl: NavController, 
-    public navParams: NavParams, 
     public cartService: CartService, 
     public alertCtrl: AlertController, 
     private geolocation: Geolocation

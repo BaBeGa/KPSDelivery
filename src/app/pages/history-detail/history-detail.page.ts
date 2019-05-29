@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { AuthService } from '../../config/authservice';
 import { Headers } from '@angular/http';
 
@@ -18,7 +18,6 @@ export class HistoryDetailPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public navCtrl: NavController, 
-    public navParams: NavParams, 
     public orderService: AuthService
   ){
     this.route.queryParams.subscribe(params => {
@@ -44,14 +43,15 @@ export class HistoryDetailPage implements OnInit {
 
     console.log('Get History');
     this.shippingOrder = [];
-    let order_id = this.navParams.get('order_id');
-    console.log(order_id);
+    //use other for pass data
+    //let order_id = this.navParams.get('order_id');
+    //console.log(order_id);
     
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.userToken);
 
     try {
-      const result: any = await this.orderService.apiGetDataService('orders/' + order_id, headers);
+      const result: any = await this.orderService.apiGetDataService('orders/' /*+ order_id*/, headers);
       //console.log(result);
 
       if (result.data.status == 'shipped') {
