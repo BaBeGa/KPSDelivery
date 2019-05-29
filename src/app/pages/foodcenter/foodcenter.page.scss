@@ -1,10 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=Coiny');
+:host {
+    ion-content {
+        --background: var(--ion-color-light);
+    }
 
-page-foodcenter {
+    ion-item {
+        border-radius: 0;
+        border-bottom: 1px dotted var(--ion-color-medium);
+    }
 
+    ion-card {
+        &.no-radius {
+            border-radius: 0;
+        }
+    }
     .toolbar-background {
-        background-color: #9afaf5;
-        background-image: url("https://www.transparenttextures.com/patterns/black-linen.png");  
+      background-color: #9afaf5;
+      background-image: url("https://www.transparenttextures.com/patterns/black-linen.png");  
         
     }
 
@@ -32,22 +44,20 @@ page-foodcenter {
       text-align: center;
     }
 
-    #notification-button {            
+    #button {            
       position: relative;
       width: 42px;
       top:1px;
       right: 1px;
       overflow: visible!important;
-      color: #1f1e1d;
     }
 
 
     #notifications-badge {
-      background-color: rgb(247, 48, 48);
+      background-color:rgb(221, 40, 64);
       position: absolute;
-      top: -3px;
-      right: -3px;
-      border-radius: 100%;
+      top: 0px;
+      right: 8px;
     }
 
     .card-background-page {

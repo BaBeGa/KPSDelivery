@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 import { AuthService, User} from '../../config/authservice';
 import { Http } from '@angular/http';
@@ -19,7 +19,6 @@ export class RegisterPage implements OnInit {
   constructor(
     private router:Router,
     public navCtrl: NavController, 
-    public navParams: NavParams, 
     public registerService: AuthService, 
     public http: Http
   ) { 

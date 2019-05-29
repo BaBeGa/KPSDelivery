@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { NavController } from '@ionic/angular';
-import { FormControl } from '@angular/forms';
+import { NavController, ModalController } from '@ionic/angular';
+import { FormControl, FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { AuthService, CartService } from 'src/app/config/authservice';
+import { BasketPage } from "src/app/pages/basket/basket.page"
+import { NotificationPage } from "src/app/pages/notification/notification.page";
+
 @Component({
   selector: 'app-foodcenter',
   templateUrl: './foodcenter.page.html',
@@ -12,6 +15,7 @@ import { AuthService, CartService } from 'src/app/config/authservice';
 export class FoodcenterPage implements OnInit {
 
   constructor(public navCtrl: NavController,
+     public modalCtrl: ModalController,
      public inAppService: AuthService,
      public cartService: CartService,
      private router:Router,
@@ -28,6 +32,7 @@ export class FoodcenterPage implements OnInit {
   cartLength = 0;
   restaurantNum = 0;
   userInfo:any;
+  myGroup:any;
 
   ngOnInit() {
     console.log('FoodCenter :'+localStorage.getItem('FCMToken'));
@@ -53,7 +58,7 @@ export class FoodcenterPage implements OnInit {
     }).catch(err => console.log(err));
   }
 
-  ionViewWillEnter() {
+  ngAfterViewInit() {
     this.cartLength = this.cartService.getCartLength();
     this.getRestaurant();
 
@@ -62,11 +67,14 @@ export class FoodcenterPage implements OnInit {
       this.checkGetData = false;
     }
 
-    this.searchControl.valueChanges.pipe(debounceTime(700)).subscribe(search => {
-      this.searching = false;
-      this.setFilteredItems();
-    });
+    this.myGroup = new FormGroup({
+      searchControl: new FormControl()
+    })
 
+    this.searchControl.valueChanges.subscribe(search => {
+      this.searching = false ;
+      this.setFilteredItems();
+    })
   }
 
   //service เรียกร้านค้า
@@ -132,8 +140,20 @@ export class FoodcenterPage implements OnInit {
     });
   }
 
-  openCart() {
+  async openCart () {
     this.router.navigateByUrl('basket');
+    // const modal = await this.modalCtrl.create({
+    //   component: BasketPage
+    // });
+    // return await modal.present();
+  }
+
+  async notifications(){
+    this.router.navigateByUrl('notification');
+    // const modal = await this.modalCtrl.create({
+    //   component: NotificationPage
+    // });
+    // return await modal.present();
   }
 
   category(keyword) {

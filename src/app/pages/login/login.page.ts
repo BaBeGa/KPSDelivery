@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { Router, NavigationExtras } from '@angular/router';
 import { AuthService, User } from '../../config/authservice';
 
@@ -16,7 +16,6 @@ export class LoginPage implements OnInit {
   constructor(
     private router:Router,
     public navCtrl: NavController, 
-    public navParams: NavParams, 
     public loginService: AuthService
   ) { }
 

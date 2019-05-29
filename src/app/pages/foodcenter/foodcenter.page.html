@@ -1,8 +1,21 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-row>
-      <ion-col col-10>
-        <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="onSearchInput()"
+  <ion-toolbar color="primary" >
+      <ion-searchbar  debounce="1000" [(ngModel)]="searchTerm" placeholder="ค้นหา" (ionInput)="onSearchInput()"></ion-searchbar>
+      <ion-buttons slot="end">
+          <ion-button id="button" size="small" shape="round" color="medium" (click)="openCart()">
+            <ion-icon name="cart"></ion-icon>
+            <ion-badge id="notifications-badge" color="dark" slot="end" *ngIf="cartLength > 0">{{ cartLength }}</ion-badge>
+          </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+          <ion-button id="button" size="small" shape="round" color="medium" (click)="notifications()">
+            <ion-icon name="notifications"></ion-icon>
+            <ion-badge id="notifications-badge" color="dark" slot="end" >2</ion-badge>
+          </ion-button>
+      </ion-buttons>
+    <!-- <ion-row>
+      <ion-col col-10 [formGroup]="myGroup">
+        <ion-searchbar type="text" debounce="1000" [(ngModel)]="searchTerm" formControlName="searchControl" (ionInput)="onSearchInput()"
           placeholder="ค้นหา">
         </ion-searchbar>
       </ion-col>
@@ -13,8 +26,17 @@
           </ion-icon>
         </button>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   </ion-toolbar>
+  <!-- <ion-toolbar color="dark">
+      <ion-searchbar  debounce="1000" [(ngModel)]="searchKey"></ion-searchbar>
+      <ion-buttons slot="end">
+        <ion-button size="small" shape="round" color="medium" (click)="openCart()">
+          <ion-icon name="cart"></ion-icon>
+          <ion-badge color="dark" slot="end" *ngIf="cartLength > 0">{{ cartLength }}</ion-badge>
+        </ion-button>
+      </ion-buttons>
+  </ion-toolbar> -->
 </ion-header>
 
 
@@ -46,7 +68,7 @@
             <ion-col no-padding>
               <ion-card no-padding (click)="getRestaurant()">
                 <img src="assets/imgs/category_all.jpg" />
-                <div class="card-title">ร้านอาหารทั้งหมด</div>
+                <div class="card-title">ร้านรวม</div>
               </ion-card>
             </ion-col>
             <ion-col no-padding>
