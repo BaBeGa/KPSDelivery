@@ -13,7 +13,6 @@ const routes: Routes = [
   { path: 'customeraddress', loadChildren: '../customeraddress/customeraddress.module#CustomeraddressPageModule' },
   { path: 'customeravatar', loadChildren: '../customeravatar/customeravatar.module#CustomeravatarPageModule' },
   { path: 'customerorder', loadChildren: '../customerorder/customerorder.module#CustomerorderPageModule' },
-  { path: 'forgotpassword', loadChildren: '../forgotpassword/forgotpassword.module#ForgotpasswordPageModule' },
   { path: 'helpcenter', loadChildren: '../helpcenter/helpcenter.module#HelpcenterPageModule' },
   { path: 'history', loadChildren: '../history/history.module#HistoryPageModule' },
   { path: 'legalnterm', loadChildren: '../legalnterm/legalnterm.module#LegalntermPageModule' },

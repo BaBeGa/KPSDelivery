@@ -3,6 +3,7 @@ import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { stringify } from '@angular/core/src/render3/util';
+import { resolve } from 'q';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +13,7 @@ export class AuthService {
   userToken: any;
   userInfo: any;
 
-  constructor(private http: Http, private toastCtrl: Toast) {
+  constructor(public http: Http, public toastCtrl: Toast) {
 
   }
 
@@ -44,7 +45,7 @@ export class AuthService {
 
         })
       }, error => {
-        this.toastCtrl.show(`I'm a toast`, '5000', 'center').subscribe(
+        this.toastCtrl.show(`Can't do authentication!`, '5000', 'center').subscribe(
           toast => {
             console.log(toast);
           }
@@ -130,7 +131,19 @@ export class AuthService {
   }
 
 }
+export class UpdateDataService extends AuthService{
+  
+    apiUpdateUser(userInfo){
+      var header = new Headers;
+      var accessToken = localStorage.getItem('userToken');
+      header.append('Content-Type','application/json');
+      header.append('token',accessToken);
+      this.http.patch(this.apiDriverUrl+'updateUser',userInfo,{ headers:header}).pipe(map(res=>res.json())).subscribe(data=>{
+        resolve(data);
+      });
+    }
 
+}
 export class CartService {
 
   cart = [];

@@ -19,17 +19,4 @@ export class CustomeraccountPage implements OnInit {
   ngOnInit() {
     console.log('ionViewDidLoad CustomeraccountPage');
   }
-
-  editName() {
-    this.router.navigateByUrl('edit-profile-name');
-  }
-
-  editAddress() {
-    this.router.navigateByUrl('edit-profile-address');
-  }
-
-  editPassword() {
-    this.router.navigateByUrl('edit-profile-password');
-  }
-
 }

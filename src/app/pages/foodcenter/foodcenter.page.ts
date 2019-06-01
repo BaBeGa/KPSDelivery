@@ -30,12 +30,14 @@ export class FoodcenterPage implements OnInit {
   checkGetData: boolean = false;
   response: any;
   cartLength = 0;
+  notifyCount = 0; //this crount = localstorange('order').length
   restaurantNum = 0;
   userInfo:any;
   myGroup:any;
 
   ngOnInit() {
-    console.log('FoodCenter :'+localStorage.getItem('FCMToken'));
+    //console.log('FoodCenter :'+localStorage.getItem('FCMToken'));
+    this.notifyCount = JSON.parse(localStorage.getItem('Notify'));
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
     if(this.userInfo!=null){
       this.saveTokenToBackend(localStorage.getItem('FCMToken'));

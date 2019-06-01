@@ -1,0 +1,99 @@
+<ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>แก้ไขโปรไฟล์</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="profile">
+    <ion-card no-margin>
+      <ion-card-content class="bg-profile">
+        <img src="http://158.108.207.4/delivery/public/images/profiles/{{userInfo.user.image}}">
+        <h1 class="fw500">{{userInfo.user.name}}</h1>
+        <h2 color="light" margin-bottom>Customer</h2>
+        <ion-button icon-left color="secondary">
+          <ion-icon name="photos"></ion-icon> 
+          เปลี่ยนรูปโปรไฟล์
+        </ion-button>
+      </ion-card-content>
+    
+      <ion-grid fixed no-padding>
+        <ion-row>
+          <ion-col size="12" padding>
+  
+            <ion-list margin-bottom>
+              <ion-list-header color="light">
+                <ion-label class="fw700">ข้อมูลของฉัน</ion-label>
+              </ion-list-header>
+  
+              <ion-item>
+                <ion-label color="dark" position="stacked">ชื่อ:</ion-label>
+                <ion-input inputmode="text"  [value]=userInfo.userInfo.firstname [(ngModel)]="userInfo.userInfo.firstname"></ion-input>
+              </ion-item>
+              <ion-item>
+                  <ion-label color="dark" position="stacked">นามสกุล:</ion-label>
+                  <ion-input inputmode="text"  [value]=userInfo.userInfo.lastname [(ngModel)]="userInfo.userInfo.lastname"></ion-input>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label color="dark" position="stacked">Email:</ion-label>
+                <ion-input inputmode="email" placeholder="Example@gmail.com" [value]=userInfo.user.email [(ngModel)]="userInfo.user.email"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label color="dark" position="stacked">โทร:</ion-label>
+                  <ion-input inputmode="text" [value]=userInfo.userInfo.phonenumber [(ngModel)]="userInfo.userInfo.phonenumber"></ion-input>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label color="dark" position="stacked">ที่อยู่:</ion-label>
+                <ion-input inputmode="text" [value]=userInfo.userInfo.address [(ngModel)]="userInfo.userInfo.address"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label color="dark" position="stacked">ที่อยู่สำรอง:</ion-label>
+                  <ion-input *ngIf="userInfo.userInfo.address2 != null" inputmode="text" [value]=userInfo.userInfo.address2 [(ngModel)]="userInfo.userInfo.address2"></ion-input>
+                  <ion-input *ngIf="userInfo.userInfo.address2 == null" inputmode="text" placeholder="กรอกที่อยู่สำรองของท่าน" [(ngModel)]="userInfo.userInfo.address2"></ion-input>
+                </ion-item>
+      
+              <ion-item>
+                <ion-label color="dark">เพศ</ion-label>
+                <ion-select>
+                  <ion-select-option (click)="setsex('ชาย')" >ชาย</ion-select-option>
+                  <ion-select-option (click)="setsex('หญิง')" >หญิง</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+            </ion-list>
+  
+            <ion-list>
+              <ion-radio-group>
+                <ion-list-header color="light">
+                  <ion-label class="fw700">ประเภทผู้ใช้</ion-label>
+                </ion-list-header>
+            
+                <ion-item>
+                  <ion-label color="primary">ลูกค้า</ion-label>
+                  <ion-radio *ngIf="userInfo.user.type == 'customer'" slot="start" checked></ion-radio>
+                  <ion-radio *ngIf="userInfo.user.type != 'customer'"slot="start" (ionSelect)="settype('customer')"></ion-radio>
+                </ion-item>
+            
+                <ion-item>
+                  <ion-label color="primary">ผู้ส่งอาหาร</ion-label>
+                  <ion-radio *ngIf="userInfo.user.type == 'driver'" slot="start" checked></ion-radio>
+                  <ion-radio *ngIf="userInfo.user.type != 'driver'" slot="start" (ionSelect)="settype('driver')" ></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+
+            </ion-list>
+    
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    
+      <ion-button size="large" expand="full" color="success" (click)="sendData()" no-margin>บันทึก</ion-button>
+    </ion-card>
+  </ion-content>
+  

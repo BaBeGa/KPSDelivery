@@ -3,10 +3,8 @@
     background: rgb(29, 219, 210);
 }
 :host {
-    .bg {
-        height: 100%;
-        width: 100%;
-        background: linear-gradient(160deg, rgb(29, 219, 210) 30%, rgb(135, 207, 248) 70%);
+    ion-content {
+        --background: linear-gradient(150deg, rgb(70, 240, 110) 30%, rgb(30, 220, 170) 100%);
     }
     .head {
         position: absolute;
@@ -67,4 +65,8 @@
     //     padding-left: 10px;
     //     padding-top: 10px;
     // }
+}
+.paz {
+    position: relative;
+    z-index: 10;
 }

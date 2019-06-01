@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NavController, NavParams, IonNav } from '@ionic/angular';
+import { NavController, IonNav } from '@ionic/angular';
 //import { CustomertabsPage } from '../customertabs/customertabs';
 //import { TabsControllerPage } from '../tabs-controller/tabs-controller';
 import { AuthService, User } from '../../config/authservice';
@@ -13,7 +13,6 @@ export class MenuPage implements OnInit {
   @ViewChild(IonNav) nav: IonNav;
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams, 
     private userService: AuthService
   ) { }
 

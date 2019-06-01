@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditProfilePasswordPage } from './edit-profile-password.page';
+import { ImagepickerComponent } from './imagepicker.component';
 
-describe('EditProfilePasswordPage', () => {
-  let component: EditProfilePasswordPage;
-  let fixture: ComponentFixture<EditProfilePasswordPage>;
+describe('ImagepickerComponent', () => {
+  let component: ImagepickerComponent;
+  let fixture: ComponentFixture<ImagepickerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditProfilePasswordPage ],
+      declarations: [ ImagepickerComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditProfilePasswordPage);
+    fixture = TestBed.createComponent(ImagepickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

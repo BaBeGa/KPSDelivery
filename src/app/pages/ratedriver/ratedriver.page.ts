@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-ratedriver',
@@ -10,7 +10,8 @@ export class RatedriverPage implements OnInit {
 
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams) { }
+    
+    ) { }
 
   ngOnInit() {
     console.log('ionViewDidLoad RatedriverPage');
