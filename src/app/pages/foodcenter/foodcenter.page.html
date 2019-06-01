@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary" >
-      <ion-searchbar  debounce="1000" [(ngModel)]="searchTerm" placeholder="ค้นหา" (ionInput)="onSearchInput()"></ion-searchbar>
+      <ion-searchbar  debounce="1000" [(ngModel)]="searchTerm" placeholder="ค้นหา" (ionChange)="onSearchInput()"></ion-searchbar>
       <ion-buttons slot="end">
           <ion-button id="button" size="small" shape="round" color="medium" (click)="openCart()">
             <ion-icon name="cart"></ion-icon>

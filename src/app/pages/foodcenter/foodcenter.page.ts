@@ -73,10 +73,10 @@ export class FoodcenterPage implements OnInit {
       searchControl: new FormControl()
     })
 
-    this.searchControl.valueChanges.subscribe(search => {
-      this.searching = false ;
-      this.setFilteredItems();
-    })
+    // this.searchControl.valueChanges.subscribe(search => {
+    //   this.searching = false ;
+    //   this.setFilteredItems();
+    // })
   }
 
   //service เรียกร้านค้า
@@ -129,7 +129,9 @@ export class FoodcenterPage implements OnInit {
   }
 
   onSearchInput() {
-    this.searching = true;
+    // this.searching = true;
+    // this.searching = false;
+    this.setFilteredItems();
   }
 
   setFilteredItems() {
