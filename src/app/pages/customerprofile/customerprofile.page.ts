@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { PopoverController,NavController, ToastController, AlertController, LoadingController } from '@ionic/angular';
+import { PopoverController,NavController, ToastController, AlertController, LoadingController, ActionSheetController } from '@ionic/angular';
 import { User, CartService } from '../../config/authservice';
 import { Http, Headers } from '@angular/http';
 import { NgForm } from '@angular/forms';
-import { ImagepickerComponent } from "../../components/imagepicker/imagepicker.component";
+import { CameraOptions, Camera } from "@ionic-native/camera/ngx";
+import { File } from '@ionic-native/file/ngx';
+// import { ImagepickerComponent } from "../../components/imagepicker/imagepicker.component";
 @Component({
   selector: 'app-customerprofile',
   templateUrl: './customerprofile.page.html',
@@ -17,7 +19,7 @@ export class CustomerprofilePage implements OnInit {
   userType: any;
   userToken: any;
   cartLength = 0;
-
+  myPhoto: any;
   constructor(
     public router: Router,
     public popoverCtrl: PopoverController,
@@ -26,8 +28,10 @@ export class CustomerprofilePage implements OnInit {
     public loadingCtrl: LoadingController,
     public navCtrl: NavController, 
     public http: Http, 
-    public cartService: CartService
-
+    public cartService: CartService,
+    public camera: Camera,
+    public actionSheetCtrl: ActionSheetController,
+    public file: File
   ){ 
 
   }
@@ -73,22 +77,6 @@ export class CustomerprofilePage implements OnInit {
     this.router.navigateByUrl('ratedriver');
   }
 
-  async editProfile(ev:any) {
-    console.log("editProfile");
-    const popover = await this.popoverCtrl.create({
-      component: ImagepickerComponent,
-      event: ev,
-      animated: true,
-      translucent: true,
-      showBackdrop: true
-    });
-    return await popover.present();
-    //this.router.navigateByUrl('edit-profile');
-  }
-  async closePopover(){
-    await this.popoverCtrl.dismiss();
-  }
-
   editAddress() {
     console.log("editAddress");
     this.router.navigateByUrl('customeraddress');
@@ -117,6 +105,71 @@ export class CustomerprofilePage implements OnInit {
   register() {
     this.router.navigateByUrl('register');
   }
+  async openCamera(){
+    console.log('Open camera');
+    const options: CameraOptions = {
+      quality: 70,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    await this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      this.myPhoto = 'data:image/jpeg;base64,' + imageData;
+     }, (err) => {
+      // Handle error
+      console.log('get Image form gallary error!' , err);
+     });
+  }
+
+  async editProfile() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'ตัวเลือก',
+      buttons: [{
+        text: 'กล้อง',
+        icon: 'camera',
+        handler: () => {
+          console.log('กล้อง');
+          this.openCamera();
+        }
+      }, {
+        text: 'อัลบัม',
+        icon: 'images',
+        handler: () => {
+          console.log('อัลบัม');
+          this.openGallery();
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
+
+  async openGallery(){
+    console.log('Open gallery');
+    const options: CameraOptions = {
+      quality: 70,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      saveToPhotoAlbum:false
+    }
+
+    await this.camera.getPicture(options).then((imageData)=>{
+      this.myPhoto = 'data:image/jpeg;base64,' + imageData;
+    }, (err)=>{
+      console.log('get Image form gallary error!' , err);
+    });
+  }
+
+
 
   async recoveryPassword() {
     const alert = await this.alertCtrl.create({

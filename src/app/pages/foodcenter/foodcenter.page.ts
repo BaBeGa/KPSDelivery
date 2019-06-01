@@ -128,9 +128,11 @@ export class FoodcenterPage implements OnInit {
 
   }
 
-  onSearchInput() {
+  onSearchInput($event) {
     // this.searching = true;
-    // this.searching = false;
+    //this.searching = false;
+    this.searchTerm = $event.target.value ;
+    //console.log('searchbar tiggered',this.searchTerm);
     this.setFilteredItems();
   }
 

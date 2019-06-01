@@ -9,7 +9,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';//
 
 import { AppComponent } from './app.component';//
 import { AppRoutingModule } from './app-routing.module';//
-
 //new
 //---Plugin---//
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -35,8 +34,6 @@ import { HelpcenterPage } from 'src/app/pages/helpcenter/helpcenter.page';
 import { HistoryDetailPage } from 'src/app/pages/history-detail/history-detail.page';
 import { LegalntermPage } from 'src/app/pages/legalnterm/legalnterm.page';
 import { MainPage } from 'src/app/pages/main/main.page';
-import { CustomerprofilePage } from "src/app/pages/customerprofile/customerprofile.page";
-//
 
 @NgModule({
   declarations: [
@@ -62,7 +59,7 @@ import { CustomerprofilePage } from "src/app/pages/customerprofile/customerprofi
     HelpcenterPage,
     HistoryDetailPage,
     LegalntermPage,
-    MainPage,
+    MainPage
   ],
   imports: [
     BrowserModule,
@@ -74,6 +71,7 @@ import { CustomerprofilePage } from "src/app/pages/customerprofile/customerprofi
     AppRoutingModule
   ],
   providers: [
+    Camera,
     StatusBar,
     SplashScreen,
     Geolocation,
@@ -81,8 +79,6 @@ import { CustomerprofilePage } from "src/app/pages/customerprofile/customerprofi
     Toast,
     AuthService,
     CartService,
-    Camera,
-    CustomerprofilePage,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
