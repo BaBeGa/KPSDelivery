@@ -11,7 +11,6 @@ const routes: Routes = [
     loadChildren: './pages/driverdialog/driverdialog.module#DriverdialogPageModule'
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'basket', loadChildren: './pages/basket/basket.module#BasketPageModule' },
   { path: 'customeraccount', loadChildren: './pages/customeraccount/customeraccount.module#CustomeraccountPageModule' },
   { path: 'customeraddress', loadChildren: './pages/customeraddress/customeraddress.module#CustomeraddressPageModule' },
   { path: 'customeravatar', loadChildren: './pages/customeravatar/customeravatar.module#CustomeravatarPageModule' },

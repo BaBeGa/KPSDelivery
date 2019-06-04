@@ -20,7 +20,7 @@ import { File } from '@ionic-native/file/ngx';
 
 //---Service---//
 import { CheckPasswordDirective } from 'src/app/config/validators';
-import { AuthService, CartService } from 'src/app/config/authservice';
+import { AuthService } from 'src/app/config/authservice';
 
 //---Firebase---//
 import { FirebaseMessaging } from "@ionic-native/firebase-messaging/ngx";
@@ -77,7 +77,6 @@ import { MainPage } from 'src/app/pages/main/main.page';
     Toast,
     AuthService,
     File,
-    CartService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

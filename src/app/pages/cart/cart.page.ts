@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from "@ionic/angular";
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CartService } from "../../services/cart.service";
 @Component({
   selector: 'app-cart',
@@ -7,14 +8,20 @@ import { CartService } from "../../services/cart.service";
   styleUrls: ['./cart.page.scss'],
 })
 export class CartPage implements OnInit {
-
+  
+  userToken: any;
+  userInfo: any;
+  orderDetail: any;
   selectedItems = [];
   totalPrice = 0;
   resItems:any;
   items = [];
+  lat: any;
+  lon: any;
   constructor(
     private cartService: CartService,
     public alertController: AlertController,
+    private geolocation: Geolocation
     ) { }
 
   ngOnInit() {
@@ -71,10 +78,6 @@ export class CartPage implements OnInit {
     this.initialCart();
   }
 
-  sentOrder(){
-    console.log('Order sended!')
-  }
-
   async presentAlertConfirm(item) {
     const alert = await this.alertController.create({
       header: 'นำสินค้าออก',
@@ -99,5 +102,46 @@ export class CartPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  sentOrder() {
+
+    var tmp = 0;
+    var qty = 0;
+    var max: any;
+
+    // for (var i = 0; i < this.basket.length; i++) {
+    //   for (var j = 0; j < this.basket[i].products.length; j++) {
+    //     qty += this.basket[i].products[j].food_qty;
+    //   }
+    //   if (qty > tmp) {
+    //     tmp = qty;
+    //     max = this.basket[i];
+    //     qty = 0;
+    //   }
+    // }
+
+    // this.geolocation.getCurrentPosition().then((res) => {
+
+    //   if (res.coords != null) {
+    //     this.latitude = res.coords.latitude;
+    //     this.longitude = res.coords.longitude;
+    //     this.orderDetail = {
+    //       name: this.userInfo.name,
+    //       address: 'หอพักห้อง 111',
+    //       phone: '0924242424',
+    //       latitude: this.latitude,
+    //       longitude: this.longitude,
+    //       restaurant_id: max.restaurant_id,
+    //       menu: this.basket
+    //     };
+    //   }
+
+    // }).catch((error)=>{
+    //   console.log('Error getting location', error);
+    // });
+
+    // console.log(this.orderDetail);
+
   }
 }
