@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { CartService } from '../../config/authservice';
+import { NavController, NavParams, PopoverController, AlertController } from '@ionic/angular';
+import { ActivatedRoute, Router } from "@angular/router";
+import { CartService } from "src/app/services/cart.service";
+//import { FoodstorePage } from "src/app/pages/foodstore/foodstore.page";
 
 @Component({
   selector: 'app-food-add-remove',
@@ -9,23 +11,27 @@ import { CartService } from '../../config/authservice';
 })
 export class FoodAddRemovePage implements OnInit {
   product: any;
-  quantity = 0;
+  quantity = 1;
   noProduct = null;
-
   constructor(
     public navCtrl: NavController,  
-    private cartService: CartService
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private navParams: NavParams,
+    private popoverCtrl: PopoverController,
+    public alertController: AlertController,
   ){
-    //use extra type to pass data between pages let see customerprofile page forexample
-    //this.product = this.navParams.data;
    }
 
   ngOnInit() {
     console.log('ionViewDidLoad FoodAddRemovePage');
+    //console.log(this.navParams.data);
+    this.product = this.navParams.data ;
   }
+
   //เพิ่มอาหารลงตะกร้า
   addToCart() {
-    
     var newProduct = {
       restaurant_id: this.product.restaurant_id,
       restaurant_name: this.product.restaurant_name,
@@ -34,17 +40,44 @@ export class FoodAddRemovePage implements OnInit {
       food_price: this.product.price,
       food_qty: this.quantity
     };
-
-    if (newProduct.food_qty == 0){
-      this.noProduct = "Please choose quantity.";
+    if(JSON.parse(localStorage.getItem('userInfo')) == null ){
+      this.noProduct = null;
+      this.presentAlertConfirm();
+      return this.closePopover();
     }
     else {
       this.noProduct = null;
       this.cartService.addProduct(newProduct);
+      return this.closePopover();
     }
 
   }
 
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'โปรดเข้าสู่ระบบ',
+      message: 'กรุณาเข้าสู่ระบบเพื่อสั่งชื้ออาหาร',
+      buttons: [
+        {
+          text: 'ตกลง',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.router.navigateByUrl('login');
+          }
+        },
+        {
+          text: 'ยกเลิก',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
   //เพิ่มอาหาร
   addProduct() {
     this.quantity += 1;
@@ -57,4 +90,7 @@ export class FoodAddRemovePage implements OnInit {
     }
   }
 
+  closePopover(){
+    this.popoverCtrl.dismiss();
+  }
 }

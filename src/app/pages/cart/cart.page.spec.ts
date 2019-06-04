@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImagepickerComponent } from './imagepicker.component';
+import { CartPage } from './cart.page';
 
-describe('ImagepickerComponent', () => {
-  let component: ImagepickerComponent;
-  let fixture: ComponentFixture<ImagepickerComponent>;
+describe('CartPage', () => {
+  let component: CartPage;
+  let fixture: ComponentFixture<CartPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImagepickerComponent ],
+      declarations: [ CartPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ImagepickerComponent);
+    fixture = TestBed.createComponent(CartPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

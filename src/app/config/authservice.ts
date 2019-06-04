@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { stringify } from '@angular/core/src/render3/util';
 import { resolve } from 'q';
+import { isJsObject } from '@angular/core/src/change_detection/change_detection_util';
 
 @Injectable()
 export class AuthService {
@@ -142,17 +143,19 @@ export class UpdateDataService extends AuthService{
         resolve(data);
       });
     }
-
 }
 export class CartService {
-
   cart = [];
   basket = [];
+  // cart = JSON.parse(localStorage.getItem('cart'));
+  // basket = JSON.parse(localStorage.getItem('basket'));
   totalCharge = 0;
 
-  addProduct(product) {
+  async addProduct(product) {
+    console.log('cart: ',this.cart)
+    console.log('auth: ',product)
     this.cart.push(product);
-    this.arrangeProduct();
+    await this.arrangeProduct();
   }
 
   arrangeProduct() {
@@ -193,22 +196,39 @@ export class CartService {
       this.totalCharge += this.cart[i].food_price * this.cart[i].food_qty;
     }
 
+    localStorage.setItem('cart',JSON.stringify(this.cart));
+    localStorage.setItem('basket',JSON.stringify(this.basket));
   }
 
   getBasket() {
-    return this.basket;
+    if(JSON.parse(localStorage.getItem('basket')) != null){
+      return JSON.parse(localStorage.getItem('basket'));
+    }else{
+      return null;
+    }
   }
 
   getCart() {
-    return this.cart;
+    if(JSON.parse(localStorage.getItem('cart')) != null){
+      return JSON.parse(localStorage.getItem('cart'));
+    }else{
+      return null;
+    }
   }
 
   getCartLength() {
-
+    
     let cartLength = 0;
-
-    for (var i = 0; i < this.cart.length; i++) {
-      cartLength += this.cart[i].food_qty;
+    let localCart =[]
+    if(JSON.parse(localStorage.getItem('cart'))!=null){
+      localCart = JSON.parse(localStorage.getItem('cart'));
+    }else{
+      return cartLength;
+    }
+    console.log('this cart:',this.cart);
+    console.log('this localCart:',localCart);
+    for (let i = 0; i < localCart.length; i++) {
+      cartLength += localCart[i].food_qty;
     }
 
     return cartLength;
@@ -218,14 +238,16 @@ export class CartService {
     return this.totalCharge;
   }
 
-  removeProduct(product) {
+  async removeProduct(product) {
 
     for (var i = 0; i < this.cart.length; i++) {
       if (product.food_id == this.cart[i].food_id) {
         this.cart.splice(i, 1);
       }
     }
-    this.arrangeProduct();
+    //console.log(this.cart);
+    localStorage.setItem('cart',JSON.stringify(this.cart));
+    await this.arrangeProduct();
 
   }
 

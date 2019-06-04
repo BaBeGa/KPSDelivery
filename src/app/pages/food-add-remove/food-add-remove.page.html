@@ -1,13 +1,13 @@
-<ion-content padding #popoverContent class="popover-page" class="position-center">
-  <div #popoverText class="text-to-change">
+<ion-content padding #popoverContent >
+  <div #popoverText >
     <div>
-      <ion-row>
+      <ion-row text-left>
         <h1>{{ product.name }}</h1>
       </ion-row>
-      <ion-row>ราคา {{ product.price }} ฿</ion-row>
+      <ion-row text-center>ราคา {{ product.price }} บาท</ion-row>
     </div>
     <div padding-top padding-bottom>
-      <ion-row>
+      <ion-row text-center>
         <div padding>
           <ion-icon name="remove" (click)="removeProduct()"></ion-icon>
         </div>
@@ -21,7 +21,7 @@
     </div>
 
     <div>
-      <button ion-button color="secondary" (click)="addToCart()">Add to cart</button>
+      <ion-button expand="block" shape="round" color="secondary" (click)="addToCart()">หยิบลงตะกร้า</ion-button>
     </div>
 
     <div>{{ noProduct }}</div>

@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { NavController, PopoverController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
-import { AuthService, CartService } from '../../config/authservice';
+import { AuthService } from '../../config/authservice';
+import { FoodAddRemovePage } from "../../pages/food-add-remove/food-add-remove.page";
+import { CartService } from "src/app/services/cart.service";
 
 @Component({
   selector: 'app-foodstore',
@@ -31,22 +33,22 @@ export class FoodstorePage implements OnInit {
     ){
 
     this.route.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state){
-        this.data = this.router.getCurrentNavigation().extras.state;
+      if (params != null){
+        this.res_id = params.restaurant_id;
+        this.res_name = params.restaurant_name;
+        this.goInRestaurant();
       }
     });
-    this.res_id = this.data.restaurant_id;
-    this.res_name = this.data.restaurant_name;
-    this.goInRestaurant();
-
    }
 
   ngOnInit() {
     console.log('ionViewDidLoad FoodselectPage');
+    this.cartLength = this.cartService.getCartLength();
   }
 
   ionViewWillEnter() {
-    this.cartLength = this.cartService.getCartLength();
+    this.cartLength = Number(localStorage.getItem('cartLength'));
+    console.log('foodstore :'+this.cartLength);
   }
 
   //service เรียกเมนูอาหาร เก็บข้อมูลลงใน products
@@ -79,14 +81,15 @@ export class FoodstorePage implements OnInit {
   async selectFood(product) {
     //FoodAddRemovePage, product
     let popover = await this.popoverCtrl.create({
-      component: 'food-add-remove',
-      event: product,
+      component: FoodAddRemovePage ,
+      componentProps: product,
       translucent: false
     });
     
     popover.present();
     popover.onDidDismiss().then(() => {
       this.cartLength = this.cartService.getCartLength();
+      localStorage.setItem('cartLength',this.cartLength.toString())
     })  
   }
 }

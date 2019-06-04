@@ -16,6 +16,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 //---Service---//
 import { CheckPasswordDirective } from 'src/app/config/validators';
@@ -29,7 +30,6 @@ import { CustomeraddressPage } from 'src/app/pages/customeraddress/customeraddre
 import { CustomeravatarPage } from 'src/app/pages/customeravatar/customeravatar.page';
 import { DriverregisterPage } from 'src/app/pages/driverregister/driverregister.page';
 import { FoodAddRemovePage } from 'src/app/pages/food-add-remove/food-add-remove.page';
-import { FoodstorePage } from 'src/app/pages/foodstore/foodstore.page';
 import { HelpcenterPage } from 'src/app/pages/helpcenter/helpcenter.page';
 import { HistoryDetailPage } from 'src/app/pages/history-detail/history-detail.page';
 import { LegalntermPage } from 'src/app/pages/legalnterm/legalnterm.page';
@@ -42,7 +42,6 @@ import { MainPage } from 'src/app/pages/main/main.page';
     CustomeravatarPage,
     DriverregisterPage,
     FoodAddRemovePage,
-    FoodstorePage,
     HelpcenterPage,
     HistoryDetailPage,
     LegalntermPage,
@@ -55,7 +54,6 @@ import { MainPage } from 'src/app/pages/main/main.page';
     CustomeravatarPage,
     DriverregisterPage,
     FoodAddRemovePage,
-    FoodstorePage,
     HelpcenterPage,
     HistoryDetailPage,
     LegalntermPage,
@@ -78,6 +76,7 @@ import { MainPage } from 'src/app/pages/main/main.page';
     FirebaseMessaging,
     Toast,
     AuthService,
+    File,
     CartService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

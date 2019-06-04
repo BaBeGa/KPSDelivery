@@ -13,30 +13,7 @@
             <ion-badge id="notifications-badge"  slot="end" *ngIf="notifyCount > 0">{{ notifyCount }}</ion-badge>
           </ion-button>
       </ion-buttons>
-    <!-- <ion-row>
-      <ion-col col-10 [formGroup]="myGroup">
-        <ion-searchbar type="text" debounce="1000" [(ngModel)]="searchTerm" formControlName="searchControl" (ionInput)="onSearchInput()"
-          placeholder="ค้นหา">
-        </ion-searchbar>
-      </ion-col>
-      <ion-col col-2 align-self-center text-center>
-        <button ion-button clear id="notification-button" (click)="openCart()">
-          <ion-icon name="cart">
-            <ion-badge id="notifications-badge" *ngIf="cartLength > 0">{{ cartLength }}</ion-badge>
-          </ion-icon>
-        </button>
-      </ion-col>
-    </ion-row> -->
   </ion-toolbar>
-  <!-- <ion-toolbar color="dark">
-      <ion-searchbar  debounce="1000" [(ngModel)]="searchKey"></ion-searchbar>
-      <ion-buttons slot="end">
-        <ion-button size="small" shape="round" color="medium" (click)="openCart()">
-          <ion-icon name="cart"></ion-icon>
-          <ion-badge color="dark" slot="end" *ngIf="cartLength > 0">{{ cartLength }}</ion-badge>
-        </ion-button>
-      </ion-buttons>
-  </ion-toolbar> -->
 </ion-header>
 
 
@@ -161,7 +138,7 @@
 
   <ion-row>
     <ion-list padding>
-      <ion-item *ngFor="let item of items" (click)="goInRestaurant(item.id, item.name)" no-padding>
+      <ion-item button=true *ngFor="let item of items" (click)="goInRestaurant(item.id, item.name)" no-padding>
         <ion-row no-padding>
           <ion-col col-3 no-padding class="img">
             <img src="http://158.108.207.4/delivery/public/images/restaurants/{{item.image}}" />

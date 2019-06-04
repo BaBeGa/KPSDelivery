@@ -2,25 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { NavController, ModalController } from '@ionic/angular';
 import { FormControl, FormGroup } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
-import { AuthService, CartService } from 'src/app/config/authservice';
-import { BasketPage } from "src/app/pages/basket/basket.page"
+import { AuthService } from 'src/app/config/authservice';
 import { NotificationPage } from "src/app/pages/notification/notification.page";
-
+import { CartService } from "src/app/services/cart.service";
 @Component({
   selector: 'app-foodcenter',
   templateUrl: './foodcenter.page.html',
   styleUrls: ['./foodcenter.page.scss'],
 })
 export class FoodcenterPage implements OnInit {
-
-  constructor(public navCtrl: NavController,
-     public modalCtrl: ModalController,
-     public inAppService: AuthService,
-     public cartService: CartService,
-     private router:Router,
-     ){ }
-
   id: string;
   searchTerm: string = '';
   searchControl: FormControl;
@@ -34,16 +24,22 @@ export class FoodcenterPage implements OnInit {
   restaurantNum = 0;
   userInfo:any;
   myGroup:any;
-
+  product:any;
+  cart:any;
+  constructor(public navCtrl: NavController,
+     public modalCtrl: ModalController,
+     public inAppService: AuthService,
+     public cartService: CartService,
+     private router:Router,
+     ){ }
   ngOnInit() {
-    //console.log('FoodCenter :'+localStorage.getItem('FCMToken'));
+    console.log('ionViewDidLoad FoodcenterPage');
     this.notifyCount = JSON.parse(localStorage.getItem('Notify'));
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
     if(this.userInfo!=null){
       this.saveTokenToBackend(localStorage.getItem('FCMToken'));
     }
-    console.log('ionViewDidLoad FoodcenterPage');
-    //console.log(localStorage.getItem('FCMToken'));
+    this.cartLength = this.cartService.getCartLength();
   }
 
   async saveTokenToBackend(token) {
@@ -55,15 +51,14 @@ export class FoodcenterPage implements OnInit {
     }
     //console.log(body);
     await this.inAppService.apiPatchUpdateUserFCM('/user',body).then((result)=>{
-      console.log('Save FCM_token status : ', result);
+      //console.log('Save FCM_token status : ', result);
       return result;
     }).catch(err => console.log(err));
   }
 
   ngAfterViewInit() {
-    this.cartLength = this.cartService.getCartLength();
     this.getRestaurant();
-
+    this.cartLength = this.cartService.getCartLength();
     if (this.checkGetData == true) {
       this.setFilteredItems();
       this.checkGetData = false;
@@ -72,13 +67,7 @@ export class FoodcenterPage implements OnInit {
     this.myGroup = new FormGroup({
       searchControl: new FormControl()
     })
-
-    // this.searchControl.valueChanges.subscribe(search => {
-    //   this.searching = false ;
-    //   this.setFilteredItems();
-    // })
   }
-
   //service เรียกร้านค้า
   getRestaurant() {
 
@@ -112,12 +101,12 @@ export class FoodcenterPage implements OnInit {
 
   goInRestaurant(id, name) {
     let navigationExtras: NavigationExtras = {
-      state: {
+      queryParams: {
         restaurant_id: id,
         restaurant_name: name
       }
     };
-    this.router.navigateByUrl('foodstore', navigationExtras );
+    this.router.navigate(['foodstore'], navigationExtras );
   }
 
   promo1() {
@@ -147,19 +136,11 @@ export class FoodcenterPage implements OnInit {
   }
 
   async openCart () {
-    this.router.navigateByUrl('basket');
-    // const modal = await this.modalCtrl.create({
-    //   component: BasketPage
-    // });
-    // return await modal.present();
+    this.router.navigateByUrl('cart');
   }
 
   async notifications(){
     this.router.navigateByUrl('notification');
-    // const modal = await this.modalCtrl.create({
-    //   component: NotificationPage
-    // });
-    // return await modal.present();
   }
 
   category(keyword) {

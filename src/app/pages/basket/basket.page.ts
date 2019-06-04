@@ -10,7 +10,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 export class BasketPage implements OnInit {
   basket: any;
   cart: any;
-  checkNoItem: any;
+  checkNoItem: boolean;
   totalCharge: any;
   quantity = 0;
   orderDetail: any;
@@ -35,11 +35,11 @@ export class BasketPage implements OnInit {
     this.cart = this.cartService.getCart();
     this.totalCharge = this.cartService.getCharge();
 
-    if (this.basket.length == 0) {
-      this.checkNoItem = true;
+    if (this.basket != null && this.basket.length != 0) {
+      this.checkNoItem = false;
     }
     else {
-      this.checkNoItem = false;
+      this.checkNoItem = true;
     }
   }
 

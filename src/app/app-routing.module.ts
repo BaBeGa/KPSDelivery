@@ -21,7 +21,7 @@ const routes: Routes = [
   ////{ path: 'driver', loadChildren: './pages/driver/driver.module#DriverPageModule' },
   { path: 'driverdialog', loadChildren: './pages/driverdialog/driverdialog.module#DriverdialogPageModule' },
   { path: 'driverregister', loadChildren: './pages/driverregister/driverregister.module#DriverregisterPageModule' },
-  { path: 'food-add-remove', loadChildren: './pages/food-add-remove/food-add-remove.module#FoodAddRemovePageModule' },
+  //{ path: 'food-add-remove', loadChildren: './pages/food-add-remove/food-add-remove.module#FoodAddRemovePageModule' },
   //// { path: 'foodcenter', loadChildren: './pages/foodcenter/foodcenter.module#FoodcenterPageModule' },
   { path: 'foodstore', loadChildren: './pages/foodstore/foodstore.module#FoodstorePageModule' },
   { path: 'helpcenter', loadChildren: './pages/helpcenter/helpcenter.module#HelpcenterPageModule' },
@@ -41,6 +41,7 @@ const routes: Routes = [
   { path: 'menu', loadChildren: './pages/menu/menu.module#MenuPageModule' },
   { path: 'edit-profile', loadChildren: './pages/edit-profile/edit-profile.module#EditProfilePageModule' },
   { path: 'setting', loadChildren: './pages/setting/setting.module#SettingPageModule' },
+  { path: 'cart', loadChildren: './pages/cart/cart.module#CartPageModule' },
 ];
 
 @NgModule({
