@@ -16,8 +16,8 @@ export class DriverService {
     localStorage.setItem('driverorder',JSON.stringify(order));
   }
 
-  getOrder(){
-    this.order = JSON.parse(localStorage.getItem('driverorder'));
+  async getOrder(){
+    this.order = await JSON.parse(localStorage.getItem('driverorder'));
     return this.order
   }
 
@@ -36,4 +36,5 @@ export class DriverService {
       return null
     }
   }
+  
 }

@@ -17,7 +17,7 @@ export class AuthService {
     public http: Http, 
     public router: Router,
     public toastCtrl: ToastController,
-    public alertController: AlertController
+    public alertController: AlertController,
     ) {
 
   }
@@ -334,6 +334,7 @@ export class AuthService {
     return new Promise((resolve) => {
       this.http.get(this.apiDriverUrl + '/user/'+userId, { headers: header }).pipe(map(res => res.json())).subscribe(data => {
         localStorage.setItem('userType', JSON.stringify(data.userType));
+        localStorage.setItem('workStatus', JSON.stringify(data.workStatus));
         console.log('UserType auth: ',data);
         resolve(data);
       }, async err =>{
@@ -480,7 +481,7 @@ export class AuthService {
                 text: 'ตกลง',
                 handler: async () => {
                   console.log('Confirm Okay');
-                  localStorage.clear();
+                  await localStorage.clear();
                   this.router.navigateByUrl('login')
                 }
               },

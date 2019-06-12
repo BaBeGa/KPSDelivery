@@ -29,8 +29,7 @@ export class FoodcenterPage implements OnInit {
      public modalCtrl: ModalController,
      public inAppService: AuthService,
      public cartService: CartService,
-     private router:Router,
-     private route: ActivatedRoute,
+     private router:Router
      ){ }
   ngOnInit() {
     console.log('ionViewDidLoad FoodcenterPage');

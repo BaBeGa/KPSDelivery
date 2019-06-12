@@ -26,7 +26,6 @@ export class DriverPage implements OnInit {
   Onorder: boolean;
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
-
   destination = {
     lat:13.851070,
     lng:100.577713,
@@ -39,15 +38,29 @@ export class DriverPage implements OnInit {
     private driverService: DriverService,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
+  ) { 
+    this.checkOnorder();
+  }
 
-  ngOnInit() {
-    this.working = JSON.parse(localStorage.getItem('workstatus'))
+  async ngOnInit() {
+    this.initWorkstatus();
     this.token = JSON.parse(localStorage.getItem('FCMToken'));
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    this.checkOnorder();
+    //this.checkOnorder();
     this.saveTokenToBackend();
     this.initMap();
+  }
+
+  initWorkstatus(){
+    let workStatus: any = JSON.parse(localStorage.getItem('workStatus'))
+    if(workStatus == 1){
+      this.working = true
+    }else if(workStatus == 0){
+      this.working = false
+    }else{
+      console.log('get workStatus fail: ',workStatus)
+      this.working = false
+    }
   }
 
   async checkOnorder(){
@@ -73,10 +86,6 @@ export class DriverPage implements OnInit {
       console.log('Save FCM_token status : ', result);
     }).catch(err => console.log(err));
     }
-  }
-
-  getLocation(){
-    return this.geolocation.getCurrentPosition();
   }
 
   initMap() {
@@ -119,22 +128,20 @@ export class DriverPage implements OnInit {
     if(ev.detail.checked){
       let body = { 
       id: this.userInfo.user.id,
-      isActiveAccount: 1
+      workStatus: 1
       }
       await this.userService.apiPatchUpdateUser(body).then((result)=>{
         console.log('Update user success : ', result);
         this.working = true;
-        localStorage.setItem('workstatus','true');
       }).catch(err => console.log(err));
     }else{
       let body = { 
         id: this.userInfo.user.id,
-        isActiveAccount: 0
+        workStatus: 0
       }
       await this.userService.apiPatchUpdateUser(body).then((result)=>{
         console.log('Update user success : ', result);
         this.working = false;
-        localStorage.setItem('workstatus','false');
       }).catch(err => console.log(err));
     }
   }

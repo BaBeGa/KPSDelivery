@@ -12,7 +12,9 @@ export class TabsControllerPage implements OnInit {
   constructor(
     public router:Router,
     private driverService: DriverService
-    ) { }
+    ) { 
+      this.ngOnInit()
+    }
 
   async ngOnInit() {
     this.res = await this.driverService.getCredit()

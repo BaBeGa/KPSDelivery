@@ -137,7 +137,7 @@ export class CartPage implements OnInit {
         text: 'ตกลง',
         handler: async (data) => {
           try {
-            if(data.limit > 0 || data.limit < 20){
+            if(data.limit > 0 && data.limit < 20){
               let postData = new FormData();
             postData.append('status', 'ordering');
             postData.append('restaurant_id', this.selectedItems[0].restaurant_id);
