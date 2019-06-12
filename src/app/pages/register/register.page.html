@@ -1,11 +1,141 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Register</ion-title>
+    <ion-title>สมัครสมาชิก</ion-title>
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content padding>
+  <div>
+    <h1>สมัครสมาชิก</h1>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" #f="ngForm">
+
+    <div id="user-data" ngModelGroup="userData">
+      <ion-item>
+        <ion-label>ชื่อที่ใช้แสดง</ion-label>
+        <ion-input type="text" name="name" ngModel required #name="ngModel" pattern="^[a-zA-Z]{6,30}$"></ion-input>
+      </ion-item>
+      <span padding-left *ngIf="(!name.valid && name.touched)">กรุณาใส่ชื่อให้ถูกต้อง ต้องเป็น a-z A-Z และมากกว่า 6
+        ตัวอักษรไม่เกิน 30 ตัวอักษร!</span>
+      <ion-item>
+        <ion-label>E-mail</ion-label>
+        <ion-input type="email" name="email" ngModel required #email="ngModel"
+          pattern="[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"></ion-input>
+      </ion-item>
+      <span padding-left *ngIf="!email.valid && email.touched">กรุณาใส่อีเมลล์ให้ถูกต้อง!</span>
+    </div>
+
+    <div ngModelGroup="passwords" #passwords1="ngModelGroup" appCheckPassword>
+      <div class="form-group">
+        <ion-item>
+          <ion-label>รหัสผ่าน</ion-label>
+          <ion-input type="password" #password="ngModel" name="password" required ngModel
+            pattern="^[a-zA-Z0-9]{6,100}$">
+          </ion-input>
+        </ion-item>
+        <span padding-left *ngIf="(!password.valid && password.touched)">กรุณาใส่รหัสผ่านให้ถูกต้อง ต้องเป็น a-z A-Z 0-9
+          และมากกว่า 6 ตัวอักษร!</span>
+      </div>
+      <div class="form-group">
+        <ion-item>
+          <ion-label>ใส่รหัสผ่านอีกครั้ง</ion-label>
+          <ion-input type="password" #c_password="ngModel" name="c_password" required ngModel></ion-input>
+        </ion-item>
+      </div>
+    </div>
+    <div padding-left *ngIf="c_password.invalid && (password.dirty || password.touched)">
+      กรุณาใส่รหัสผ่านอีกครั้ง
+    </div>
+    <div padding-left *ngIf="passwords1.errors?.passwordCheck && (c_password.dirty || c_password.touched)">
+      รหัสผ่านไม่ตรงกัน
+    </div>
+
+    <div id="user-data" ngModelGroup="userData">
+      <ion-item>
+        <ion-label>ชื่อ</ion-label>
+        <ion-input type="text" name="firstname" ngModel required #firstname="ngModel" pattern="^[a-zA-Zก-๛]{1,50}$">
+        </ion-input>
+      </ion-item>
+      <span padding-left *ngIf="!firstname.valid && firstname.touched">กรุณาใส่ชื่อให้ถูกต้อง!</span>
+      <ion-item>
+        <ion-label>นามสกุล</ion-label>
+        <ion-input type="text" name="lastname" ngModel required #lastname="ngModel" pattern="^[a-zA-Zก-๛]{1,50}$">
+        </ion-input>
+      </ion-item>
+      <span padding-left *ngIf="!lastname.valid && lastname.touched">กรุณาใส่นามสกุลให้ถูกต้อง!</span>
+      <ion-item>
+        <ion-label>เลขประจำตัวประชาชน</ion-label>
+        <ion-input type="text" name="id_number" ngModel required #id_number="ngModel" pattern="[0-9]{13}$">
+        </ion-input>
+      </ion-item>
+      <span padding-left *ngIf="!id_number.valid && id_number.touched">กรุณาใส่เลขให้ถูกต้อง!</span>
+      <ion-item>
+        <ion-label>เพศ</ion-label>
+        <ion-select name="sex" ngModel required #sex="ngModel">
+          <ion-select-option value="ชาย">ชาย</ion-select-option>
+          <ion-select-option value="หญิง">หญิง</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span padding-left *ngIf="!lastname.valid && lastname.touched">กรุณาใส่เพศ!</span>
+      <ion-item>
+        <ion-label>วันเกิด</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" name="dob" ngModel required #dob="ngModel"></ion-datetime>
+      </ion-item>
+      <span padding-left *ngIf="!dob.valid && dob.touched">กรุณาใส่วันเกิด!</span>
+      <ion-item>
+        <ion-label>ที่อยู่</ion-label>
+        <ion-input type="text" name="address" ngModel required #address="ngModel">
+        </ion-input>
+      </ion-item>
+      <span padding-left *ngIf="!address.valid && address.touched">กรุณาใส่ที่อยู่!</span>
+      <ion-item>
+        <ion-label>ตำบล/แขวง</ion-label>
+        <ion-input type="text" name="subdistrict" ngModel required #subdistrict="ngModel">
+        </ion-input>
+      </ion-item>
+      <span padding-left *ngIf="!subdistrict.valid && subdistrict.touched">กรุณาใส่ตำบล/แขวง!</span>
+      <ion-item>
+        <ion-label>อำเภอ/เขต</ion-label>
+        <ion-input type="text" name="district" ngModel required #district="ngModel">
+        </ion-input>
+      </ion-item>
+      <span padding-left *ngIf="!district.valid && district.touched">กรุณาใส่อำเภอ/เขต!</span>
+      <ion-item>
+        <ion-label>จังหวัด</ion-label>
+        <ion-input type="text" name="province" ngModel required #province="ngModel">
+        </ion-input>
+      </ion-item>
+      <span padding-left *ngIf="!province.valid && province.touched">กรุณาใส่จังหวัด!</span>
+      <ion-item>
+        <ion-label>รหัสไปรษณีย์</ion-label>
+        <ion-input type="text" name="zipcode" ngModel required #zipcode="ngModel" pattern="[0-9]{3,10}$">
+        </ion-input>
+      </ion-item>
+      <span padding-left *ngIf="!zipcode.valid && zipcode.touched">กรุณาใส่รหัสไปรษณีย์ให้ถูกต้อง!</span>
+      <ion-item>
+        <ion-label>เบอร์โทรศัพท์</ion-label>
+        <ion-input type="text" name="phonenumber" ngModel required #phonenumber="ngModel" pattern="[0-9]{10}$">
+        </ion-input>
+      </ion-item>
+      <span padding-left *ngIf="!phonenumber.valid && phonenumber.touched">กรุณาใส่เบอร์โทรศัพท์ให้ถูกต้อง!</span>
+      <ion-item>
+        <ion-label>ประเภทการใช้บริการ</ion-label>
+        <ion-select name="type" ngModel required #type="ngModel">
+          <ion-select-option value="customer">ลูกค้าทั่วไป</ion-select-option>
+          <ion-select-option value="driver">คนส่งอาหาร</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <span padding-left *ngIf="!type.valid && type.touched">กรุณาเลือกประเภท!</span>
+    </div>
+
+    <ion-button block margin-top type="submit" [disabled]="!f.valid">Register</ion-button>
+  </form>
+
+
+</ion-content>
+
+<!-- <ion-content padding>
   <div>
     <h1>Register</h1>
   </div>
@@ -54,4 +184,5 @@
     </form>
 
   </div>
-</ion-content>
+</ion-content> -->
+

@@ -1,9 +1,39 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>my-wallet</ion-title>
+    <ion-title>เครดิตของฉัน</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
-</ion-content>
+<ion-content padding >
+    <ion-card >
+      <ion-list>
+        <ion-item-sliding>
+          <ion-item color="dark" >
+            <ion-icon name="person" item-left></ion-icon>
+              {{ userInfo.user.name }}
+          </ion-item>
+        </ion-item-sliding>
+        <ion-item *ngIf="!allowAccept">
+          <div >
+            <p style="margin-top:0px;color:#000000;font-size:13px;">
+              ติดต่อผู้ดูแลระบบของคุณหากต้องการ
+              <strong>
+                เติม
+              </strong>
+              เครดิตของคุณ.
+            </p>
+          </div>
+        </ion-item>
+        <ion-item *ngIf="allowAccept" color="assertive" >
+          <ion-icon name="card" slot="start"></ion-icon>
+          เลขผู้เครดิต
+          <ion-note slot="end">{{ userCreditNum }}</ion-note>
+        </ion-item>
+        <ion-item color="assertive" >
+          <ion-icon name="card" slot="start"></ion-icon>
+          เครดิตคงเหลือ
+          <ion-note slot="end">{{ userCredit }}</ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </ion-content>

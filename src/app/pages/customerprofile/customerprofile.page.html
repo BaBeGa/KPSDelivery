@@ -31,7 +31,7 @@
         </ion-label>
       </ion-item>
       <ion-buttons slot="end">
-          <ion-button size="small" shape="round" color="medium" (click)="notifications()">
+          <ion-button size="small" shape="round" color="medium" (click)="openCart()">
             <ion-icon name="cart"></ion-icon>
             <ion-badge slot="end" *ngIf="cartLength > 0">{{ cartLength }}</ion-badge>
           </ion-button>
@@ -74,7 +74,7 @@
     <ion-segment *ngIf="this.userType == 'customer'" >
       <ion-segment-button>
         <ion-icon name="timer"></ion-icon>
-        <ion-label>ที่รอการตอบรับ</ion-label>
+        <ion-label>รอการตอบรับ</ion-label>
       </ion-segment-button>
       <ion-segment-button>
         <ion-icon name="gift"></ion-icon>

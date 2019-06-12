@@ -1,15 +1,15 @@
 import { Component,ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from 'src/app/services/data.service';
-import { MenuPage } from 'src/app/pages/menu/menu.page';
+//import { DataService } from 'src/app/services/data.service';
 import { Platform,AlertController,ToastController,NavController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-
+import { DriverService } from "src/app/services/driver.service";
 //get the user id from auth
 import { AuthService, User } from 'src/app/config/authservice';
 import { FirebaseMessaging } from '@ionic-native/firebase-messaging/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
@@ -20,16 +20,18 @@ export class AppComponent {
     user = {} as User;
     userInfo: any;
     userType: any;
+    lat:any ;
+    lon:any ;
   constructor(
     private router:Router,
-    private dataService: DataService,
+    private driverService: DriverService,
     private platform: Platform,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
     private alertCtrl: AlertController, 
     private userService: AuthService,
-    public toastController: ToastController,
-    private firebase:FirebaseMessaging
+    private firebase:FirebaseMessaging,
+    private geolocation:Geolocation
   ) {
     this.initializeApp();
   }
@@ -41,6 +43,7 @@ export class AppComponent {
       this.statusBar.styleLightContent();
       this.splashScreen.hide();
       this.setupFCM();
+      this.getGeolocation();
     });
   }
 
@@ -48,18 +51,35 @@ export class AppComponent {
     //chech platform
     if (this.platform.is('android')) {
       //get token from firebase
-      this.firebase.getToken().then(token=> {
+      this.firebase.getToken().then(async token=> {
         console.log("FCM_Token android: "+token);
-        this.initializeUser();
+        localStorage.setItem('FCMToken',JSON.stringify(token));
+        await this.initializeUser();
+        //await this.saveTokenToBackend(token);
       }).catch(err=> console.log(err));
 
       this.firebase.onMessage().subscribe(payload=>{
-        console.log("New foreground FCM message: ", payload.orderid);
-        this.presentAlertConfirm(payload)
+        console.log("New foreground FCM message: ", payload);
+        //this.dataService.setData(payload.orderid, payload);
+        if(payload.messageType == 'acception'){
+          this.driverAlertConfirm(payload);
+        }else if(payload.messageType == 'limit'){
+          this.customerAlertConfirm(payload);
+        }else if(payload.messageType == 'accepted'){
+          this.customerAlert(payload);
+        }
+        
       }),err=> console.log(err);
       this.firebase.onBackgroundMessage().subscribe(payload=>{
-        console.log("New background FCM message: ", payload.orderid);
-        this.presentAlertConfirm(payload)
+        console.log("New background FCM message: ", payload);
+        if(payload.messageType == 'acception'){
+          this.driverAlertConfirm(payload);
+        }else if(payload.messageType == 'limit'){
+          this.customerAlertConfirm(payload);
+        }else if(payload.messageType == 'accepted'){
+          this.customerAlert(payload);
+        }
+
       }),err=> console.log(err);
 
     } 
@@ -70,20 +90,60 @@ export class AppComponent {
       })  
 
       //get token from firebase
-      this.firebase.getToken().then(token=> {
+      this.firebase.getToken().then(async token=> {
         console.log("FCM_Token ios: "+token);
-        this.initializeUser();
+        localStorage.setItem('FCMToken',JSON.stringify(token));
+        await this.initializeUser();
+        //await this.saveTokenToBackend(token);
       }).catch(err=> console.log(err));
       
       this.firebase.onMessage().subscribe(payload=>{
-        console.log("New foreground FCM message: ", payload.orderid);
-        this.presentAlertConfirm(payload)
+        console.log("New foreground FCM message: ", payload);
+        if(payload.messageType == 'acception'){
+          this.driverAlertConfirm(payload);
+        }else if(payload.messageType == 'limit'){
+          this.customerAlertConfirm(payload);
+        }else if(payload.messageType == 'accepted'){
+          this.customerAlert(payload);
+        }
+        this.driverAlertConfirm(payload)
       }),err=> console.log(err);
       this.firebase.onBackgroundMessage().subscribe(payload=>{
-        console.log("New background FCM message: ", payload.orderid);
-        this.presentAlertConfirm(payload)
+        console.log("New background FCM message: ", payload);
+
+        if(payload.messageType == 'acception'){
+          this.driverAlertConfirm(payload);
+        }else if(payload.messageType == 'limit'){
+          this.customerAlertConfirm(payload);
+        }else if(payload.messageType == 'accepted'){
+          this.customerAlert(payload);
+        }
       }),err=> console.log(err);
       
+    }
+  }
+
+  getGeolocation(){
+    this.geolocation.getCurrentPosition().then((resp)=>{  
+      this.lat=resp.coords.latitude
+      this.lon=resp.coords.longitude      
+    }).catch((error)=>{console.log('Error getting location',error);
+    });
+  }
+
+  async saveTokenToBackend(token) {
+    if(this.userInfo != null){
+      let userID = this.userInfo.user.id;
+    //console.log(userID);
+    let body = { 
+      id: userID,
+      fcmToken: token
+    }
+    //console.log(body);
+    await this.userService.apiPatchUpdateUser(body).then((result)=>{
+      console.log('Save FCM_token status : ', result);
+      return result;
+    }).catch(err => console.log(err));
     }
   }
 
@@ -91,7 +151,6 @@ export class AppComponent {
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
       if(this.userInfo!=null){
         await this.syncUserType();
-        //this.saveTokenToBackend(localStorage.getItem('FCMToken'));   change to foodcenterpage,and driverpage
         this.userType = JSON.parse(localStorage.getItem('userType'));
         if(this.userType!= null){
           this.setRootPage();
@@ -112,7 +171,7 @@ export class AppComponent {
     else if(this.userType == 'driver') {
       this.router.navigateByUrl('tabs-controller');
     }
-    else if(this.userType == 'user') {
+    else if(this.userType == 'customer') {
       this.router.navigateByUrl('customertabs');
     }
     else {
@@ -124,20 +183,34 @@ export class AppComponent {
     await this.userService.apiSyncUserType();
   }
 
-  async presentAlertConfirm(message:any) {
+  async driverAlertConfirm(message:any) {
+    let msg = 'ร้าน :'+message.resName+'<br/>'+'ส่ง :'+message.cusName
     const alert = await this.alertCtrl.create({
       header: message.title,
-      message: message.body,
+      message: msg,
       buttons: [
         {
-          text: 'Okay',
-          handler: () => {
+          text: 'รับออเดอร์',
+          handler: async () => {
             console.log('Confirm Okay',message);
-            this.dataService.setData(message.orderid, message);
-            this.router.navigateByUrl('driverdialog/'+message.orderid);
+            let body1 = {
+              orderId:JSON.parse(message.orderid),
+              userId:this.userInfo.user.id
+            }
+            this.userService.apiDriverAccept(body1).then(async ()=>{
+              let body2 = {
+                status:'assigned',
+                _method: 'put',
+                driver_lat_value: this.lat,
+                driver_lon_value: this.lon,
+                driver_id: this.userInfo.user.id
+              }
+              await this.userService.apiDriverOrder(message.orderid,body2);
+              await this.driverService.setOrder(message);  
+            }).then(()=>this.router.navigateByUrl('driverdialog'))
           }
         },{
-          text: 'Cancel',
+          text: 'เพิกเฉย',
           role: 'cancel',
           cssClass: 'cancel',
           handler: (blah) => {
@@ -146,7 +219,61 @@ export class AppComponent {
         }
       ]
     });
+    await alert.present();
+  }
 
+  async customerAlertConfirm(message:any) {
+    const alert = await this.alertCtrl.create({
+      header: message.title,
+      message: 'โปรดเพิ่มระยะทางการค้นหา:',
+      inputs: [{
+        name: 'newlimit',
+        type: 'number',
+        min: message.limit,
+        max: message.limit+10
+      }],
+      buttons: [
+        {
+          text: 'สั่งชื้ออีกครั้ง',
+          handler: (data) => {
+            console.log('Confirm Okay',message);
+            this.userService.apiGetFinddriver(message.orderid,data.newlimit);
+          }
+        },{
+          text: 'ยกเลิก',
+          role: 'cancel',
+          cssClass: 'cancel',
+          handler: (data) => {
+            //this handler set cancel order in database
+            console.log('Confirm Cancel: blah');
+            let post = {
+              status: 'cancel',
+              _method: 'put'
+            }
+            this.userService.apiPostDataService('orders/'+data.orderid,post);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async customerAlert(message:any) {
+    let msg = message.driverName+'<br/>'+message.driverPhone
+    const alert = await this.alertCtrl.create({
+      header: message.title,
+      message: msg,
+      buttons: [
+        {
+          text: 'รับทราบ',
+          role: 'cancel',
+          cssClass: 'cancel',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
     await alert.present();
   }
   

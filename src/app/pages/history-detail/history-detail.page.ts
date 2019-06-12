@@ -46,12 +46,9 @@ export class HistoryDetailPage implements OnInit {
     //use other for pass data
     //let order_id = this.navParams.get('order_id');
     //console.log(order_id);
-    
-    let headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.userToken);
 
     try {
-      const result: any = await this.orderService.apiGetDataService('orders/' /*+ order_id*/, headers);
+      const result: any = await this.orderService.apiGetDataService('orders/' /*+ order_id*/);
       //console.log(result);
 
       if (result.data.status == 'shipped') {
@@ -63,7 +60,7 @@ export class HistoryDetailPage implements OnInit {
         let total_price = result.data.total_price;
         let shipped_time = result.data.shipped_time;
 
-        const orderMenu: any = await this.orderService.apiGetDataService('orders/' + result.data.id + '/details', headers);
+        const orderMenu: any = await this.orderService.apiGetDataService('orders/' + result.data.id + '/details');
         //console.log(orderMenu);
         
         for (var i = 0; i < orderMenu.data.length; i++) {

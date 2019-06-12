@@ -2,23 +2,23 @@
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="my-wallet">
       <ion-icon name="card"></ion-icon>
-      <ion-label>Wallet</ion-label>
-      <ion-badge>!</ion-badge>
+      <ion-label>เครดิต</ion-label>
+      <ion-badge *ngIf="!this.allowAccept" color = "danger">!</ion-badge>
     </ion-tab-button>
 
     <ion-tab-button tab="driver">
       <ion-icon name="car"></ion-icon>
-      <ion-label>Driver</ion-label>
+      <ion-label>ส่งอาหาร</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="foodcenter">
       <ion-icon name="restaurant"></ion-icon>
-      <ion-label>Restaurant</ion-label>
+      <ion-label>ร้านค้า</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="customerprofile">
       <ion-icon name="contact"></ion-icon>
-      <ion-label>Profile</ion-label>
+      <ion-label>โปรไฟล์</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

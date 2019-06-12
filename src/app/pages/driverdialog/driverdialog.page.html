@@ -1,9 +1,68 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>driverdialog</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>
+        ส่งอาหาร
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content >
+    <ion-segment *ngIf="this.orderStatus == 'assigned'" >
+        <ion-segment-button checked color = "success">
+          <ion-icon name="checkmark-circle" color="success" ></ion-icon>  
+          <ion-label>กำลังดำเนินการ</ion-label>
+        </ion-segment-button  >
+        <ion-segment-button  disabled="true">
+          <ion-label>กำลังนำส่ง</ion-label>
+        </ion-segment-button>
+        <ion-segment-button  disabled="true">
+            <ion-label>เสร็จสิ้น</ion-label>
+          </ion-segment-button>
+    </ion-segment>
+    <ion-segment *ngIf="this.orderStatus == 'waiting'" >
+          <ion-segment-button checked color = "success">
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            <ion-label>กำลังดำเนินการ</ion-label>
+          </ion-segment-button>
+          <ion-segment-button checked color = "success" > 
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            <ion-label>กำลังนำส่ง</ion-label>
+          </ion-segment-button>
+          <ion-segment-button   disabled="true">
+              <ion-label>เสร็จสิ้น</ion-label>
+          </ion-segment-button>
+      </ion-segment>
+      <ion-segment *ngIf="this.orderStatus == 'shipped'" >
+            <ion-segment-button checked color = "success">
+              <ion-icon name="checkmark-circle" color="success"></ion-icon>  
+              <ion-label>กำลังดำเนินการ</ion-label>
+            </ion-segment-button>
+            <ion-segment-button checked color = "success">
+              <ion-icon name="checkmark-circle" color="success"></ion-icon>
+              <ion-label>กำลังนำส่ง</ion-label>
+            </ion-segment-button>
+            <ion-segment-button checked color = "success" >
+              <ion-icon name="checkmark-circle" color="success"></ion-icon>
+              <ion-label>เสร็จสิ้น</ion-label>
+            </ion-segment-button>
+      </ion-segment>
+    <ion-button expand="block" color="success"  (click)="updateOrderStatus()">
+      <ion-icon name="checkbox-outline" color="success"></ion-icon>
+      อัพเดตสถานะการส่ง
+    </ion-button>
 
-<ion-content>
-
-</ion-content>
+    <ion-card class="transparent-card">
+        <ion-card-header>
+          <ion-card-title>ตำแหน่งทำงานปัจจุบัน</ion-card-title>
+          <ion-card-subtitle>กดย้ายตำแหน่งทำงาน เพื่อย้ายตำแหน่งทำงานมายังปัจจุบันของคุณ</ion-card-subtitle>
+        </ion-card-header>
+    </ion-card>
+    <ion-button expand="block" color="danger"  (click)="clearAll()">
+        <ion-icon name="checkbox-outline" ></ion-icon>
+        เสร็จสิ้น
+    </ion-button>
+    <div #Map id="map"></div>
+  </ion-content>
+  

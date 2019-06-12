@@ -1,9 +1,41 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>driver</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar>
+      <ion-title>
+        ส่งอาหาร
+        <ion-badge *ngIf="this.working" color="success">กำลังทำงาน</ion-badge>
+        <ion-badge *ngIf="!this.working" color="medium">ออฟไลน์</ion-badge>
+      </ion-title>
+      <ion-buttons slot="end">
+          <ion-button *ngIf="!this.Onorder" id="button1"  shape="round" color="medium">
+            <ion-icon name="clipboard"></ion-icon>
+          </ion-button>
+          <ion-button *ngIf="this.Onorder" id="button"  shape="round" color="success" (click)="openOrder()">
+            <ion-icon name="clipboard"></ion-icon>
+            <ion-badge id="order-badge"  slot="end">!</ion-badge>
+          </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content >
+    <form>
+      <ion-item >
+        <ion-label>
+          เข้าทำงาน
+        </ion-label>
+        <ion-toggle [(ngModel)]="this.working" [ngModelOptions]="{standalone: true}"  color="success"  (ionChange)="workStatus($event)"></ion-toggle>
+      </ion-item>
+    </form>
+    <ion-button expand="block" color="success"  (click)="updateDriverlocation()">
+    <ion-icon name="locate"></ion-icon>
+      ย้ายตำแหน่งทำงาน
+    </ion-button>
 
-<ion-content>
-
-</ion-content>
+    <ion-card class="transparent-card">
+        <ion-card-header>
+          <ion-card-title>ตำแหน่งทำงานปัจจุบัน</ion-card-title>
+          <ion-card-subtitle>กดย้ายตำแหน่งทำงาน เพื่อย้ายตำแหน่งทำงานมายังตำแหน่งปัจจุบันของคุณ</ion-card-subtitle>
+        </ion-card-header>
+    </ion-card>
+    <div #Map id="map"></div>
+  </ion-content>
+  

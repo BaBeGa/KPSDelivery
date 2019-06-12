@@ -21,12 +21,7 @@ export class CustomerorderPage implements OnInit {
   }
   
   ionViewWillEnter() {
-
-    this.userToken = JSON.parse(localStorage.getItem('userToken'));
-    let headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.userToken);
-
-    this.orderService.apiGetDataService('orders', headers).then((result: any) => {
+    this.orderService.apiGetDataService('orders').then((result: any) => {
       this.userAllOrder = result.data;
 
       for (var i = 0; i < this.userAllOrder.length; i++) {

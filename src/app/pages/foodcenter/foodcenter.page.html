@@ -4,13 +4,7 @@
       <ion-buttons slot="end">
           <ion-button id="button" size="small" shape="round" color="medium" (click)="openCart()">
             <ion-icon name="cart"></ion-icon>
-            <ion-badge id="notifications-badge"  slot="end" *ngIf="cartLength > 0">{{ cartLength }}</ion-badge>
-          </ion-button>
-      </ion-buttons>
-      <ion-buttons slot="end">
-          <ion-button id="button" size="small" shape="round" color="medium" (click)="notifications()">
-            <ion-icon name="notifications"></ion-icon>
-            <ion-badge id="notifications-badge"  slot="end" *ngIf="notifyCount > 0">{{ notifyCount }}</ion-badge>
+            <ion-badge id="notifications-badge"  slot="end" *ngIf="this.cartLength > 0">{{ this.cartLength }}</ion-badge>
           </ion-button>
       </ion-buttons>
   </ion-toolbar>

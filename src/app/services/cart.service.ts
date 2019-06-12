@@ -55,7 +55,15 @@ export class CartService {
   }
   
   getCartLength(){
+    if(JSON.parse(localStorage.getItem('cart'))!=null){
+      this.cart = JSON.parse(localStorage.getItem('cart'));
+    }
     return this.cart.length;
+  }
+  
+  clearCart(){
+    this.cart = [];
+    this.saveCart();
   }
 
   saveCart(){

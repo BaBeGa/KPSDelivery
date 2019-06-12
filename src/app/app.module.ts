@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';//
 import { BrowserModule } from '@angular/platform-browser';//
 import { RouteReuseStrategy } from '@angular/router';
 import { Toast } from '@ionic-native/toast/ngx';
+import { DatePipe } from "@angular/common";
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';//
@@ -17,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { HTTP } from "@ionic-native/http/ngx";
 
 //---Service---//
 import { CheckPasswordDirective } from 'src/app/config/validators';
@@ -70,6 +72,7 @@ import { MainPage } from 'src/app/pages/main/main.page';
   ],
   providers: [
     Camera,
+    DatePipe,
     StatusBar,
     SplashScreen,
     Geolocation,
@@ -77,7 +80,8 @@ import { MainPage } from 'src/app/pages/main/main.page';
     Toast,
     AuthService,
     File,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    HTTP
   ],
   bootstrap: [AppComponent]
 })

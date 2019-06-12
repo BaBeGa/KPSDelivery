@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
-import { PopoverController,NavController, ToastController, AlertController, LoadingController, ActionSheetController } from '@ionic/angular';
+import { PopoverController,NavController, ToastController, AlertController, LoadingController, ActionSheetController} from '@ionic/angular';
 import { User } from '../../config/authservice';
 import { CartService } from "src/app/services/cart.service";
 import { Http, Headers } from '@angular/http';
@@ -46,12 +46,13 @@ export class CustomerprofilePage implements OnInit {
   }
 
   openCart() {
-    this.router.navigateByUrl('basket');
+    this.router.navigateByUrl('cart');
   }
 
-  logout() {
-    localStorage.clear();
-    setTimeout(() => this.router.navigateByUrl('customertabs'), 1000);
+  async logout() {
+    await this.cartService.clearCart();
+    await localStorage.clear()
+    this.navCtrl.navigateRoot('login');
   }
 
   login() {

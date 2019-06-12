@@ -37,11 +37,9 @@ export class HistoryPage implements OnInit {
     console.log('Get History');
     this.userAllOrder = [];
     this.shippingOrder = [];
-    let headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + this.userToken);
 
     try {
-      const result: any = await this.orderService.apiGetDataService('orders', headers);
+      const result: any = await this.orderService.apiGetDataService('orders');
       //console.log(result);
 
       for (var i = 0; i < result.data.length; i++) {
@@ -55,7 +53,7 @@ export class HistoryPage implements OnInit {
           let total_price = result.data[i].total_price;
           let shipped_time = result.data[i].shipped_time;
 
-          const orderMenu: any = await this.orderService.apiGetDataService('orders/' + result.data[i].id + '/details', headers);
+          const orderMenu: any = await this.orderService.apiGetDataService('orders/' + result.data[i].id + '/details');
           //console.log(orderMenu);
           //console.log(orderMenu.data.length);
           if (orderMenu.data.length > 1) {

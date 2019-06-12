@@ -1,10 +1,8 @@
-import { Toast } from '@ionic-native/toast/ngx';
-import { Http, Headers } from '@angular/http';
+import { ToastController, AlertController } from "@ionic/angular";
+import { Router } from "@angular/router";
+import { Http, Headers, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { stringify } from '@angular/core/src/render3/util';
-import { resolve } from 'q';
-import { isJsObject } from '@angular/core/src/change_detection/change_detection_util';
 
 @Injectable()
 export class AuthService {
@@ -13,8 +11,14 @@ export class AuthService {
   apiUrl = 'http://158.108.207.4/delivery/public/';
   userToken: any;
   userInfo: any;
+  getToken: any;
 
-  constructor(public http: Http, public toastCtrl: Toast) {
+  constructor(
+    public http: Http, 
+    public router: Router,
+    public toastCtrl: ToastController,
+    public alertController: AlertController
+    ) {
 
   }
 
@@ -22,9 +26,6 @@ export class AuthService {
 
     return new Promise((resolve) => {
       let postData = new FormData();
-      // postData.append('username', 'frontdriver@gmail.com');
-      // postData.append('username', 'fronttest@gmail.com');
-      // postData.append('password', '123456');
       postData.append('username', user.email);
       postData.append('password', user.password);
       postData.append('grant_type', 'password');
@@ -32,25 +33,30 @@ export class AuthService {
       postData.append('client_secret', 'tacNc9Ll4lUkD56JMhEKVpdQ9ZVxQCQMhCkPM1Yw');
 
       this.http.post(this.apiUrl + type, postData).pipe(map(res => res.json())).subscribe(data => {
-
+        console.log('userToken: '+data);
         this.userToken = data;
         let headers = new Headers();
+        console.log(data.access_token)
         headers.append('Authorization', 'Bearer '+ data.access_token);
 
         this.http.get(this.apiUrl + 'api/users', { headers: headers }).pipe(map(res => res.json())).subscribe(data => {
-          
+          console.log('userInfo: '+data);
           this.userInfo = data;
           localStorage.setItem('userToken', JSON.stringify(this.userToken.access_token));
           localStorage.setItem('userInfo', JSON.stringify(this.userInfo));
           resolve(data);
-
+        }, async err =>{
+          console.log(err)
+          let errhandle:any = err
+          console.log(errhandle._body)
+          const toast = await this.toastCtrl.create({
+            showCloseButton: true,
+            message: 'ข้อผิดพลาด '+errhandle.status,
+            duration: 4000,
+            position: 'bottom'
+          });
+          toast.present();
         })
-      }, error => {
-        this.toastCtrl.show(`Can't do authentication!`, '5000', 'center').subscribe(
-          toast => {
-            console.log(toast);
-          }
-        );
       })
     })
   }
@@ -58,21 +64,20 @@ export class AuthService {
   apiRegister(user, type) {
 
     return new Promise((resolve) => {
-      let postData = new FormData();
-      postData.append('name', user.name);
-      postData.append('email', user.email);
-      postData.append('type', user.type);
-      postData.append('password', user.password);
-      postData.append('c_password', user.c_password);
-      this.http.post(this.apiUrl + 'api/' + type, postData).pipe(map(res => res.json())).subscribe(data => {
+      this.http.post(this.apiUrl + 'api/' + type, user).pipe(map(res => res.json())).subscribe(data => {
+        console.log(data);
         resolve(data);
-      }, error => {
-        this.toastCtrl.show(`This email already use!`, '5000', 'center').subscribe(
-          toast => {
-            console.log(toast);
-          }
-        );
-        
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 4000,
+          position: 'bottom'
+        });
+        toast.present();
       })
     })
 
@@ -81,15 +86,143 @@ export class AuthService {
   apiGetService(type) {
     return new Promise((resolve) => {
       this.http.get(this.apiUrl + 'api/' + type).pipe(map(res => res.json())).subscribe(data => {
+        console.log(data);
         resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 4000,
+          position: 'bottom'
+        });
+        toast.present();
+        if(errhandle.status == 401){
+          const alert = await this.alertController.create({
+            header: 'Unauthorized',
+            message: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง',
+            buttons: [
+              {
+                text: 'ตกลง',
+                handler: async () => {
+                  console.log('Confirm Okay');
+                  localStorage.clear();
+                  this.router.navigateByUrl('login')
+                }
+              },
+              {
+                text: 'ยกเลิก',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel: blah');
+                }
+              }
+            ]
+          });
+      
+          await alert.present();
+        }
       })
     })
   }
 
-  apiGetDataService(type, headers) {
+  apiGetDataService(type) {
+    this.getToken = JSON.parse(localStorage.getItem('userToken'));
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.getToken);
     return new Promise((resolve) => {
       this.http.get(this.apiUrl + 'api/' + type, { headers: headers }).pipe(map(res => res.json())).subscribe(data => {
+        console.log(data);
         resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
+        if(errhandle.status == 401){
+          const alert = await this.alertController.create({
+            header: 'Unauthorized',
+            message: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง',
+            buttons: [
+              {
+                text: 'ตกลง',
+                handler: async () => {
+                  console.log('Confirm Okay');
+                  localStorage.clear();
+                  this.router.navigateByUrl('login')
+                }
+              },
+              {
+                text: 'ยกเลิก',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel: blah');
+                }
+              }
+            ]
+          });
+      
+          await alert.present();
+        }
+      })
+    })
+  }
+
+  async apiGetOrder(orderId){
+    this.getToken = await JSON.parse(localStorage.getItem('userToken'));
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.getToken);
+    return new Promise((resolve) => {
+      this.http.get(this.apiUrl + 'api/orders/' + orderId, { headers: headers }).pipe(map(res => res.json())).subscribe(data => {
+        console.log(data);
+        resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
+        if(errhandle.status == 401){
+          const alert = await this.alertController.create({
+            header: 'Unauthorized',
+            message: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง',
+            buttons: [
+              {
+                text: 'ตกลง',
+                handler: async () => {
+                  console.log('Confirm Okay');
+                  localStorage.clear();
+                  this.router.navigateByUrl('login')
+                }
+              },
+              {
+                text: 'ยกเลิก',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel: blah');
+                }
+              }
+            ]
+          });
+      
+          await alert.present();
+        }
       })
     })
   }
@@ -97,14 +230,102 @@ export class AuthService {
   apiPostService(type, post) {
     return new Promise((resolve) => {
       this.http.post(this.apiUrl + 'api/' + type, post).pipe(map(res => res.json())).subscribe(data => {
+        console.log(data);
         resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
+        if(errhandle.status == 401){
+          const alert = await this.alertController.create({
+            header: 'Unauthorized',
+            message: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง',
+            buttons: [
+              {
+                text: 'ตกลง',
+                handler: async () => {
+                  console.log('Confirm Okay');
+                  localStorage.clear();
+                  this.router.navigateByUrl('login')
+                }
+              },
+              {
+                text: 'ยกเลิก',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel: blah');
+                }
+              }
+            ]
+          });
+      
+          await alert.present();
+        }
+      })
+    })
+  }
+
+  //new
+  async apiPostDataService(type, post) {
+    this.getToken = await JSON.parse(localStorage.getItem('userToken'));
+    console.log(this.getToken);
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.getToken);
+    return new Promise((resolve) => {
+      this.http.post(this.apiUrl + 'api/' + type, post, { headers: headers }).pipe(map((res:Response) => res.json())).subscribe(async data=> {
+        resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
+        if(errhandle.status == 401){
+          const alert = await this.alertController.create({
+            header: 'Unauthorized',
+            message: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง',
+            buttons: [
+              {
+                text: 'ตกลง',
+                handler: async () => {
+                  console.log('Confirm Okay');
+                  localStorage.clear();
+                  this.router.navigateByUrl('login')
+                }
+              },
+              {
+                text: 'ยกเลิก',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel: blah');
+                }
+              }
+            ]
+          });
+      
+          await alert.present();
+        }
       })
     })
   }
   
   apiSyncUserType(){
     var header = new Headers;
-    var accessToken = localStorage.getItem('userToken');
+    var accessToken = JSON.parse(localStorage.getItem('userToken'));
     var userInfo = JSON.parse(localStorage.getItem('userInfo'));
     var userId = userInfo.user.id;
     console.log('User ID : '+userId);
@@ -113,20 +334,193 @@ export class AuthService {
     return new Promise((resolve) => {
       this.http.get(this.apiDriverUrl + '/user/'+userId, { headers: header }).pipe(map(res => res.json())).subscribe(data => {
         localStorage.setItem('userType', JSON.stringify(data.userType));
-        console.log('UserType auth: '+data.userType);
+        console.log('UserType auth: ',data);
         resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
       })
     })
   }
   //**********************************The 2'nd Backend start here!!!!******************************* */
-  apiPatchUpdateUserFCM(type,body){
+  apiPatchUpdateUser(body){
     var header = new Headers;
     var accessToken = localStorage.getItem('userToken');
     header.append('Content-Type','application/json');
     header.append('token',accessToken);
     return new Promise((resolve) => {
-      this.http.patch(this.apiDriverUrl+type,body,{ headers:header }).pipe(map(res => res.json())).subscribe(data => {
+      this.http.patch(this.apiDriverUrl+'/user',body,{ headers:header }).pipe(map(res => res.json())).subscribe(data => {
         resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
+      })
+    });
+  }
+
+  apiGetFinddriver(orderId,limit){
+    var header = new Headers;
+    var accessToken = localStorage.getItem('userToken');
+    header.append('Content-Type','application/json');
+    header.append('token',accessToken);
+    console.log(this.apiDriverUrl+'/'+orderId+'/'+limit);
+    console.log('token : '+ accessToken);
+    return new Promise((resolve) => {
+      this.http.get(this.apiDriverUrl+'/finder/'+orderId+'/'+limit,{ headers:header }).pipe(map(res => res.json())).subscribe(data => {
+        resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
+      })
+    })
+  }
+
+  apiDriverOrder(orderId,body){
+    this.getToken = JSON.parse(localStorage.getItem('userToken'));
+    console.log(this.getToken);
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.getToken);
+
+    return new Promise((resolve) => {
+      this.http.post(this.apiUrl + 'api/orders/'+orderId,body, { headers: headers }).pipe(map(res => res.json())).subscribe(data => {
+        resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
+        if(errhandle.status == 401){
+          const alert = await this.alertController.create({
+            header: 'Unauthorized',
+            message: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง',
+            buttons: [
+              {
+                text: 'ตกลง',
+                handler: async () => {
+                  console.log('Confirm Okay');
+                  localStorage.clear();
+                  this.router.navigateByUrl('login')
+                }
+              },
+              {
+                text: 'ยกเลิก',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel: blah');
+                }
+              }
+            ]
+          });
+      
+          await alert.present();
+        }
+      })
+    })
+  }
+
+  async apiDriverCredit(){
+    var header = new Headers;
+    var accessToken = JSON.parse(localStorage.getItem('userToken'))
+    var userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    var userId = userInfo.user.id;
+    await header.append('Authorization', 'Bearer ' + accessToken);
+    console.log('header : ',header);
+    return new Promise((resolve) => {
+      this.http.get(this.apiUrl + 'api/users/'+userId+'/credit', { headers: header }).pipe(map(res => res.json())).subscribe(data => {
+        console.log('UserCredit auth: ',data);
+        resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
+        if(errhandle.status == 401){
+          const alert = await this.alertController.create({
+            header: 'Unauthorized',
+            message: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง',
+            buttons: [
+              {
+                text: 'ตกลง',
+                handler: async () => {
+                  console.log('Confirm Okay');
+                  localStorage.clear();
+                  this.router.navigateByUrl('login')
+                }
+              },
+              {
+                text: 'ยกเลิก',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel: blah');
+                }
+              }
+            ]
+          });
+      
+          await alert.present();
+        }
+      })
+    })
+  }
+
+  apiDriverAccept(body){
+    var header = new Headers;
+    var accessToken = localStorage.getItem('userToken');
+    header.append('Content-Type','application/json');
+    header.append('token',accessToken);
+    console.log(body)
+    return new Promise((resolve) => {
+      this.http.post(this.apiDriverUrl+'/acception',body,{ headers:header }).pipe(map(res => res.json())).subscribe(data => {
+        resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
       })
     })
   }
@@ -134,28 +528,52 @@ export class AuthService {
 }
 export class UpdateDataService extends AuthService{
   
-    apiUpdateUser(userInfo){
-      var header = new Headers;
-      var accessToken = localStorage.getItem('userToken');
-      header.append('Content-Type','application/json');
-      header.append('token',accessToken);
-      this.http.patch(this.apiDriverUrl+'updateUser',userInfo,{ headers:header}).pipe(map(res=>res.json())).subscribe(data=>{
-        resolve(data);
-      });
-    }
+  apiUpdateUser(userInfo){
+    var header = new Headers;
+    var accessToken = localStorage.getItem('userToken');
+    header.append('Content-Type','application/json');
+    header.append('token',accessToken);
+    this.http.patch(this.apiDriverUrl+'updateUser',userInfo,{ headers:header}).pipe(map(res=>res.json())).subscribe(data=>{
+    });
+  }
 }
+
+export class UpdateOrderService extends AuthService{
+
+}
+
 export interface User {
 
+  // name: string;
+  // email: string;
+  // type: string;
+  // password: string;
+  // c_password: string;
+  // newpass: string;
+  // cnewpass: string;
+  // cpassword: string;
+  // userToken: any;
+  // userInfo: any;
   name: string;
   email: string;
   type: string;
   password: string;
   c_password: string;
-  newpass: string;
-  cnewpass: string;
-  cpassword: string;
-  userToken: any;
-  userInfo: any;
+  newpassword: string;
+  c_newpassword: string;
+  firstname: string;
+  lastname: string;
+  id_number: string;
+  sex: string;
+  dob: string;
+  address: string;
+  subdistrict: string;
+  district: string;
+  province: string;
+  zipcode: string;
+  phonenumber: string;
+  lat_value: string;
+  lon_value: string;
 
 }
 
