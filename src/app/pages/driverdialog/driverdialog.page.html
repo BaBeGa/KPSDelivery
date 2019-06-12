@@ -50,16 +50,86 @@
       </ion-segment>
     <ion-button expand="block" color="success"  (click)="updateOrderStatus()">
       <ion-icon name="checkbox-outline" color="success"></ion-icon>
-      อัพเดตสถานะการส่ง
+      อัพเดตสถานะการส่งเป็น {{this.shipstatus}}
     </ion-button>
 
     <ion-card class="transparent-card">
         <ion-card-header>
-          <ion-card-title>ตำแหน่งทำงานปัจจุบัน</ion-card-title>
-          <ion-card-subtitle>กดย้ายตำแหน่งทำงาน เพื่อย้ายตำแหน่งทำงานมายังปัจจุบันของคุณ</ion-card-subtitle>
+          <ion-card-title>รายละเอียดการส่งอาหาร</ion-card-title>
+          <ion-card-subtitle>กดดูแผนที่เพื่อแสดงแผนที่การส่งอาหาร</ion-card-subtitle>
         </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item>
+              <ion-label>ชื่อผู้ซื้อ</ion-label>
+              <ion-text color="medium">
+                <h5>{{this.order.cusName}}</h5>
+              </ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-label>เบอร์โทรติดต่อ</ion-label>
+              <ion-text color="medium">
+                <h5>{{this.order.cusPhone}}</h5>
+              </ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-label>ชื่อร้านค้า</ion-label>
+              <ion-text color="medium">
+                <h5>{{this.order.resName}}</h5>
+              </ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-label>เบอร์โทรร้านค้า</ion-label>
+              <ion-text color="medium">
+                <h5>{{this.order.resPhone}}</h5>
+              </ion-text>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label>รายการอาหาร</ion-label>
+            </ion-item>
+            <ion-item lines="none" *ngFor="let menu of this.result.menus">
+              <ion-label color="medium" id="menulist"><h3>{{menu.quantity}}x{{menu.name}}</h3></ion-label>
+              <ion-text color="medium">
+                <h5>{{menu.price*menu.quantity}}-</h5>
+              </ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-label>ราคาค่าอาหารรวม</ion-label>
+              <ion-text color="medium">
+                <h5>{{this.result.foodPrice}}</h5>
+              </ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-label>ราคารวม</ion-label>
+              <ion-text color="medium">
+                <h5 *ngIf="this.result.totalPrice != null">{{this.result.foodPrice}}</h5>
+                <h5 *ngIf="this.result.totalPrice == null">รอการคำนวณ</h5>
+              </ion-text>
+            </ion-item>
+          </ion-list>
+          <ion-item>
+            <ion-label>ค่าส่งอาหาร</ion-label>
+            <ion-text color="medium">
+              <h5 *ngIf="this.result.totalPrice != null">{{this.result.totalPrice-this.result.foodPrice}}</h5>
+              <h5 *ngIf="this.result.totalPrice == null">รอการคำนวณ</h5>
+            </ion-text>
+          </ion-item>
+        </ion-card-content>
+
+        <ion-button expand="block" color="primary"  (click)="initMap()">
+          <ion-icon name="compass"></ion-icon>
+          ดูแผนที่
+        </ion-button>
     </ion-card>
-    <ion-button expand="block" color="danger"  (click)="clearAll()">
+    <ion-button *ngIf="this.orderStatus == 'assigned'" expand="block" color="medium" disabled="true">
+      <ion-icon name="checkbox-outline" ></ion-icon>
+      เสร็จสิ้น
+    </ion-button>
+    <ion-button *ngIf="this.orderStatus == 'waiting'" expand="block" color="medium" disabled="true">
+      <ion-icon name="checkbox-outline" ></ion-icon>
+      เสร็จสิ้น
+    </ion-button>
+    <ion-button *ngIf="this.orderStatus == 'shipped'" expand="block" color="success"  (click)="clearAll()">
         <ion-icon name="checkbox-outline" ></ion-icon>
         เสร็จสิ้น
     </ion-button>

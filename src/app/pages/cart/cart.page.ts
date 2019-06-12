@@ -152,7 +152,7 @@ export class CartPage implements OnInit {
             }
             console.log('finddriver'+result.data.order.id+'<br>'+ data.limit*1000);
             this.findDriver(result.data.order.id,data.limit*1000);
-            }else if(data.limit < 0){
+            }else if(data.limit <= 0){
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
                 message: 'โปรดกรอกระยะทางการค้นหาอีกครั้ง',

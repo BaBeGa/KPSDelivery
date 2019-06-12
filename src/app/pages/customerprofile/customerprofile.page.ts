@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 import { PopoverController,NavController, ToastController, AlertController, LoadingController, ActionSheetController} from '@ionic/angular';
-import { User } from '../../config/authservice';
 import { CartService } from "src/app/services/cart.service";
-import { Http, Headers } from '@angular/http';
 import { NgForm } from '@angular/forms';
 import { CameraOptions, Camera } from "@ionic-native/camera/ngx";
 import { File } from '@ionic-native/file/ngx';
@@ -28,7 +26,6 @@ export class CustomerprofilePage implements OnInit {
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     public navCtrl: NavController, 
-    public http: Http, 
     public cartService: CartService,
     public camera: Camera,
     public actionSheetCtrl: ActionSheetController,

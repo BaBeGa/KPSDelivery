@@ -31,7 +31,8 @@ export class AppComponent {
     private alertCtrl: AlertController, 
     private userService: AuthService,
     private firebase:FirebaseMessaging,
-    private geolocation:Geolocation
+    private geolocation:Geolocation,
+    private toastCtrl:ToastController
   ) {
     this.initializeApp();
   }
@@ -224,20 +225,53 @@ export class AppComponent {
 
   async customerAlertConfirm(message:any) {
     const alert = await this.alertCtrl.create({
-      header: message.title,
-      message: 'โปรดเพิ่มระยะทางการค้นหา:',
+      header: 'ไม่พบคนขับ',
+      message: 'เพิ่มระยะทางการค้นหา:',
       inputs: [{
-        name: 'newlimit',
+        name: 'limit',
         type: 'number',
-        min: message.limit,
-        max: message.limit+10
+        placeholder: 'ใส่ระยะการค้นหา(กิโลเมตร)',
+        min: 1,
+        max: 20
       }],
       buttons: [
         {
           text: 'สั่งชื้ออีกครั้ง',
-          handler: (data) => {
+          handler: async (data) => {
             console.log('Confirm Okay',message);
-            this.userService.apiGetFinddriver(message.orderid,data.newlimit);
+            console.log('Confirm Okay',data.limit);
+            try{
+              if(data.limit > 0 && data.limit <20){
+                this.userService.apiGetFinddriver(message.orderid,data.limit*1000);
+              }else if(data.limit <= 0){
+                const toast = await this.toastCtrl.create({
+                  showCloseButton: true,
+                  message: 'โปรดกรอกระยะทางการค้นหาอีกครั้ง',
+                  duration: 3000,
+                  position: 'bottom'
+                });
+                toast.present();
+              }else if(data.limt > 20){
+                const toast = await this.toastCtrl.create({
+                  showCloseButton: true,
+                  message: 'การค้นหานอกเขตบริการ',
+                  duration: 3000,
+                  position: 'bottom'
+                });
+                toast.present();
+              }else{
+                const toast = await this.toastCtrl.create({
+                  showCloseButton: true,
+                  message: 'โปรดกรอกระยะทางการค้นหา',
+                  duration: 3000,
+                  position: 'bottom'
+                });
+                toast.present();
+              }
+
+            }catch(e){
+              console.log('error send order in cart page',e);
+            }
           }
         },{
           text: 'ยกเลิก',
@@ -250,7 +284,7 @@ export class AppComponent {
               status: 'cancel',
               _method: 'put'
             }
-            this.userService.apiPostDataService('orders/'+data.orderid,post);
+            this.userService.apiPostDataService('orders/'+message.orderid,post);
           }
         }
       ]

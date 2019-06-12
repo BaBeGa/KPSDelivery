@@ -134,7 +134,7 @@ export class DriverPage implements OnInit {
         console.log('Update user success : ', result);
         this.working = true;
       }).catch(err => console.log(err));
-    }else{
+    }else if(!ev.detail.checked){
       let body = { 
         id: this.userInfo.user.id,
         workStatus: 0

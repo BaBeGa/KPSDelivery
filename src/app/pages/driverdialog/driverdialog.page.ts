@@ -17,6 +17,8 @@ export class DriverdialogPage implements OnInit {
   order: any;
   waypts = [];
   orderStatus: any;
+  shipstatus:any
+  showmap:boolean;
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
   constructor(
@@ -35,13 +37,22 @@ export class DriverdialogPage implements OnInit {
   async initializeOrder(){
     this.order = await this.driverService.getOrder();
     if(this.order != null){
-    await this.orderService.apiGetOrder(this.order.orderid).then( (response) => {
-      this.result = response
-      this.orderStatus = this.result.data.status
-    })
+      await this.orderService.apiDriverGetOrder(this.order.orderid).then((response)=>{
+        console.log(response);
+        this.result = response
+        this.orderStatus = this.result.orderStatus
+        if(this.orderStatus == 'assigned'){
+          this.shipstatus = 'กำลังนำส่ง'
+        }else if(this.orderStatus == 'waiting'){
+          this.shipstatus = 'เสร็จสิ้น'
+        }
+      })
     }
   }
 
+  showMap(){
+    this.showmap = true
+  }
   initMap() {
     // var mapDiv = document.getElementById('map');
     // this.geolocation.getCurrentPosition().then((resp)=>{
@@ -94,6 +105,7 @@ export class DriverdialogPage implements OnInit {
     this.order = null
     this.waypts = [];
     this.orderStatus = null
+
     this.driverService.delOrder();
   }
 
