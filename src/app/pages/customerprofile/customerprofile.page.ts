@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PopoverController,NavController, ToastController, AlertController, LoadingController, ActionSheetController} from '@ionic/angular';
 import { CartService } from "src/app/services/cart.service";
+import { AuthService } from "src/app/config/authservice";
 import { NgForm } from '@angular/forms';
 import { CameraOptions, Camera } from "@ionic-native/camera/ngx";
 import { File } from '@ionic-native/file/ngx';
@@ -27,6 +28,7 @@ export class CustomerprofilePage implements OnInit {
     public loadingCtrl: LoadingController,
     public navCtrl: NavController, 
     public cartService: CartService,
+    private userService: AuthService,
     public camera: Camera,
     public actionSheetCtrl: ActionSheetController,
     public file: File
@@ -49,38 +51,19 @@ export class CustomerprofilePage implements OnInit {
   async logout() {
     await this.cartService.clearCart();
     await localStorage.clear()
+    let body = { 
+      id: this.userInfo.user.id,
+      workStatus: 0
+    }
+    await this.userService.apiPatchUpdateUser(body).then((result)=>{
+      console.log('Update user success : ', result);
+    }).catch(err => console.log(err));
     this.navCtrl.navigateRoot('login');
   }
 
   login() {
     setTimeout(() => this.router.navigateByUrl('login'), 1000);
   }
-
-  history() {
-    console.log("History");
-    this.router.navigateByUrl('history');
-  }
-
-  shipping() {
-    console.log("shipping");
-    this.router.navigateByUrl('customerorder');
-  }
-
-  rateRestaurants() {
-    console.log("rateRestaurants");
-    this.router.navigateByUrl('raterestaurant');
-  }
-
-  rateDriver() {
-    console.log("rateDriver");
-    this.router.navigateByUrl('ratedriver');
-  }
-
-  editAddress() {
-    console.log("editAddress");
-    this.router.navigateByUrl('customeraddress');
-  }
-
   setting() {
     console.log("setting");
     this.router.navigateByUrl('edit-profile');
@@ -96,10 +79,6 @@ export class CustomerprofilePage implements OnInit {
     this.router.navigateByUrl('legalnterm');
   }
 
-  changeAvatar() {
-    console.log("avatar");
-    this.router.navigateByUrl('customeravatar');
-  }
 
   register() {
     this.router.navigateByUrl('register');

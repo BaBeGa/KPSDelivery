@@ -1,4 +1,7 @@
 <ion-header>
+    <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+    </ion-buttons>
 
     <ion-toolbar>
       <ion-title>รายการสั่งซื้อ</ion-title>
@@ -7,64 +10,14 @@
   </ion-header>
   
   
-  <ion-content> 
-    <ion-list>
-      <ion-item *ngFor="let order of this.shippingOrder" class="itemBorder">
-        <ion-row>
-          <ion-col align-self-center>
-            หมายเลขคำสั่งซื้อ {{ order.order_id }}
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col padding-left>
-            สถานะอาหาร {{ order.details[0].status }}
-          </ion-col>
-        </ion-row>
-        <ion-row class="borderBottom">
-          <ion-col col-4>
-            <img src="http://158.108.207.4/delivery/public/images/restaurants/{{order.details[0].restaurant_image}}">
-          </ion-col>
-          <ion-col col-8>
-            <ion-row>
-              <h1>{{ order.details[0].food_name }}</h1>
-            </ion-row>
-            <ion-row>
-              <h5>จำนวน {{ order.details[0].food_qty }}</h5>
-            </ion-row>
-            <ion-row>
-              <h4>ราคา: {{ order.details[0].food_price }}฿</h4>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-        <ion-row *ngIf="order.moreOne" class="borderBottom" (click)="moreDetails(order.order_id)">
-          <ion-col text-center>
-            ดูสินค้าเพิ่มเติม <ion-icon name="arrow-dropdown"></ion-icon>
-          </ion-col>
-        </ion-row>
-        <ion-row class="borderBottom">
-          <ion-col>
-            <h2>ยอดรวมโดยประมาณ: {{ order.details[0].total_price }} ฿</h2>
-          </ion-col>
-          <ion-col>
-            <!-- <h2>จำนวนทั้งหมด: {{ order.details[0].total_qty }}</h2> -->
-          </ion-col>
-        </ion-row>
-        <ion-row class="borderBottom">
-          <ion-col>
-            <h2>หมายเลขผู้ส่ง {{ order.details[0].driver_id }}</h2>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <h2>เวลาที่สั่งอาหาร: {{ order.details[0].created_time }}</h2>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col text-right>
-            <ion-button (click)="moreDetails(order.order_id)" class="ButtonColor">ดูรายละเอียด</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-item>
-    </ion-list>
-  
-  </ion-content>
+  <ion-content>
+
+      <div *ngIf="userInfo == null">
+        กรุณาเข้าสู่ระบบ
+      </div>
+    
+      <div *ngIf="userInfo != null">
+       
+      </div>
+    
+    </ion-content>
