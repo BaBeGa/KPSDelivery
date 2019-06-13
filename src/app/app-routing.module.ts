@@ -41,6 +41,8 @@ const routes: Routes = [
   { path: 'edit-profile', loadChildren: './pages/edit-profile/edit-profile.module#EditProfilePageModule' },
   { path: 'setting', loadChildren: './pages/setting/setting.module#SettingPageModule' },
   { path: 'cart', loadChildren: './pages/cart/cart.module#CartPageModule' },
+  { path: 'customerorderdetail', loadChildren: './pages/customerorderdetail/customerorderdetail.module#CustomerorderdetailPageModule' },
+  { path: 'driverworkhistory', loadChildren: './pages/driverworkhistory/driverworkhistory.module#DriverworkhistoryPageModule' },
 ];
 
 @NgModule({

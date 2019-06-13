@@ -549,6 +549,29 @@ export class AuthService {
     })
   }
 
+  apiDriverGetHistory(driverId){
+    var header = new Headers;
+    var accessToken = JSON.parse(localStorage.getItem('userToken'));
+    header.append('Content-Type','application/json');
+    header.append('token',accessToken);
+    return new Promise((resolve) => {
+      this.http.get(this.apiDriverUrl + '/driver/history/'+driverId, { headers: header }).pipe(map(res => res.json())).subscribe(data => {
+        //console.log('DriverOrder: ',data);
+        resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
+      })
+    })
+  }
+
 }
 export class UpdateDataService extends AuthService{
   
@@ -557,7 +580,7 @@ export class UpdateDataService extends AuthService{
     var accessToken = localStorage.getItem('userToken');
     header.append('Content-Type','application/json');
     header.append('token',accessToken);
-    this.http.patch(this.apiDriverUrl+'updateUser',userInfo,{ headers:header}).pipe(map(res=>res.json())).subscribe(data=>{
+    this.http.patch(this.apiDriverUrl+'/updateUser',userInfo,{ headers:header}).pipe(map(res=>res.json())).subscribe(data=>{
     });
   }
 }

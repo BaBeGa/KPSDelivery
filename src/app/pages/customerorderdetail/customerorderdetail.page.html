@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>รายละเอียดออเดอร์</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <ion-row>
+    <ion-col></ion-col>
+  </ion-row>
+  <ion-row padding>
+    <h4>คำสั่งซื้อหมายเลข {{ order_id }}</h4>
+  </ion-row>
+  <ion-row padding>
+    ร้านอาหาร  {{ order_info.restaurant_name }}
+  </ion-row>
+  <ion-row>
+    เวลาที่สั่ง {{ order_details?.data?.created_at }}
+  </ion-row>
+  <!-- <ion-row>
+      <img src="http://158.108.207.4/delivery/public/images/restaurants/{{order_info.restaurant_image}}">
+    </ion-row> -->
+
+  <ion-row padding>
+    <h4>รายการอาหารที่สั่งซื้อ</h4>
+    <ion-item *ngFor="let order of order_info.menu">
+      <ion-row>
+        <ion-col col-1>
+          {{ order.quantity }}x
+        </ion-col>
+        <ion-col col-9>
+          {{ order.name }}
+        </ion-col>
+        <ion-col col-2 text-right>
+          {{ order.price }}฿
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-row>
+
+</ion-content>

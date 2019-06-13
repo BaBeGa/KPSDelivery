@@ -76,7 +76,7 @@ export class FoodstorePage implements OnInit {
 
   //เปิดหน้าตะกร้า
   openCart() {
-    this.router.navigateByUrl('basket');
+    this.router.navigateByUrl('cart');
   }
 
   //เปิดป็อบอัพเลือกจำนวนอาหาร

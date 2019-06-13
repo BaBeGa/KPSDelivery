@@ -9,24 +9,34 @@
 
 <ion-content>
 
-  <ion-list>
-    <ion-item *ngFor="let order of shippingOrder">
-      <ion-row>
-        {{ order.order_id }}
-      </ion-row>
-      <ion-row>
-        {{ order.restaurant_id }}
-      </ion-row>
-      <ion-row>
-        {{ order.driver_id }}
-      </ion-row>
-      <ion-row>
-        {{ order.status }}
-      </ion-row>
-      <ion-row>
-        {{ order.food_price }}
-      </ion-row>
+    <ion-item>
+      <ion-col></ion-col>
     </ion-item>
-  </ion-list>
-
-</ion-content>
+    <ion-item padding>
+      <h4>คำสั่งซื้อหมายเลข {{ order_id }}</h4>
+    </ion-item>
+    <ion-item padding>
+      <h2>ร้าน {{ order_info.restaurant_name }}</h2>
+    </ion-item>
+    <ion-item>
+      <img src="http://158.108.207.4/delivery/public/images/restaurants/{{order_info.restaurant_image}}">
+    </ion-item>
+  
+    <ion-item padding>
+      <h4>รายการอาหารที่สั่งซื้อ</h4>
+      <ion-item *ngFor="let order of order_info.menu">
+        <ion-item>
+          <ion-col col-1>
+            {{ order.quantity }}x
+          </ion-col>
+          <ion-col col-9>
+            {{ order.name }}
+          </ion-col>
+          <ion-col col-2 text-right>
+            {{ order.price }}฿
+          </ion-col>
+        </ion-item>
+      </ion-item>
+    </ion-item>
+  
+  </ion-content>

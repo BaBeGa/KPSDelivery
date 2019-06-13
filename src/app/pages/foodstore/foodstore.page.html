@@ -1,45 +1,35 @@
 <ion-header>
-
-  <ion-toolbar class="toolbar-background">
-    <ion-row>
-      <ion-col col-10 align-self-center text-left>
-        ร้านค้า
-      </ion-col>
-      <ion-col col-2 align-self-center text-center>
-        <button ion-button clear id="notification-button" (click)="openCart()">
-          <ion-icon name="cart">
-            <ion-badge id="notifications-badge" *ngIf="cartLength > 0">{{ this.cartLength }}</ion-badge>
-          </ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
+  <ion-toolbar color="primary">
+    <ion-title>
+      ร้านค้า
+    </ion-title>
+    <ion-buttons slot="end">
+        <ion-button id="button" shape="round" color="medium" (click)="openCart()">
+          <ion-icon name="cart"></ion-icon>
+          <ion-badge id="notifications-badge"  slot="end" *ngIf="this.cartLength > 0">{{ this.cartLength }}</ion-badge>
+        </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 
 </ion-header>
 
 
-<ion-content padding>
-
-  <div>
+<ion-content class="bg">
+  <ion-item >
     <img src="assets/imgs/breakfast001.jpg">
-  </div>
-  <div margin-buttom padding>
-    <h3>{{ res_name }}</h3>
-  </div>
-  <div>
-    <ion-row>
-        <ion-list padding>
-          <ion-item button=true *ngFor="let product of products" (click)="selectFood(product)">  
-            <ion-row>
-              <ion-col col-6 align-self-center>
-                {{ product.name }}
-              </ion-col>
-              <ion-col text-right col-3 align-self-center>
-                {{ product.price }} บาท
-              </ion-col>
-            </ion-row>
-          </ion-item>
-        </ion-list>
-      </ion-row>
-  </div>
+  </ion-item>
+  
+  <ion-list>
+    <ion-item-divider color="primary">
+        <ion-label>
+            {{ res_name }}
+        </ion-label>
+    </ion-item-divider>
+    <ion-item button=true *ngFor="let product of products" (click)="selectFood(product)"> 
+      <ion-label>{{ product.name }}</ion-label>
+      <ion-text color="medium">
+        <h5>{{ product.price }} บาท</h5>
+      </ion-text>
+    </ion-item>
+  </ion-list>
 </ion-content>

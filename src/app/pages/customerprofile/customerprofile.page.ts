@@ -104,6 +104,23 @@ export class CustomerprofilePage implements OnInit {
   register() {
     this.router.navigateByUrl('register');
   }
+
+  openMyrate(){
+    this.router.navigateByUrl('raterestaurant');
+  }
+
+  openMyorder(){
+    this.router.navigateByUrl('customerorder');
+  }
+
+  openMyorderhistory(){
+    this.router.navigateByUrl('history');
+  }
+
+  openMyworkhistory(){
+    this.router.navigateByUrl('driverworkhistory');
+  }
+
   async openCamera(){
     console.log('Open camera');
     const options: CameraOptions = {
@@ -167,7 +184,7 @@ export class CustomerprofilePage implements OnInit {
       console.log('get Image form gallary error!' , err);
     });
   }
-
+  
 
 
   async recoveryPassword() {

@@ -38,6 +38,7 @@ export class FoodcenterPage implements OnInit {
     this.cartLength = this.cartService.getCartLength();
     this.saveTokenToBackend(token);
   }
+  
   ionViewWillEnter(){
     console.log('ionViewWillEnter'+ this.cartLength);
     this.cartLength = this.cartService.getCartLength();
@@ -74,7 +75,6 @@ export class FoodcenterPage implements OnInit {
   getRestaurant() {
 
     this.inAppService.apiGetService('restaurants').then(result => {
-
       this.response = result;
       this.items = this.response.data;
       this.restaurantNum = this.response.data.length;

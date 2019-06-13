@@ -1,0 +1,30 @@
+:host {
+    .star {
+        color: rgb(226, 184, 95);
+        font-size: 30px;
+    }
+
+    img {
+        height: 200px;
+        width: 90%;
+        margin: auto;
+        display: block;
+    }
+
+    .textStar {
+        color: #000000;
+        font-size: 16px;
+    }
+
+    .buttonRate {
+        background: rgb(226, 184, 95);
+    }
+
+    .buttonRateBorder {
+        border: none;
+    }
+
+    .lists {
+        margin-top: 60px;
+    }
+}

@@ -23,13 +23,8 @@ export class HistoryPage implements OnInit {
 
   ngOnInit() {
     console.log('ionViewDidLoad HistoryPage');
-  }
-
-  ionViewWillEnter() {
-
     this.userToken = JSON.parse(localStorage.getItem('userToken'));
     this.getHistory();
-
   }
 
   async getHistory() {
@@ -43,7 +38,7 @@ export class HistoryPage implements OnInit {
       //console.log(result);
 
       for (var i = 0; i < result.data.length; i++) {
-        if (result.data[i].status == 'shipped') {
+        if (result.data[i].status == 'shipped' || result.data[i].status == 'finish') {
           result.data[i].status = 'การจัดส่งเรียบร้อย';
           this.userAllOrder.push(result.data[i]);
 
@@ -52,15 +47,17 @@ export class HistoryPage implements OnInit {
           let total_qty = result.data[i].quantity;
           let total_price = result.data[i].total_price;
           let shipped_time = result.data[i].shipped_time;
+          let driver_rating = result.data[i].driver_rating;
+          let restaurant_rating = result.data[i].restaurant_rating;
 
           const orderMenu: any = await this.orderService.apiGetDataService('orders/' + result.data[i].id + '/details');
           //console.log(orderMenu);
           //console.log(orderMenu.data.length);
-          if (orderMenu.data.length > 1) {
-            this.moreOne = true;
+          if (orderMenu.data.length <= 1 || orderMenu.data.length == null || orderMenu.data.length == []) {
+            this.moreOne = false;
           }
           else {
-            this.moreOne = false;
+            this.moreOne = true;
           }
 
           for (var i = 0; i < orderMenu.data.length; i++) {
@@ -96,7 +93,9 @@ export class HistoryPage implements OnInit {
                 status: status,
                 total_qty: total_qty,
                 total_price: total_price,
-                shipped_time: shipped_time
+                shipped_time: shipped_time,
+                driver_rating,
+                restaurant_rating
               }]
             };
 
@@ -108,7 +107,7 @@ export class HistoryPage implements OnInit {
         }
       }
 
-      //console.log(this.shippingOrder);
+      console.log(this.shippingOrder);
 
     }
     catch (e) {
@@ -118,20 +117,23 @@ export class HistoryPage implements OnInit {
 
   }
 
-  rateRestaurant() {
-    console.log('Rate not working now');
-
+  rateRestaurant(order_id) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        order_id: order_id
+      }
+    };
+    this.router.navigate(['raterestaurant'], navigationExtras);
   }
 
   moreDetails(order_id) {
-    console.log('More Details not working now');
+
     let navigationExtras: NavigationExtras = {
       state: {
-        order_id: order_id,
+        order_id: order_id
       }
     };
-    this.router.navigateByUrl('history-detail', navigationExtras)
-
+    this.router.navigate(['history-detail'], navigationExtras);
   }
 
 }

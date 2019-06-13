@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from '../../config/authservice';
 import { DriverService } from "src/app/services/driver.service";
-import { LoadingController, ToastController} from "@ionic/angular";
+import { LoadingController, ToastController, AlertController} from "@ionic/angular";
 /* to get currentlocation */
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
@@ -38,6 +38,7 @@ export class DriverPage implements OnInit {
     private driverService: DriverService,
     private route: ActivatedRoute,
     private router: Router,
+    private alertCtrl: AlertController
   ) { 
     this.checkOnorder();
   }
@@ -46,7 +47,7 @@ export class DriverPage implements OnInit {
     this.initWorkstatus();
     this.token = JSON.parse(localStorage.getItem('FCMToken'));
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    //this.checkOnorder();
+    this.checkOnorder();
     this.saveTokenToBackend();
     this.initMap();
   }
@@ -179,6 +180,16 @@ export class DriverPage implements OnInit {
       position: 'bottom'
     });
     toast.present();
+  }
+
+  async noWork(){
+    const alert = await this.alertCtrl.create({
+      header: 'ยังไม่มีงาน',
+      message: 'เมื่อคุณรับงานเสร็จแล้ว ปุ่มนี้จะเปลี่ยนเป็นสีเขียวโดยอัตโนมัติ',
+      buttons: ['ตกลง']
+    });
+
+    await alert.present();
   }
 
   calculateAndDisplayRoute() {

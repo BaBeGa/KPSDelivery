@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';//
 //new
 //---Plugin---//
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -32,7 +33,6 @@ import { CustomeraddressPage } from 'src/app/pages/customeraddress/customeraddre
 import { CustomeravatarPage } from 'src/app/pages/customeravatar/customeravatar.page';
 import { DriverregisterPage } from 'src/app/pages/driverregister/driverregister.page';
 import { FoodAddRemovePage } from 'src/app/pages/food-add-remove/food-add-remove.page';
-import { HelpcenterPage } from 'src/app/pages/helpcenter/helpcenter.page';
 import { HistoryDetailPage } from 'src/app/pages/history-detail/history-detail.page';
 import { LegalntermPage } from 'src/app/pages/legalnterm/legalnterm.page';
 import { MainPage } from 'src/app/pages/main/main.page';
@@ -44,7 +44,6 @@ import { MainPage } from 'src/app/pages/main/main.page';
     CustomeravatarPage,
     DriverregisterPage,
     FoodAddRemovePage,
-    HelpcenterPage,
     HistoryDetailPage,
     LegalntermPage,
     MainPage,
@@ -56,7 +55,6 @@ import { MainPage } from 'src/app/pages/main/main.page';
     CustomeravatarPage,
     DriverregisterPage,
     FoodAddRemovePage,
-    HelpcenterPage,
     HistoryDetailPage,
     LegalntermPage,
     MainPage
@@ -76,6 +74,7 @@ import { MainPage } from 'src/app/pages/main/main.page';
     StatusBar,
     SplashScreen,
     Geolocation,
+    LaunchNavigator,
     FirebaseMessaging,
     Toast,
     AuthService,

@@ -1,39 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { AlertController } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController } from "@ionic/angular";
 import { AuthService } from '../../config/authservice';
 
 @Component({
-  selector: 'app-history-detail',
-  templateUrl: './history-detail.page.html',
-  styleUrls: ['./history-detail.page.scss'],
+  selector: 'app-customerorderdetail',
+  templateUrl: './customerorderdetail.page.html',
+  styleUrls: ['./customerorderdetail.page.scss'],
 })
-export class HistoryDetailPage implements OnInit {
+export class CustomerorderdetailPage implements OnInit {
   order_id: any;
   order_details: any;
   order_info = {};
-  rated: any = 0;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public alertCtrl: AlertController,
-    public service: AuthService
-  ){
+    private service: AuthService,
+    private alertCtrl: AlertController
+  ) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.order_id = this.router.getCurrentNavigation().extras.state.order_id;
       }
     });
-    console.log(this.order_id);
    }
 
   ngOnInit() {
-    console.log('ionViewDidLoad HistoryDetailPage');
+    console.log(this.order_id);
     this.loadInfo();
   }
 
   async loadInfo() {
-    
     try {
       this.order_details = await this.service.apiGetDataService('orders/' + this.order_id);
       //console.log(this.order_details);
@@ -65,15 +62,6 @@ export class HistoryDetailPage implements OnInit {
     catch (e) {
       console.log(e);
     }
-  }
-
-  rate(point) {
-    this.confirmationAlert('ยืนยันการให้ ' + point + ' ดาว').then(confirm => {
-      if (confirm) {
-        this.rated = point;
-        console.log(this.rated);
-      }
-    })
   }
 
   async confirmationAlert(message: string): Promise<boolean> {

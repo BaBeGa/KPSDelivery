@@ -8,7 +8,7 @@
       </ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content >
+  <ion-content *ngIf="this.result != null">
     <ion-segment *ngIf="this.orderStatus == 'assigned'" >
         <ion-segment-button checked color = "success">
           <ion-icon name="checkmark-circle" color="success" ></ion-icon>  
@@ -94,7 +94,7 @@
               </ion-text>
             </ion-item>
             <ion-item>
-              <ion-label>ราคาค่าอาหารรวม</ion-label>
+              <ion-label>ราคาอาหาร</ion-label>
               <ion-text color="medium">
                 <h5>{{this.result.foodPrice}}</h5>
               </ion-text>
@@ -102,7 +102,7 @@
             <ion-item>
               <ion-label>ราคารวม</ion-label>
               <ion-text color="medium">
-                <h5 *ngIf="this.result.totalPrice != null">{{this.result.foodPrice}}</h5>
+                <h5 *ngIf="this.result.totalPrice != null">{{this.result.totalPrice}}</h5>
                 <h5 *ngIf="this.result.totalPrice == null">รอการคำนวณ</h5>
               </ion-text>
             </ion-item>
@@ -116,7 +116,7 @@
           </ion-item>
         </ion-card-content>
 
-        <ion-button expand="block" color="primary"  (click)="initMap()">
+        <ion-button expand="block" color="primary"  (click)="showMap(this.destinatoin)">
           <ion-icon name="compass"></ion-icon>
           ดูแผนที่
         </ion-button>

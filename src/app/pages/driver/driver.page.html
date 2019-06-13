@@ -6,11 +6,11 @@
         <ion-badge *ngIf="!this.working" color="medium">ออฟไลน์</ion-badge>
       </ion-title>
       <ion-buttons slot="end">
-          <ion-button *ngIf="!this.Onorder" id="button1"  shape="round" color="medium">
+          <ion-button *ngIf="!this.Onorder" id="button1"  shape="round" color="medium" (click)="noWork()">
             <ion-icon name="clipboard"></ion-icon>
           </ion-button>
           <ion-button *ngIf="this.Onorder" id="button"  shape="round" color="success" (click)="openOrder()">
-            <ion-icon name="clipboard"></ion-icon>
+            <ion-icon src="assets/icon/sendbox.svg"></ion-icon>
             <ion-badge id="order-badge"  slot="end">!</ion-badge>
           </ion-button>
       </ion-buttons>

@@ -1,9 +1,129 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>raterestaurant</ion-title>
+      <ion-title>ให้คะแนนร้านค้า</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
+    <ion-item>
+        <ion-col></ion-col>
+      </ion-item>
+      <ion-item>
+        <h4>คำสั่งซื้อหมายเลข {{ order_id }}</h4>
+      </ion-item>
+      <ion-item>
+        <h2>{{ order_info.restaurant_name }}</h2>
+      </ion-item>
+      <ion-item>
+        <img src="http://158.108.207.4/delivery/public/images/restaurants/{{order_info.restaurant_image}}">
+      </ion-item>
+      <ion-item text-center>
+        <h4 padding-top>ให้คะแนนด้วยการกดที่ดาว</h4>
+      </ion-item>
+      <ion-item class="star">
+        <ion-col class="textStar" align-self-center>ให้คะแนนร้านอาหาร</ion-col>
+        <ion-col text-center *ngIf="rate_r == 0">
+          <ion-icon name="star-outline" (click)="point_R(1)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(2)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(3)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(4)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(5)"></ion-icon>
+        </ion-col>
+        <ion-col text-center *ngIf="rate_r == 1">
+          <ion-icon name="star" (click)="point_R(1)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(2)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(3)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(4)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(5)"></ion-icon>
+        </ion-col>
+        <ion-col text-center *ngIf="rate_r == 2">
+          <ion-icon name="star" (click)="point_R(1)"></ion-icon>
+          <ion-icon name="star" (click)="point_R(2)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(3)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(4)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(5)"></ion-icon>
+        </ion-col>
+        <ion-col text-center *ngIf="rate_r == 3">
+          <ion-icon name="star" (click)="point_R(1)"></ion-icon>
+          <ion-icon name="star" (click)="point_R(2)"></ion-icon>
+          <ion-icon name="star" (click)="point_R(3)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(4)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(5)"></ion-icon>
+        </ion-col>
+        <ion-col text-center *ngIf="rate_r == 4">
+          <ion-icon name="star" (click)="point_R(1)"></ion-icon>
+          <ion-icon name="star" (click)="point_R(2)"></ion-icon>
+          <ion-icon name="star" (click)="point_R(3)"></ion-icon>
+          <ion-icon name="star" (click)="point_R(4)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_R(5)"></ion-icon>
+        </ion-col>
+        <ion-col text-center *ngIf="rate_r == 5">
+          <ion-icon name="star" (click)="point_R(1)"></ion-icon>
+          <ion-icon name="star" (click)="point_R(2)"></ion-icon>
+          <ion-icon name="star" (click)="point_R(3)"></ion-icon>
+          <ion-icon name="star" (click)="point_R(4)"></ion-icon>
+          <ion-icon name="star" (click)="point_R(5)"></ion-icon>
+        </ion-col>
+      </ion-item>
+      <ion-item class="star">
+        <ion-col class="textStar" align-self-center>ให้คะแนนคนส่งอาหาร</ion-col>
+        <ion-col text-center *ngIf="rate_d == 0">
+          <ion-icon name="star-outline" (click)="point_D(1)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(2)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(3)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(4)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(5)"></ion-icon>
+        </ion-col>
+        <ion-col text-center *ngIf="rate_d == 1">
+          <ion-icon name="star" (click)="point_D(1)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(2)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(3)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(4)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(5)"></ion-icon>
+        </ion-col>
+        <ion-col text-center *ngIf="rate_d == 2">
+          <ion-icon name="star" (click)="point_D(1)"></ion-icon>
+          <ion-icon name="star" (click)="point_D(2)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(3)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(4)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(5)"></ion-icon>
+        </ion-col>
+        <ion-col text-center *ngIf="rate_d == 3">
+          <ion-icon name="star" (click)="point_D(1)"></ion-icon>
+          <ion-icon name="star" (click)="point_D(2)"></ion-icon>
+          <ion-icon name="star" (click)="point_D(3)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(4)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(5)"></ion-icon>
+        </ion-col>
+        <ion-col text-center *ngIf="rate_d == 4">
+          <ion-icon name="star" (click)="point_D(1)"></ion-icon>
+          <ion-icon name="star" (click)="point_D(2)"></ion-icon>
+          <ion-icon name="star" (click)="point_D(3)"></ion-icon>
+          <ion-icon name="star" (click)="point_D(4)"></ion-icon>
+          <ion-icon name="star-outline" (click)="point_D(5)"></ion-icon>
+        </ion-col>
+        <ion-col text-center *ngIf="rate_d == 5">
+          <ion-icon name="star" (click)="point_D(1)"></ion-icon>
+          <ion-icon name="star" (click)="point_D(2)"></ion-icon>
+          <ion-icon name="star" (click)="point_D(3)"></ion-icon>
+          <ion-icon name="star" (click)="point_D(4)"></ion-icon>
+          <ion-icon name="star" (click)="point_D(5)"></ion-icon>
+        </ion-col>
+      </ion-item>
+    
+      <ion-button float-right (click)="rate()" class="buttonRate">ยืนยันให้คะแนน</ion-button>
+      
+      <ion-item class="lists">
+        <h4>รายการอาหารที่สั่งซื้อ</h4>
+        <ion-item *ngFor="let order of order_info.menu">
+          <ion-item>
+            <ion-col col-9>
+              - {{ order.name }}
+            </ion-col>
+            <ion-col col-3 text-right>
+              {{ order.price }}฿
+            </ion-col>
+          </ion-item>
+        </ion-item>
+      </ion-item>
 </ion-content>
