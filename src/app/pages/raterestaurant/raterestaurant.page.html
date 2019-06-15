@@ -12,10 +12,10 @@
         <h4>คำสั่งซื้อหมายเลข {{ order_id }}</h4>
       </ion-item>
       <ion-item>
-        <h2>{{ order_info.restaurant_name }}</h2>
+        <h2>ชื่อร้านค้า {{ this.order.restaurant.name }}</h2>
       </ion-item>
       <ion-item>
-        <img src="http://158.108.207.4/delivery/public/images/restaurants/{{order_info.restaurant_image}}">
+          <h2>ชื่อคนขับ {{ this.order.driver.name }} ID:{{ this.order.driver.id }}</h2>
       </ion-item>
       <ion-item text-center>
         <h4 padding-top>ให้คะแนนด้วยการกดที่ดาว</h4>
@@ -112,18 +112,4 @@
       </ion-item>
     
       <ion-button float-right (click)="rate()" class="buttonRate">ยืนยันให้คะแนน</ion-button>
-      
-      <ion-item class="lists">
-        <h4>รายการอาหารที่สั่งซื้อ</h4>
-        <ion-item *ngFor="let order of order_info.menu">
-          <ion-item>
-            <ion-col col-9>
-              - {{ order.name }}
-            </ion-col>
-            <ion-col col-3 text-right>
-              {{ order.price }}฿
-            </ion-col>
-          </ion-item>
-        </ion-item>
-      </ion-item>
 </ion-content>

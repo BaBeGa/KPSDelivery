@@ -2,18 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ToastController } from "@ionic/angular";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CartService } from "../../services/cart.service";
+import { OrderService } from "src/app/services/order.service";
 import { AuthService } from "../../config/authservice";
+import { Router } from "@angular/router";
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.page.html',
   styleUrls: ['./cart.page.scss'],
 })
-export class CartPage implements OnInit {
-  
-  findDriverId: any;
-  userToken: any;
-  userInfo: any;
-  orderDetail: any;
+export class CartPage implements OnInit { 
   selectedItems = [];
   totalPrice = 0;
   resItems:any;
@@ -25,7 +22,9 @@ export class CartPage implements OnInit {
     public alertController: AlertController,
     public toastCtrl: ToastController,
     private geolocation: Geolocation,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
+    private orderService: OrderService
     ) { }
 
   ngOnInit() {
@@ -113,15 +112,6 @@ export class CartPage implements OnInit {
   }
 
   async sendOrder() {
-    // this.orderDetail = {
-    //   name: this.userInfo.name,
-    //   address: 'หอพักห้อง 111',
-    //   phone: '0924242424',
-    //   latitude: this.lat,
-    //   longitude: this.lon,
-    //   restaurant_id: 1,
-    //   menu: 1
-    // }
     let alert = await this.alertController.create({
       header: 'การยืนยัน',
       message: "ยืนยันที่จะสั่งซื้อหรือไม่",
@@ -148,10 +138,11 @@ export class CartPage implements OnInit {
             console.log('form data: ' +this.lon);
             const result: any = await this.authService.apiPostDataService('orders', postData);
             for(let product of this.selectedItems){
-              this.putMenu(result.data.order.id, product.food_id, product.food_qty);
+              await this.putMenu(result.data.order.id, product.food_id, product.food_qty);
             }
-            console.log('finddriver'+result.data.order.id+'<br>'+ data.limit*1000);
-            this.findDriver(result.data.order.id,data.limit*1000);
+            //console.log('finddriver'+result.data.order.id+'<br>'+ data.limit*1000);
+            await this.findDriver(result.data.order.id,data.limit*1000);
+            await this.orderService.initializeOrders();
             }else if(data.limit <= 0){
               const toast = await this.toastCtrl.create({
                 showCloseButton: true,
@@ -183,7 +174,7 @@ export class CartPage implements OnInit {
           }
           
           this.cartService.clearCart();
-          console.log('Send Order Success');
+          //console.log('Send Order Success');
         }
       }, {
         text: 'ยกเลิก',
@@ -196,7 +187,6 @@ export class CartPage implements OnInit {
   }
 
   async putMenu(order_id, menu_id, qty) {
-
     try {
       let postData = new FormData();
         postData.append('menu_id', menu_id);
@@ -219,6 +209,7 @@ export class CartPage implements OnInit {
         position: 'bottom'
       });
       toast.present();
+      this.router.navigateByUrl('customerorder')
       console.log('Find Driver Success');
       console.log('Find driver service result :',result);
     });

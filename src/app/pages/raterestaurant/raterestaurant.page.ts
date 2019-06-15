@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RaterestaurantPage implements OnInit {
 
+  order: any;
   order_id: any;
   order_details: any;
   order_info = {};
@@ -24,41 +25,16 @@ export class RaterestaurantPage implements OnInit {
   ) { 
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
-        this.order_id = this.router.getCurrentNavigation().extras.state.order_id;
+        this.order = this.router.getCurrentNavigation().extras.state.order;
       }
     });
-    console.log(this.order_id);
+    this.order_id = this.order.id;
+    console.log(this.order);
   }
 
   ngOnInit() {
     console.log('ionViewDidLoad RaterestaurantPage');
-    this.loadInfo();
-  }
-
-  async loadInfo() {
-    try {
-      this.order_details = await this.service.apiGetDataService('orders/' + this.order_id);
-      const restaurantDetails: any = await this.service.apiGetService('restaurants/' + this.order_details.data.restaurant_id);
-      const menuOrder: any = await this.service.apiGetDataService('orders/' + this.order_id + '/details');
-
-      let menuDetails = [];
-      for (var i = 0; i < menuOrder.data.length; i++) {
-        const resultMenu: any = await this.service.apiGetService('menus/' + menuOrder.data[i].menu_id);
-        menuDetails.push(resultMenu.data);
-      }
-
-      var newDetail = {
-        restaurant_id: this.order_details.data.restaurant_id,
-        restaurant_name: restaurantDetails.data.name,
-        restaurant_image: restaurantDetails.data.image,
-        menu: menuDetails
-      };
-      this.order_info = newDetail;
-      //console.log(this.order_info);
-    }
-    catch (e) {
-      console.log(e);
-    }
+    //this.loadInfo();
   }
 
   point_R(point_r) {
@@ -96,13 +72,13 @@ export class RaterestaurantPage implements OnInit {
       resolveFunction = resolve;
     });
     let alert = await this.alertCtrl.create({
-      header: 'Confirmation',
+      header: 'คุณต้องการที่จะให้คะแนนคำสั่งชื้อนี้หรือไม่',
       message: message,
       buttons: [{
-        text: 'No',
+        text: 'ยกเลิก',
         handler: () => resolveFunction(false)
       }, {
-        text: 'Yes',
+        text: 'ตกลง',
         handler: () => resolveFunction(true)
       }]
     });

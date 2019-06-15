@@ -29,10 +29,15 @@
           หมายเลขเลขเครดิต
           <ion-note slot="end">{{ userCreditNum }}</ion-note>
         </ion-item>
-        <ion-item color="assertive" >
+        <ion-item *ngIf="allowAccept" color="assertive" >
           <ion-icon name="card" slot="start"></ion-icon>
           เครดิตคงเหลือ
           <ion-note slot="end">{{ userCredit }}</ion-note>
+        </ion-item>
+        <ion-item *ngIf="!allowAccept" color="assertive" >
+          <ion-icon name="card" slot="start"></ion-icon>
+          เครดิตคงเหลือ
+          <ion-note slot="end">คุณยังไม่มีเครดิต</ion-note>
         </ion-item>
       </ion-list>
     </ion-card>

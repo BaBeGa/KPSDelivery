@@ -90,30 +90,31 @@
             <ion-item lines="none" *ngFor="let menu of this.result.menus">
               <ion-label color="medium" id="menulist"><h3>{{menu.quantity}}x{{menu.name}}</h3></ion-label>
               <ion-text color="medium">
-                <h5>{{menu.price*menu.quantity}}-</h5>
+                <h5>{{menu.price*menu.quantity}}</h5>
               </ion-text>
             </ion-item>
             <ion-item>
               <ion-label>ราคาอาหาร</ion-label>
               <ion-text color="medium">
-                <h5>{{this.result.foodPrice}}</h5>
+                <h5>{{this.result.foodPrice}} บาท</h5>
               </ion-text>
+            </ion-item>
+            <ion-item>
+                <ion-label>ค่าส่งอาหาร</ion-label>
+                <ion-text color="medium">
+                  <h5 *ngIf="this.result.totalPrice != null">{{this.result.totalPrice-this.result.foodPrice}} บาท</h5>
+                  <h5 *ngIf="this.result.totalPrice == null">รอการคำนวณ</h5>
+                </ion-text>
             </ion-item>
             <ion-item>
               <ion-label>ราคารวม</ion-label>
               <ion-text color="medium">
-                <h5 *ngIf="this.result.totalPrice != null">{{this.result.totalPrice}}</h5>
+                <h5 *ngIf="this.result.totalPrice != null">{{this.result.totalPrice}} บาท</h5>
                 <h5 *ngIf="this.result.totalPrice == null">รอการคำนวณ</h5>
               </ion-text>
             </ion-item>
           </ion-list>
-          <ion-item>
-            <ion-label>ค่าส่งอาหาร</ion-label>
-            <ion-text color="medium">
-              <h5 *ngIf="this.result.totalPrice != null">{{this.result.totalPrice-this.result.foodPrice}}</h5>
-              <h5 *ngIf="this.result.totalPrice == null">รอการคำนวณ</h5>
-            </ion-text>
-          </ion-item>
+          
         </ion-card-content>
 
         <ion-button expand="block" color="primary"  (click)="showMap(this.destinatoin)">

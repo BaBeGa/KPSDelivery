@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
-import { DataResolverService } from './resolver/data-resolver.service';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
     path: 'driverdialog/:id',
-    resolve: {
-      special: DataResolverService
-    },
     loadChildren: './pages/driverdialog/driverdialog.module#DriverdialogPageModule'
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },

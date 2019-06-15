@@ -37,11 +37,23 @@ export class CustomerprofilePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log('ionViewDidLoad customerProfilePage');
-    this.userType = JSON.parse(localStorage.getItem('userType'));
-    this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    // console.log('ionViewDidLoad customerProfilePage');
+    // this.userType = JSON.parse(localStorage.getItem('userType'));
+    // this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    // this.cartLength = this.cartService.getCartLength();
+  }
+
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter customerProfilePage');
+    if (localStorage.getItem('userInfo') != null) {
+      this.userType = JSON.parse(localStorage.getItem('userType'));
+      this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
+      this.cartLength = this.cartService.getCartLength();
+    }
+    else {
+      this.userInfo = null;
+    }
     console.log(this.userInfo);
-    this.cartLength = this.cartService.getCartLength();
   }
 
   openCart() {

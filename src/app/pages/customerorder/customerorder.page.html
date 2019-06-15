@@ -11,13 +11,96 @@
   
   
   <ion-content>
+    <div *ngIf="userInfo == null">
+      กรุณาเข้าสู่ระบบ
+    </div>
 
-      <div *ngIf="userInfo == null">
-        กรุณาเข้าสู่ระบบ
+    <div *ngIf="this.orders">
+    <ion-card *ngFor="let order of this.orders; let i = index">
+      <ion-card-content>
+        <ion-item button="true" (click)="hide(i)">
+            <ion-label>รายการสั่งชื้อที่ {{order.id}}</ion-label>
+            <ion-text color="medium">
+                <h5>{{order.order_date}}</h5>
+            </ion-text>
+            <ion-icon *ngIf="order.hidden" name="arrow-dropdown" slot="end"></ion-icon>
+            <ion-icon *ngIf="!order.hidden" name="arrow-dropup" slot="end"></ion-icon>
+        </ion-item>
+      </ion-card-content>
+
+      <div *ngIf="!order.hidden">
+      <ion-grid fixed no-padding >
+        <!-- <h1 class="fw500">{{order.restaurant.name}}</h1>
+        <h2 color="light" margin-bottom>{{order.restaurant.address}}</h2> -->
+        <ion-row>
+          <ion-col size="12" padding>
+  
+            <ion-list margin-bottom>
+              <ion-list-header color="light">
+                <ion-label class="fw700">ข้อมูลออเดอร์</ion-label>
+              </ion-list-header>
+              <ion-item>
+                  <ion-label color="dark" position="stacked">ร้าน:</ion-label>
+                  <ion-col>{{order.restaurant.name}}</ion-col>
+              </ion-item>
+              <ion-item>
+                  <ion-label color="dark" position="stacked">ที่ตั้งร้าน:</ion-label>
+                  <ion-col>{{order.restaurant.address}}</ion-col>
+              </ion-item>
+              <ion-item>
+                <ion-label color="dark" position="stacked">สั่งเมื่อ:</ion-label>
+                <ion-col>{{order.created_at}}</ion-col>
+              </ion-item>
+              <ion-item>
+                <ion-label color="dark" position="stacked">ส่งเมื่อ:</ion-label>
+                <ion-col *ngIf="order.shipped_time != null">{{order.shipped_time}}</ion-col>
+                <ion-col *ngIf="order.shipped_time == null">รอการจัดส่ง</ion-col>
+              </ion-item>
+              <ion-item>
+                <ion-label color="dark" position="stacked">เวลาที่รอ:</ion-label>
+                <ion-col *ngIf="order.total_time != null">{{order.total_time}} นาที</ion-col>
+                <ion-col *ngIf="order.total_time == null">รอการคำนวณ</ion-col>
+              </ion-item>
+              <ion-item>
+                <ion-label color="dark" position="stacked">ผู้ส่ง:</ion-label>
+                <ion-col *ngIf="order.driver != null">{{order.driver.name}} หมายเลข: {{order.driver.id}}</ion-col>
+                <ion-col *ngIf="order.driver == null">รอการตอบรับ</ion-col>
+              </ion-item>
+              
+              <ion-item lines="none">
+                <ion-label color="dark" position="stacked">รายการอาหาร:</ion-label>
+              </ion-item>
+              <ion-item *ngFor="let menu of order.orderdetails" lines="none">
+                <ion-col>{{menu.quantity}}x{{menu.menu.name}}</ion-col>
+                <ion-text color="medium">
+                  <h5>{{ menu.menu.price }} บาท</h5>
+                </ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label color="dark" position="stacked">ระยะทางทั้งหมด:</ion-label>
+                <ion-col *ngIf="order.total_lenght != null">{{order.total_lenght}}</ion-col>
+                <ion-col *ngIf="order.total_lenght == null">รอการคำนวณ</ion-col>
+              </ion-item>
+              <ion-item>
+                <ion-label color="dark" position="stacked">ราคารวมค่าส่ง:</ion-label>
+                <ion-col *ngIf="order.total_price != null">{{order.total_price}}</ion-col>
+                <ion-col *ngIf="order.total_price == null">รอการคำนวณ</ion-col>
+              </ion-item>
+              <ion-item>
+                <ion-label color="dark" position="stacked">สถานะการส่ง:</ion-label>
+                <ion-col *ngIf="order.status == 'ordering'">กำลังค้นหาคนขับ</ion-col>
+                <ion-col *ngIf="order.status == 'assigned'">คนขับกำลังเดินทางไปที่ร้าน</ion-col>
+                <ion-col *ngIf="order.status == 'waiting'">รอการนำส่ง</ion-col>
+                <ion-col *ngIf="order.status == 'shipped'">ส่งแล้ว</ion-col>
+                <ion-button *ngIf="order.status == 'shipped'" color="warning" slot="end" size="small" (click)="Ratings(order)">ให้คะแนน</ion-button>
+              </ion-item>
+              
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
       </div>
-    
-      <div *ngIf="userInfo != null">
-       
-      </div>
+    </ion-card>
+    </div>
     
     </ion-content>

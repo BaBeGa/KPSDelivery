@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AuthService } from '../../config/authservice';
+import { OrderService } from "src/app/services/order.service";
 import { Headers } from '@angular/http';
 import { Router, NavigationExtras } from '@angular/router';
 
@@ -11,13 +11,10 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class HistoryPage implements OnInit {
   userToken: any;
-  userAllOrder = [];
-  shippingOrder = [];
-  moreOne = true;
-
+  orderHistory = [];
   constructor(
     public navCtrl: NavController, 
-    public orderService: AuthService,
+    public orderService: OrderService,
     private router:Router,
   ) { }
 
@@ -28,20 +25,7 @@ export class HistoryPage implements OnInit {
   }
 
   async getHistory() {
-
-    console.log('Get History');
-    this.userAllOrder = [];
-    this.shippingOrder = [];
-
-    try {
-      const result: any = await this.orderService.apiGetDataService('orders');
-      console.log(result)
-    }
-    catch (e) {
-      console.error(e);
-    }
-
-
+    this.orderHistory = JSON.parse(localStorage.getItem('historyOrders'));
   }
 
   rateRestaurant(order_id) {

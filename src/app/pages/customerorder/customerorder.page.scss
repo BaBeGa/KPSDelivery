@@ -13,4 +13,10 @@ page-customerorder {
         border-bottom:solid rgb(206, 206, 206);
         border-width: 5px;
     }
+    ion-card{
+        display: flex;
+        flex-direction: column;
+        width: 90% !important;
+        margin: 0 !important;
+      }
 }

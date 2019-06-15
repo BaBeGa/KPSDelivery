@@ -41,6 +41,7 @@ export class FoodcenterPage implements OnInit {
   
   ionViewWillEnter(){
     console.log('ionViewWillEnter'+ this.cartLength);
+    
     this.cartLength = this.cartService.getCartLength();
   }
 

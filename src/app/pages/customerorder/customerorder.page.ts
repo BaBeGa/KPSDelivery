@@ -1,64 +1,54 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Router, NavigationExtras } from "@angular/router";
-import { AuthService } from '../../config/authservice';
-import { Headers } from '@angular/http';
+import { OrderService } from "src/app/services/order.service";
 @Component({
   selector: 'app-customerorder',
   templateUrl: './customerorder.page.html',
   styleUrls: ['./customerorder.page.scss'],
 })
 export class CustomerorderPage implements OnInit {
-  userToken: any;
-  shippingOrder = [];
-  userAllOrder = [];
-  moreOne = true;
   userInfo :any
+  orders = [];
   constructor(
     public navCtrl: NavController, 
-    public orderService: AuthService,
+    public orderService: OrderService,
     private router:Router
-  ) { }
+  ) { 
+
+  }
 
   ngOnInit() {
     console.log('ionViewDidLoad CustomerorderPage');
-    this.userToken = JSON.parse(localStorage.getItem('userToken'));
-    this.getHistory();
+    this.orders = JSON.parse(localStorage.getItem('inprocessOrders'));
+    console.log(this.orders)
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
+    console.log('ionViewWillEnter CustomerorderPage');
+    this.orders = [];
+    await this.orderService.initializeOrders();
     if (localStorage.getItem('userInfo') != null) {
       this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
     }
     else {
       this.userInfo = null;
     }
+    this.orders = JSON.parse(localStorage.getItem('inprocessOrders'));
+    console.log(this.orders)
   }
   
-  async getHistory() {
-
-    console.log('Get History');
-    this.userAllOrder = [];
-    this.shippingOrder = [];
-
-    try {
-      const result: any = await this.orderService.apiGetDataService('orders');
-      console.log(result);
-
-    }
-    catch (e) {
-      console.error(e);
-    }
-
+  hide(index){
+    this.orders[index].hidden = !this.orders[index].hidden
   }
 
-  moreDetails(order_id) {    
+  Ratings(order){
     let navigationExtras: NavigationExtras = {
       state: {
-        order_id: order_id
+        order: order
       }
     };
-    this.router.navigate(['customerorderdetail'], navigationExtras);
+    this.router.navigate(['raterestaurant'], navigationExtras);
   }
 
 }

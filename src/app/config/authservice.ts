@@ -498,6 +498,30 @@ export class AuthService {
       
           await alert.present();
         }
+        if(errhandle.status == 500){
+          const alert = await this.alertController.create({
+            header: 'คุณยังไม่ได้ลงทะเบียนเพื่อเปิดใช้เครดิต',
+            message: 'กรุณาติดต่อผู้ดูแลระบบองคุณเพื่อขอลงทะเบียนเครดิต',
+            buttons: [
+              {
+                text: 'ตกลง',
+                handler: async () => {
+                  console.log('Confirm Okay');
+                }
+              },
+              {
+                text: 'ยกเลิก',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel: blah');
+                }
+              }
+            ]
+          });
+      
+          await alert.present();
+        }
       })
     })
   }
@@ -590,17 +614,6 @@ export class UpdateOrderService extends AuthService{
 }
 
 export interface User {
-
-  // name: string;
-  // email: string;
-  // type: string;
-  // password: string;
-  // c_password: string;
-  // newpass: string;
-  // cnewpass: string;
-  // cpassword: string;
-  // userToken: any;
-  // userInfo: any;
   name: string;
   email: string;
   type: string;
