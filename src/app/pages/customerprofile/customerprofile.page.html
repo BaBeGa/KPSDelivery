@@ -1,6 +1,5 @@
 <ion-header *ngIf="userInfo == null">
     <ion-toolbar class="user-profile">
-
       <ion-item margin-bottom>
         <ion-avatar slot="start" class="user-avatar">
             <img src="/assets/imgs/nonloginavatar.png">
@@ -73,9 +72,9 @@
         <ion-icon name="gift"></ion-icon>
         <ion-label>ที่ต้องได้รับ</ion-label>
       </ion-segment-button>
-      <ion-segment-button (click)=openMyrate()>
-        <ion-icon name="star-outline"></ion-icon>
-        <ion-label>ให้คะแนน</ion-label>
+      <ion-segment-button (click)=openMyhistory()>
+          <ion-icon name="clipboard"></ion-icon>
+          <ion-label>ประวัติการสั่งซื้อ</ion-label>
       </ion-segment-button>
     </ion-segment>
     <ion-segment *ngIf="this.userType == 'driver'" scrollable>
@@ -88,12 +87,8 @@
           <ion-label>ที่ต้องได้รับ</ion-label>
         </ion-segment-button>
         <ion-segment-button (click)=openMyhistory()>
-            <ion-icon name="gift"></ion-icon>
+            <ion-icon name="clipboard"></ion-icon>
             <ion-label>ประวัติการสั่งซื้อ</ion-label>
-          </ion-segment-button>
-        <ion-segment-button (click)=openMyrate()>
-          <ion-icon name="star-outline"></ion-icon>
-          <ion-label>ให้คะแนน</ion-label>
         </ion-segment-button>
     </ion-segment>
   </ion-toolbar>

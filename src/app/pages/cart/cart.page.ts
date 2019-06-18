@@ -35,6 +35,13 @@ export class CartPage implements OnInit {
     });
   }
 
+  ionViewWillEnter() {
+    this.geolocation.getCurrentPosition().then((resp)=>{
+      this.lat= resp.coords.latitude, 
+      this.lon = resp.coords.longitude 
+    });
+  }
+
   initialCart(){
     this.items = this.cartService.getCart();
     let selected = {};

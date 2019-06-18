@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { AuthService } from "src/app/config/authservice";
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -20,7 +20,8 @@ export class RaterestaurantPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: AuthService, 
-    private alertCtrl: AlertController 
+    private alertCtrl: AlertController,
+    private toastController: ToastController
     
   ) { 
     this.route.queryParams.subscribe(params => {
@@ -28,12 +29,12 @@ export class RaterestaurantPage implements OnInit {
         this.order = this.router.getCurrentNavigation().extras.state.order;
       }
     });
-    this.order_id = this.order.id;
-    console.log(this.order);
   }
 
   ngOnInit() {
     console.log('ionViewDidLoad RaterestaurantPage');
+    this.order_id = this.order.id;
+    console.log(this.order);
     //this.loadInfo();
   }
 
@@ -53,11 +54,20 @@ export class RaterestaurantPage implements OnInit {
         let postData = new FormData();
         postData.append('_method', 'put');
         postData.append('status', 'finish');
-        postData.append('restaurant_rating', this.rate_r);
-        postData.append('driver_rating', this.rate_d);
-
-        const result = await this.service.apiPostDataService('orders/' + this.order_id, postData);
-        console.log(postData);
+        if(this.rate_d != 0 || this.rate_d != 0){
+          postData.append('restaurant_rating', this.rate_r);
+          postData.append('driver_rating', this.rate_d);
+        }
+        await this.service.apiPostDataService('orders/' + this.order_id, postData).then( async res=>{
+          const toast = await this.toastController.create({
+            message: 'เสร็จสิ้น',
+            duration: 3000
+          });
+          toast.present();
+          this.router.navigateByUrl('customerorder');
+          console.log(res);
+        })
+        
         
       }
     })
@@ -74,12 +84,12 @@ export class RaterestaurantPage implements OnInit {
     let alert = await this.alertCtrl.create({
       header: 'คุณต้องการที่จะให้คะแนนคำสั่งชื้อนี้หรือไม่',
       message: message,
-      buttons: [{
-        text: 'ยกเลิก',
-        handler: () => resolveFunction(false)
-      }, {
+      buttons: [ {
         text: 'ตกลง',
         handler: () => resolveFunction(true)
+      },{
+        text: 'ยกเลิก',
+        handler: () => resolveFunction(false)
       }]
     });
     alert.present();

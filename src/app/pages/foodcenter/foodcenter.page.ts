@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/config/authservice';
-import { NotificationPage } from "src/app/pages/notification/notification.page";
 import { CartService } from "src/app/services/cart.service";
 @Component({
   selector: 'app-foodcenter',
@@ -29,6 +28,7 @@ export class FoodcenterPage implements OnInit {
      public modalCtrl: ModalController,
      public inAppService: AuthService,
      public cartService: CartService,
+     private alertCtrl: AlertController,
      private router:Router
      ){ }
   ngOnInit() {
@@ -102,15 +102,25 @@ export class FoodcenterPage implements OnInit {
 
   }
 
-  goInRestaurant(id, name) {
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        restaurant_id: id,
-        restaurant_name: name,
-        callback: this.callbackcartLength
-      }
-    };
-    this.router.navigate(['foodstore'], navigationExtras );
+  async goInRestaurant(item) {
+    if(item.status == 'ร้านเปิด'){
+      let navigationExtras: NavigationExtras = {
+        queryParams: {
+          restaurant_id: item.id,
+          restaurant_name: item.name,
+          callback: this.callbackcartLength
+        }
+      };
+      this.router.navigate(['foodstore'], navigationExtras );
+    }else{
+      const alert = await this.alertCtrl.create({
+        header: 'ร้านไม่พร้อมให้บริการ',
+        message: 'ขออภัยลูกค้า ขณะนี้ร้านอาหารปิดทำการ.',
+        buttons: ['ตกลง']
+      });
+  
+      await alert.present();
+    }
   }
   //this fucn return cartLength from foodstore page
   callbackcartLength = (_params) => {
@@ -131,6 +141,8 @@ export class FoodcenterPage implements OnInit {
 
   setFilteredItems() {
     this.items = this.filterItems(this.searchTerm);
+    console.log(this.items);
+    this.restaurantNum = this.items;
   }
 
   filterItems(searchTerm) {

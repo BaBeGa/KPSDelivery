@@ -49,7 +49,7 @@ export class FoodstorePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.cartLength = Number(localStorage.getItem('cartLength'));
+    this.cartLength = this.cartService.getCartLength();
     console.log('foodstore :'+this.cartLength);
   }
 

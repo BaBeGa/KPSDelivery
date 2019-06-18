@@ -6,7 +6,7 @@ import { AuthService } from "src/app/config/authservice";
   styleUrls: ['./driverworkhistory.page.scss'],
 })
 export class DriverworkhistoryPage implements OnInit {
-  history: any;
+  historyList: any;
   userInfo:any;
   loadDone: boolean;
   constructor(
@@ -16,22 +16,30 @@ export class DriverworkhistoryPage implements OnInit {
    }
 
   ngOnInit() {
+    this.loadDone = false;
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    this.userService.apiDriverGetHistory(this.userInfo.user.id).then(res=>{
-      console.log(res);
+    this.userService.apiDriverGetHistory().then(async res=>{
       let result:any = res ;
-      this.history = Object.assign([],result.driverHistory).reverse();
+      this.historyList = await Object.assign([],result.data).reverse();
+      await this.historyList.forEach((obj) => obj.hidden = true)
+      console.log(this.historyList);
       this.loadDone = true;
     })
   }
   ionViewWillEnter() {
-    // this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    // this.userService.apiDriverGetHistory(this.userInfo.user.id).then(res=>{
-    //   console.log(res);
-    //   let result:any = res ;
-    //   this.history = Object.assign([],result.driverHistory).reverse();
-    //   this.loadDone = true;
-    // })
+    this.loadDone = false;
+    this.userService.apiDriverGetHistory().then(async res=>{
+      console.log(res);
+      let result:any = res ;
+      this.historyList = await Object.assign([],result.data).reverse();
+      await this.historyList.forEach((obj) => obj.hidden = true)
+      console.log(this.historyList);
+      this.loadDone = true;
+    })
+  }
+
+  hide(index){
+    this.historyList[index].hidden = !this.historyList[index].hidden
   }
 
 }

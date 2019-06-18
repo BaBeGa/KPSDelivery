@@ -21,7 +21,6 @@ const routes: Routes = [
   { path: 'foodstore', loadChildren: './pages/foodstore/foodstore.module#FoodstorePageModule' },
   { path: 'helpcenter', loadChildren: './pages/helpcenter/helpcenter.module#HelpcenterPageModule' },
   { path: 'history', loadChildren: './pages/history/history.module#HistoryPageModule' },
-  { path: 'history-detail', loadChildren: './pages/history-detail/history-detail.module#HistoryDetailPageModule' },
   { path: 'legalnterm', loadChildren: './pages/legalnterm/legalnterm.module#LegalntermPageModule' },
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
   { path: 'main', loadChildren: './pages/main/main.module#MainPageModule' },
@@ -37,7 +36,6 @@ const routes: Routes = [
   { path: 'edit-profile', loadChildren: './pages/edit-profile/edit-profile.module#EditProfilePageModule' },
   { path: 'setting', loadChildren: './pages/setting/setting.module#SettingPageModule' },
   { path: 'cart', loadChildren: './pages/cart/cart.module#CartPageModule' },
-  { path: 'customerorderdetail', loadChildren: './pages/customerorderdetail/customerorderdetail.module#CustomerorderdetailPageModule' },
   { path: 'driverworkhistory', loadChildren: './pages/driverworkhistory/driverworkhistory.module#DriverworkhistoryPageModule' },
 ];
 

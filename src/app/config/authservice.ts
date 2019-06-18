@@ -273,6 +273,43 @@ export class AuthService {
     })
   }
 
+  async apiChangePassword(userId,body){
+    this.getToken = await JSON.parse(localStorage.getItem('userToken'));
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.getToken);
+    return new Promise((resolve) => {
+      this.http.post(this.apiUrl + 'api/users/'+userId+'/changepassword', body, { headers: headers }).pipe(map((res:Response) => res.json())).subscribe(async data=> {
+        resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        if(1){
+          const alert = await this.alertController.create({
+            header: 'รหัสผ่านไม่ถูกต้อง',
+            message: 'กรุณาตรวจเซ็ครหัสผ่านเดิมหรือรหัสผ่านใหม่ แล้วลองใหม่อีกครั้ง',
+            buttons: [
+              {
+                text: 'ตกลง',
+                handler: async () => {
+                }
+              },
+              {
+                text: 'ยกเลิก',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel: blah');
+                }
+              }
+            ]
+          });
+      
+          await alert.present();
+        }
+      })
+    })
+  }
+
   //new
   async apiPostDataService(type, post) {
     this.getToken = await JSON.parse(localStorage.getItem('userToken'));
@@ -285,14 +322,6 @@ export class AuthService {
       }, async err =>{
         console.log(err)
         let errhandle:any = err
-        console.log(errhandle._body)
-        const toast = await this.toastCtrl.create({
-          showCloseButton: true,
-          message: 'ข้อผิดพลาด '+errhandle.status,
-          duration: 3000,
-          position: 'bottom'
-        });
-        toast.present();
         if(errhandle.status == 401){
           const alert = await this.alertController.create({
             header: 'Unauthorized',
@@ -318,6 +347,30 @@ export class AuthService {
           });
       
           await alert.present();
+        }else if(errhandle.status == 404){
+          const alert = await this.alertController.create({
+            header: 'ร้านค้าไม่พร้อมให้บริการ',
+            message: 'กรุณาสั่งซื้ออีกครั้ง ภายหลัง',
+            buttons: [
+              {
+                text: 'ตกลง',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel: blah');
+                }
+              }
+            ]
+          });
+          await alert.present();
+        }else{
+          const toast = await this.toastCtrl.create({
+            showCloseButton: true,
+            message: 'ข้อผิดพลาด '+errhandle.status,
+            duration: 3000,
+            position: 'bottom'
+          });
+          toast.present();
         }
       })
     })
@@ -539,13 +592,24 @@ export class AuthService {
         console.log(err)
         let errhandle:any = err
         console.log(errhandle._body)
-        const toast = await this.toastCtrl.create({
-          showCloseButton: true,
-          message: 'ข้อผิดพลาด '+errhandle.status,
-          duration: 3000,
-          position: 'bottom'
-        });
-        toast.present();
+        if(errhandle.status == 403){
+          const alert = await this.alertController.create({
+            header: 'ไม่สามารถรับงานได้',
+            message: 'คุณไม่สามารถรับงานนี้ได้เนื่องจาก มีผู้รับออเดอร์นี้ไปแล้ว.',
+            buttons: ['ตกลง']
+          });
+      
+          await alert.present();
+        }else{
+          const toast = await this.toastCtrl.create({
+            showCloseButton: true,
+            message: 'ข้อผิดพลาด '+errhandle.status,
+            duration: 3000,
+            position: 'bottom'
+          });
+          toast.present();
+        }
+
       })
     })
   }
@@ -573,15 +637,15 @@ export class AuthService {
     })
   }
 
-  apiDriverGetHistory(driverId){
+  apiDriverGetHistory(){
     var header = new Headers;
     var accessToken = JSON.parse(localStorage.getItem('userToken'));
-    header.append('Content-Type','application/json');
-    header.append('token',accessToken);
+    header.append('Accept','application/json');
+    header.append('Authorization', 'Bearer '+accessToken);
     return new Promise((resolve) => {
-      this.http.get(this.apiDriverUrl + '/driver/history/'+driverId, { headers: header }).pipe(map(res => res.json())).subscribe(data => {
-        //console.log('DriverOrder: ',data);
+      this.http.get(this.apiUrl + 'api/orders-drivers', { headers: header }).pipe(map(res => res.json())).subscribe(data => {
         resolve(data);
+        localStorage.setItem('userToken',JSON.parse(data.access_token))
       }, async err =>{
         console.log(err)
         let errhandle:any = err

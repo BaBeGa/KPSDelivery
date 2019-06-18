@@ -8,7 +8,6 @@ import { IonicModule } from '@ionic/angular';
 import { HistoryPage } from './history.page';
 
 const routes: Routes = [
-  { path: 'history-detail', loadChildren: '../history-detail/history-detail.module#HistoryDetailPageModule' },
   {
     path: '',
     component: HistoryPage

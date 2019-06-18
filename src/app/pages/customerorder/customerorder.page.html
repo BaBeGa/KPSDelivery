@@ -1,16 +1,14 @@
 <ion-header>
-    <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-    </ion-buttons>
-
-    <ion-toolbar>
+    <ion-toolbar color="success">
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
       <ion-title>รายการสั่งซื้อ</ion-title>
     </ion-toolbar>
+</ion-header>
   
-  </ion-header>
   
-  
-  <ion-content>
+<ion-content>
     <div *ngIf="userInfo == null">
       กรุณาเข้าสู่ระบบ
     </div>
@@ -19,7 +17,7 @@
     <ion-card *ngFor="let order of this.orders; let i = index">
       <ion-card-content>
         <ion-item button="true" (click)="hide(i)">
-            <ion-label>รายการสั่งชื้อที่ {{order.id}}</ion-label>
+            <ion-label>รายการสั่งซื้อที่ {{order.id}}</ion-label>
             <ion-text color="medium">
                 <h5>{{order.order_date}}</h5>
             </ion-text>
@@ -34,7 +32,6 @@
         <h2 color="light" margin-bottom>{{order.restaurant.address}}</h2> -->
         <ion-row>
           <ion-col size="12" padding>
-  
             <ion-list margin-bottom>
               <ion-list-header color="light">
                 <ion-label class="fw700">ข้อมูลออเดอร์</ion-label>
@@ -82,6 +79,11 @@
                 <ion-col *ngIf="order.total_lenght == null">รอการคำนวณ</ion-col>
               </ion-item>
               <ion-item>
+                  <ion-label color="dark" position="stacked">ค่าส่งอาหาร:</ion-label>
+                  <ion-col *ngIf="order.total_price != null">{{order.total_price-order.food_price}}</ion-col>
+                  <ion-col *ngIf="order.total_price == null">รอการคำนวณ</ion-col>
+              </ion-item>
+              <ion-item>
                 <ion-label color="dark" position="stacked">ราคารวมค่าส่ง:</ion-label>
                 <ion-col *ngIf="order.total_price != null">{{order.total_price}}</ion-col>
                 <ion-col *ngIf="order.total_price == null">รอการคำนวณ</ion-col>
@@ -94,13 +96,14 @@
                 <ion-col *ngIf="order.status == 'shipped'">ส่งแล้ว</ion-col>
                 <ion-button *ngIf="order.status == 'shipped'" color="warning" slot="end" size="small" (click)="Ratings(order)">ให้คะแนน</ion-button>
               </ion-item>
-              
             </ion-list>
           </ion-col>
         </ion-row>
       </ion-grid>
+      <ion-button *ngIf="order.status == 'ordering'" color="warning" expand="full" (click)="cancelOrder(order.id)">ยกเลิกคำสั่งซื้อ</ion-button>
+      <ion-button *ngIf="order.status == 'shipped'" color="success" expand="full" (click)="Ratings(order)">เสร็จสิ้น</ion-button>
       </div>
     </ion-card>
     </div>
     
-    </ion-content>
+</ion-content>

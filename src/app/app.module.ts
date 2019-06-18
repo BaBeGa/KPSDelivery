@@ -33,7 +33,6 @@ import { CustomeraddressPage } from 'src/app/pages/customeraddress/customeraddre
 import { CustomeravatarPage } from 'src/app/pages/customeravatar/customeravatar.page';
 import { DriverregisterPage } from 'src/app/pages/driverregister/driverregister.page';
 import { FoodAddRemovePage } from 'src/app/pages/food-add-remove/food-add-remove.page';
-import { HistoryDetailPage } from 'src/app/pages/history-detail/history-detail.page';
 import { LegalntermPage } from 'src/app/pages/legalnterm/legalnterm.page';
 import { MainPage } from 'src/app/pages/main/main.page';
 
@@ -44,7 +43,6 @@ import { MainPage } from 'src/app/pages/main/main.page';
     CustomeravatarPage,
     DriverregisterPage,
     FoodAddRemovePage,
-    HistoryDetailPage,
     LegalntermPage,
     MainPage,
     CheckPasswordDirective
@@ -55,7 +53,6 @@ import { MainPage } from 'src/app/pages/main/main.page';
     CustomeravatarPage,
     DriverregisterPage,
     FoodAddRemovePage,
-    HistoryDetailPage,
     LegalntermPage,
     MainPage
   ],

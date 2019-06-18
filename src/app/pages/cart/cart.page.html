@@ -3,7 +3,7 @@
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
-      <ion-title>ตะกร้าสินค้า</ion-title>
+      <ion-title>รถเข็นสินค้า</ion-title>
     </ion-toolbar>
   </ion-header>
    
@@ -12,9 +12,9 @@
       <ion-item *ngFor="let item of selectedItems" lines="inset">
         {{ item.food_name }} <br> ราคา {{ item.food_price }}บาท/ชิ้น
         <ion-col>
-            <ion-icon name="remove" (click)="decreaseItem(item)" padding-right></ion-icon>
-            {{ item.food_qty }}
             <ion-icon name="add" (click)="increaseItem(item)" padding-left></ion-icon>
+            {{ item.food_qty }}
+            <ion-icon name="remove" (click)="decreaseItem(item)" padding-right></ion-icon>
         </ion-col>
         <ion-label slot="end" text-right>{{ (item.food_price * item.food_qty) }} บาท</ion-label>
         <ion-col>
@@ -31,7 +31,7 @@
 
     <div *ngIf="this.items.length <= 0" text-center>
         <ion-icon large src="assets/icon/emptybasket.svg"></ion-icon>
-        <h5>ไม่มีสินค้าในตะกร้า</h5>
+        <h5>ไม่มีสินค้าในรถเข็น</h5>
     </div>
   </ion-content>
 

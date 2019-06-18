@@ -236,7 +236,7 @@ export class AppComponent {
       }],
       buttons: [
         {
-          text: 'สั่งชื้ออีกครั้ง',
+          text: 'สั่งซื้ออีกครั้ง',
           handler: async (data) => {
             console.log('Confirm Okay',message);
             console.log('Confirm Okay',data.limit);
@@ -274,7 +274,7 @@ export class AppComponent {
             }
           }
         },{
-          text: 'ยกเลิก',
+          text: 'ยกเลิกการสั่งซื้อ',
           role: 'cancel',
           cssClass: 'cancel',
           handler: (data) => {
@@ -293,7 +293,7 @@ export class AppComponent {
   }
 
   async customerAlert(message:any) {
-    let msg = message.driverName+'<br/>'+message.driverPhone
+    let msg = 'ชื่อผู้ส่ง :'+message.driverName+'<br/>โทร :'+message.driverPhone
     const alert = await this.alertCtrl.create({
       header: message.title,
       message: msg,
@@ -303,6 +303,7 @@ export class AppComponent {
           role: 'cancel',
           cssClass: 'cancel',
           handler: (blah) => {
+            this.router.navigateByUrl('customertabs/ctabs/customerorder');
             console.log('Confirm Cancel: blah');
           }
         }

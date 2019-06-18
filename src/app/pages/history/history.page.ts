@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { OrderService } from "src/app/services/order.service";
-import { Headers } from '@angular/http';
+import { AuthService } from "src/app/config/authservice";
 import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
@@ -11,40 +11,40 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class HistoryPage implements OnInit {
   userToken: any;
+  userInfo: any;
   orderHistory = [];
   constructor(
     public navCtrl: NavController, 
     public orderService: OrderService,
     private router:Router,
+    private historyService: AuthService
   ) { }
 
   ngOnInit() {
     console.log('ionViewDidLoad HistoryPage');
-    this.userToken = JSON.parse(localStorage.getItem('userToken'));
-    this.getHistory();
-  }
-
-  async getHistory() {
     this.orderHistory = JSON.parse(localStorage.getItem('historyOrders'));
   }
 
-  rateRestaurant(order_id) {
-    let navigationExtras: NavigationExtras = {
-      state: {
-        order_id: order_id
-      }
-    };
-    this.router.navigate(['raterestaurant'], navigationExtras);
+  async ionViewWillEnter() {
+    await this.orderService.initializeOrders();
+    this.orderHistory = JSON.parse(localStorage.getItem('historyOrders'));
+    this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    console.log(this.orderHistory);
   }
 
-  moreDetails(order_id) {
+  hide(index){
+    this.orderHistory[index].hidden = !this.orderHistory[index].hidden
+  }
 
-    let navigationExtras: NavigationExtras = {
-      state: {
-        order_id: order_id
-      }
-    };
-    this.router.navigate(['history-detail'], navigationExtras);
+  delHistory(index){
+    let orderId = this.orderHistory[index].id;
+    let body = {
+      _method: 'put',
+      status: 'delete'
+    }
+    this.historyService.apiPostDataService('orders/'+orderId,body).then(res=>{
+      this.router.navigateByUrl('customertabs/ctabs/history');
+    })
   }
 
 }

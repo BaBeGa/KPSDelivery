@@ -126,13 +126,13 @@
 
   <ion-row>
     <div padding-left>
-      จำนวนร้านค้าที่มี {{ restaurantNum }}
+      จำนวนร้านค้าที่มี {{ restaurantNum }} ร้าน
     </div>
   </ion-row>
 
   <ion-row>
     <ion-list padding>
-      <ion-item button=true *ngFor="let item of items" (click)="goInRestaurant(item.id, item.name)" no-padding>
+      <ion-item button=true *ngFor="let item of items" (click)="goInRestaurant(item)" no-padding>
         <ion-row no-padding>
           <ion-col col-3 no-padding class="img">
             <img src="http://158.108.207.4/delivery/public/images/restaurants/{{item.image}}" />
