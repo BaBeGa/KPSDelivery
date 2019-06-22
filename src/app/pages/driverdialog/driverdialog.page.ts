@@ -28,7 +28,7 @@ export class DriverdialogPage implements OnInit {
     private orderService:AuthService,
     private loadingCtrl: LoadingController,
     private launchNavigator: LaunchNavigator,
-    private router:Router
+    private router:Router,
   ) {
     
    }
@@ -112,7 +112,7 @@ export class DriverdialogPage implements OnInit {
         _method: 'put',
         status: 'waiting'
       }
-      this.loadingCtrl.create();
+      await this.loadingCtrl.create();
       console.log(this.orderStatus);
       await this.orderService.apiDriverOrder(this.order.orderid,body).then(async ()=>{
         await this.ngOnInit()
@@ -135,13 +135,24 @@ export class DriverdialogPage implements OnInit {
     
   }
 
-  clearAll(){
+  async clearAll(){
+    const loading = await this.loadingCtrl.create();
+    await loading.present();
+    let userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    let body = { 
+      id: userInfo.user.id,
+      workStatus: 1
+      }
+    await this.orderService.apiPatchUpdateUser(body).then((result)=>{
+      console.log('Update user success : ', result);
+    })
     this.state = null
     this.result = null
     this.order = null
     this.waypts = [];
-    this.orderStatus = null
+    this.orderStatus = null;
     this.driverService.delOrder();
+    loading.dismiss();
     this.router.navigateByUrl('tabs-controller')
   }
 

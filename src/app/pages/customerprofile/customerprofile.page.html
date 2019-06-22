@@ -62,7 +62,7 @@
       <ion-buttons slot="end">
           <ion-button size="small" shape="round" color="medium" (click)="openCart()">
             <ion-icon name="cart"></ion-icon>
-            <ion-badge slot="end" *ngIf="cartLength > 0">{{ this.cartLength }}</ion-badge>
+            <ion-badge slot="end" *ngIf="cartLength > 0">!</ion-badge>
           </ion-button>
       </ion-buttons>
   </ion-toolbar>
@@ -133,12 +133,19 @@
           <ion-label color="dark" position="stacked">เบอร์โทร:</ion-label>
           <ion-col>{{this.userInfo.userinfo.phonenumber}}</ion-col>
       </ion-item>
+      <ion-item>
+          <ion-label color="dark" position="stacked">คะแนน:</ion-label>
+          <ion-col>{{this.userInfo.user.avg_rating}}</ion-col>
+      </ion-item>
     </ion-list>
   </ion-card-content>
   </ion-card>
   <ion-list margin-bottom *ngIf="userInfo != null">
       <ion-item>
-          <ion-label button=true color="dark" (click)="setting()">ตั้งค่าบัญชีผู้ใช้</ion-label>
+          <ion-label button=true color="dark" (click)="setting()">แก้ไขข้อมูลส่วนตัว</ion-label>
+      </ion-item>
+      <ion-item>
+          <ion-label button=true color="dark" (click)="changePass()">เปลี่ยนรหัสผ่าน</ion-label>
       </ion-item>
       <ion-item>
           <ion-label button=true color="dark" (click)="helpcenter()">ศูนย์ช่วยเหลือ</ion-label>

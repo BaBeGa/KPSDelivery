@@ -57,6 +57,17 @@ export class AuthService {
           });
           toast.present();
         })
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'รหัสผ่านไม่ถูกต้อง',
+          duration: 4000,
+          position: 'bottom'
+        });
+        toast.present();
       })
     })
   }
@@ -273,8 +284,10 @@ export class AuthService {
     })
   }
 
-  async apiChangePassword(userId,body){
+  async apiChangePassword(body){
     this.getToken = await JSON.parse(localStorage.getItem('userToken'));
+    var userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    var userId = userInfo.user.id;
     let headers = new Headers();
     headers.append('Authorization', 'Bearer ' + this.getToken);
     return new Promise((resolve) => {
@@ -286,7 +299,7 @@ export class AuthService {
         if(1){
           const alert = await this.alertController.create({
             header: 'รหัสผ่านไม่ถูกต้อง',
-            message: 'กรุณาตรวจเซ็ครหัสผ่านเดิมหรือรหัสผ่านใหม่ แล้วลองใหม่อีกครั้ง',
+            message: 'กรุณากรอกรหัสผ่านใหม่ แล้วลองใหม่อีกครั้ง',
             buttons: [
               {
                 text: 'ตกลง',
@@ -306,6 +319,29 @@ export class AuthService {
       
           await alert.present();
         }
+      })
+    })
+  }
+
+  async apiGetCost(body){
+    this.getToken = await JSON.parse(localStorage.getItem('userToken'));
+    console.log(this.getToken);
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.getToken);
+    return new Promise ( (resolve) => {
+      this.http.post(this.apiUrl + 'api/startprice', body, { headers: headers }).pipe(map((res:Response) => res.json())).subscribe(async data=> {
+        resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
       })
     })
   }

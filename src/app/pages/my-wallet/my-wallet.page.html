@@ -8,7 +8,7 @@
     <ion-card >
       <ion-list>
         <ion-item-sliding>
-          <ion-item color="dark" >
+          <ion-item color="dark">
             <ion-icon name="person" item-left></ion-icon>
               {{ userInfo.user.name }}
           </ion-item>
@@ -26,13 +26,13 @@
         </ion-item>
         <ion-item *ngIf="allowAccept" color="assertive" >
           <ion-icon name="card" slot="start"></ion-icon>
-          หมายเลขเลขเครดิต
-          <ion-note slot="end">{{ userCreditNum }}</ion-note>
+          <ion-label>เลขเครดิต</ion-label>
+          <ion-note color="primary" slot="end">{{ userCreditNum }}</ion-note>
         </ion-item>
         <ion-item *ngIf="allowAccept" color="assertive" >
           <ion-icon name="card" slot="start"></ion-icon>
-          เครดิตคงเหลือ
-          <ion-note slot="end">{{ userCredit }}</ion-note>
+          <ion-label>เครดิตคงเหลือ</ion-label>
+          <ion-note color="success" slot="end">{{ userCredit }}</ion-note>
         </ion-item>
         <ion-item *ngIf="!allowAccept" color="assertive" >
           <ion-icon name="card" slot="start"></ion-icon>

@@ -65,7 +65,8 @@ export class CustomerprofilePage implements OnInit {
     await localStorage.clear()
     let body = { 
       id: this.userInfo.user.id,
-      workStatus: 0
+      workStatus: 0,
+      fcmToken:''
     }
     await this.userService.apiPatchUpdateUser(body).then((result)=>{
       console.log('Update user success : ', result);
@@ -175,8 +176,6 @@ export class CustomerprofilePage implements OnInit {
       console.log('get Image form gallary error!' , err);
     });
   }
-  
-
 
   async recoveryPassword() {
     const alert = await this.alertCtrl.create({
@@ -222,5 +221,9 @@ export class CustomerprofilePage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  async changePass(){
+    this.router.navigateByUrl('change-password');
   }
 }

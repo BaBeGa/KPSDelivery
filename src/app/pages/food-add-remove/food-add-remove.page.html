@@ -1,22 +1,25 @@
-<ion-content padding #popoverContent >
+<ion-content #popoverContent class="popover-page" class="position-center">
+  <ion-row>
+        <ion-button slot="end" (click)="closePopover()" color="danger">X</ion-button>
+  </ion-row>
   <div #popoverText >
     <div>
-      <ion-row text-left>
+      <ion-row text-center>
         <h1>{{ product.name }}</h1>
       </ion-row>
-      <ion-row text-center>ราคา {{ product.price }} บาท</ion-row>
+      <ion-row >ราคา {{ product.price*this.quantity }} บาท</ion-row>
     </div>
-    <div padding-top padding-bottom>
-      <ion-row text-center>
-        <div padding>
-          <ion-icon name="remove" (click)="removeProduct()"></ion-icon>
-        </div>
-        <div class="qty" padding>
-          {{ quantity }}
-        </div>
-        <div padding>
-          <ion-icon name="add" (click)="addProduct()"></ion-icon>
-        </div>
+    <div >
+      <ion-row padding-top padding-bottom>
+          <ion-col col-3 class="removeButton" (click)="removeProduct()" align-self-center>
+              <ion-icon name="remove"></ion-icon>
+          </ion-col>
+          <ion-col col-6 class="qty">
+            {{ quantity }}
+          </ion-col>
+            <ion-col col-3 class="addButton" (click)="addProduct()" align-self-center>
+            <ion-icon name="add"></ion-icon>
+          </ion-col>
       </ion-row>
     </div>
 
@@ -24,7 +27,7 @@
       <ion-button expand="block" shape="round" color="secondary" (click)="addToCart()">หยิบลงตะกร้า</ion-button>
     </div>
 
-    <div>{{ noProduct }}</div>
+    <div color="red">{{ noProduct }}</div>
 
   </div>
 </ion-content>

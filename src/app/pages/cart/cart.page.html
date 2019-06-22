@@ -22,11 +22,11 @@
         </ion-col>
       </ion-item>
       <ion-item>
-        รวม*: <span slot="end">{{ totalPrice }} บาท</span>
+        ค่าส่งโดยประมาณ: <span slot="end">{{ this.cost.data.start_price }} บาท</span>
       </ion-item>
       <ion-item>
-        หมายเหตุ *ราคายังไม่ได้รวมค่าจัดส่ง 
-      </ion-item>
+        ราคารวมประมาณ: <span slot="end">{{ totalPrice+this.cost.data.start_price }} บาท</span>
+        </ion-item>
     </ion-list>
 
     <div *ngIf="this.items.length <= 0" text-center>

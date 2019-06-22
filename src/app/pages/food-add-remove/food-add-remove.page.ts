@@ -45,7 +45,9 @@ export class FoodAddRemovePage implements OnInit {
       this.presentAlertConfirm();
       return this.closePopover();
     }
-    else {
+    else if(this.quantity == 0){
+      this.noProduct = "Please choose quantity.";
+    }else{
       this.noProduct = null;
       this.cartService.addProduct(newProduct);
       return this.closePopover();

@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
   private cart = [];
-  constructor() { }
+  loading: any;
+  constructor(
+    private loadingCtrl:LoadingController
+  ) { }
 
   getCart(){
     if(JSON.parse(localStorage.getItem('cart'))!=null){
@@ -78,5 +82,14 @@ export class CartService {
     }
     this.saveCart();
     return this.cart
+  }
+
+  async presentLoading(){
+    this.loading = await this.loadingCtrl.create();
+    await this.loading.present();
+  }
+
+  async dismiddLoading(){
+    this.loading.dismiss();
   }
 }

@@ -1,5 +1,4 @@
 :host {
-
     .position-center {
         text-align: center;
     }
@@ -12,6 +11,24 @@
     .qty {
         font-size: 20px;
         text-align: center;
+        border-top: thin solid rgb(230, 230, 230);
+        border-bottom: thin solid rgb(230, 230, 230);
+    }
+
+    .removeButton {
+       background-color: #c0c0c0;
+       border: thin solid #b1b1b1;
+       color: rgb(255, 255, 255);
+    }
+
+    .addButton {
+        background-color: #c0c0c0;
+        border: thin solid #b1b1b1;
+        color: rgb(255, 255, 255);
+    }
+
+    .putToBasket {
+        background-color: rgb(0, 185, 93);
     }
 
 }

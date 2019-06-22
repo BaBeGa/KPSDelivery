@@ -206,7 +206,15 @@ export class AppComponent {
                 driver_lon_value: this.lon,
                 driver_id: this.userInfo.user.id
               }
-              await this.userService.apiDriverOrder(message.orderid,body2);
+              await this.userService.apiDriverOrder(message.orderid,body2).then(async ()=>{
+                let body = { 
+                  id: this.userInfo.user.id,
+                  workStatus: 0
+                  }
+                await this.userService.apiPatchUpdateUser(body).then((result)=>{
+                  console.log('Update user success : ', result);
+                })
+              })
               await this.driverService.setOrder(message);  
             }).then(()=>this.router.navigateByUrl('driverdialog'))
           }
@@ -227,10 +235,12 @@ export class AppComponent {
     const alert = await this.alertCtrl.create({
       header: 'ไม่พบคนขับ',
       message: 'เพิ่มระยะทางการค้นหา:',
+      backdropDismiss: false,
       inputs: [{
         name: 'limit',
         type: 'number',
         placeholder: 'ใส่ระยะการค้นหา(กิโลเมตร)',
+        value: message.limit,
         min: 1,
         max: 20
       }],
@@ -241,7 +251,7 @@ export class AppComponent {
             console.log('Confirm Okay',message);
             console.log('Confirm Okay',data.limit);
             try{
-              if(data.limit > 0 && data.limit <20){
+              if(data.limit > 0 && data.limit <=20){
                 this.userService.apiGetFinddriver(message.orderid,data.limit*1000);
               }else if(data.limit <= 0){
                 const toast = await this.toastCtrl.create({

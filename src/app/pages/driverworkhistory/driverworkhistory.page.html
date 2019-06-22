@@ -56,8 +56,8 @@
                 <ion-col *ngIf="history.total_time == null">รอการคำนวณ</ion-col>
               </ion-item>
               <ion-item>
-                <ion-label color="dark" position="stacked">ผู้ส่ง:</ion-label>
-                <ion-col *ngIf="history.driver != null">{{history.driver.name}} หมายเลข: {{history.driver.id}}</ion-col>
+                <ion-label color="dark" position="stacked">ผู้สั่งซื้อ:</ion-label>
+                <ion-col *ngIf="history.driver != null">{{history.customer.name}}</ion-col>
                 <ion-col *ngIf="history.driver == null">รอการตอบรับ</ion-col>
               </ion-item>
               
@@ -72,8 +72,12 @@
               </ion-item>
               <ion-item>
                 <ion-label color="dark" position="stacked">ระยะทางทั้งหมด:</ion-label>
-                <ion-col *ngIf="history.total_lenght != null">{{history.total_lenght}}</ion-col>
-                <ion-col *ngIf="history.total_lenght == null">รอการคำนวณ</ion-col>
+                <ion-col *ngIf="history.total_length != null">{{history.total_length}}</ion-col>
+                <ion-col *ngIf="history.total_length == null">รอการคำนวณ</ion-col>
+              </ion-item>
+              <ion-item>
+                  <ion-label color="dark" position="stacked">ค่าธรรมเนียมการหักเครดิต:</ion-label>
+                  <ion-col *ngIf="history.percent_price != null">{{history.percent_price}} เครดิต</ion-col>
               </ion-item>
               <ion-item>
                   <ion-label color="dark" position="stacked">ค่าส่งอาหาร:</ion-label>

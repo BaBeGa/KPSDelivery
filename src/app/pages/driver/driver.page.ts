@@ -175,7 +175,7 @@ export class DriverPage implements OnInit {
   async presentToast(duration,msg){
     const toast = await this.toastCtrl.create({
       showCloseButton: true,
-      message: 'กำลังค้นหาคนขับ...',
+      message: msg,
       duration: duration,
       position: 'bottom'
     });

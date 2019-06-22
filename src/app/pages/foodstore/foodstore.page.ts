@@ -12,7 +12,7 @@ import { CartService } from "src/app/services/cart.service";
   styleUrls: ['./foodstore.page.scss'],
 })
 export class FoodstorePage implements OnInit {
-  callback:any;
+  image:any;
   data: any;
   res_id: any;
   res_name: any;
@@ -37,7 +37,7 @@ export class FoodstorePage implements OnInit {
       if (params != null){
         this.res_id = params.restaurant_id;
         this.res_name = params.restaurant_name;
-        this.callback = params.callback;
+        this.image = params.image;
         this.goInRestaurant();
       }
     });
@@ -93,9 +93,5 @@ export class FoodstorePage implements OnInit {
       this.cartLength = this.cartService.getCartLength();
       localStorage.setItem('cartLength',this.cartLength.toString())
     })  
-  }
-
-  ionViewDidLeave() {
-    this.callback = this.cartService.getCartLength();
   }
 }

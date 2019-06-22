@@ -23,13 +23,16 @@ export class HistoryPage implements OnInit {
   ngOnInit() {
     console.log('ionViewDidLoad HistoryPage');
     this.orderHistory = JSON.parse(localStorage.getItem('historyOrders'));
+    this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
   }
 
   async ionViewWillEnter() {
-    await this.orderService.initializeOrders();
-    this.orderHistory = JSON.parse(localStorage.getItem('historyOrders'));
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    console.log(this.orderHistory);
+    if(this.userInfo != null){
+      await this.orderService.initializeOrders();
+      this.orderHistory = JSON.parse(localStorage.getItem('historyOrders'));
+      console.log(this.orderHistory);
+    }
   }
 
   hide(index){

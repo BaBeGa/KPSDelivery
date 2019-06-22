@@ -37,6 +37,7 @@ const routes: Routes = [
   { path: 'setting', loadChildren: './pages/setting/setting.module#SettingPageModule' },
   { path: 'cart', loadChildren: './pages/cart/cart.module#CartPageModule' },
   { path: 'driverworkhistory', loadChildren: './pages/driverworkhistory/driverworkhistory.module#DriverworkhistoryPageModule' },
+  { path: 'change-password', loadChildren: './pages/change-password/change-password.module#ChangePasswordPageModule' },
 ];
 
 @NgModule({

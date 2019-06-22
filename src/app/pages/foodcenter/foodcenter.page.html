@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar color="primary" >
+  <ion-toolbar color="success" >
       <ion-searchbar  debounce="1000" placeholder="ค้นหา" (ionChange)="onSearchInput($event)"></ion-searchbar>
       <ion-buttons slot="end">
           <ion-button id="button" size="small" shape="round" color="medium" (click)="openCart()">
             <ion-icon name="cart"></ion-icon>
-            <ion-badge id="notifications-badge"  slot="end" *ngIf="this.cartLength > 0">{{ this.cartLength }}</ion-badge>
+            <ion-badge id="notifications-badge"  slot="end" *ngIf="this.cartLength > 0">!</ion-badge>
           </ion-button>
       </ion-buttons>
   </ion-toolbar>
@@ -126,22 +126,101 @@
 
   <ion-row>
     <div padding-left>
-      จำนวนร้านค้าที่มี {{ restaurantNum }} ร้าน
+      หมวดหมู่ {{this.categoryType}}
+    </div>
+  </ion-row>
+
+  <ion-row>
+    <div padding-left>
+     จำนวนร้านค้าที่มี {{ restaurantNum }} ร้าน
     </div>
   </ion-row>
 
   <ion-row>
     <ion-list padding>
       <ion-item button=true *ngFor="let item of items" (click)="goInRestaurant(item)" no-padding>
-        <ion-row no-padding>
+        <ion-row no-padding >
           <ion-col col-3 no-padding class="img">
             <img src="http://158.108.207.4/delivery/public/images/restaurants/{{item.image}}" />
           </ion-col>
           <ion-col col-6 align-self-center>
             {{item.name}}
           </ion-col>
-          <ion-col text-right col-3 align-self-center>
-            {{item.status}}
+          <div class="star">
+            <ion-col *ngIf="item.num_rating != null && item.num_rating >=0.5 && item.num_rating < 1" text-right >
+              <ion-icon size="small" name="star-half" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+            </ion-col>
+            <ion-col *ngIf="item.num_rating != null && item.num_rating == 1" text-right >
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+            </ion-col>
+            <ion-col *ngIf="item.num_rating != null && item.num_rating >=1.5 && item.num_rating < 2" text-right >
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star-half" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+            </ion-col>
+            <ion-col *ngIf="item.num_rating != null && item.num_rating == 2" text-right >
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+            </ion-col>
+            <ion-col *ngIf="item.num_rating != null && item.num_rating >=2.5 && item.num_rating < 3" text-right >
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star-half" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+            </ion-col>
+            <ion-col *ngIf="item.num_rating != null && item.num_rating == 3" text-right >
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+            </ion-col>
+            <ion-col *ngIf="item.num_rating != null && item.num_rating >=3.5 && item.num_rating < 4" text-right >
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star-half" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+            </ion-col>
+            <ion-col *ngIf="item.num_rating != null && item.num_rating == 4" text-right >
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+            </ion-col>
+            <ion-col *ngIf="item.num_rating != null && item.num_rating >=4.5 && item.num_rating < 5" text-right >
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star-half" ></ion-icon>
+            </ion-col>
+            <ion-col *ngIf="item.num_rating != null && item.num_rating == 5" text-right >
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star-outline" ></ion-icon>
+            </ion-col>
+          </div>
+          
+          <ion-col *ngIf="item.num_rating == null" text-right col-3 align-self-center>
+            ยังไม่มีคะแนน
           </ion-col>
         </ion-row>
       </ion-item>

@@ -24,6 +24,7 @@ export class FoodcenterPage implements OnInit {
   myGroup:any;
   product:any;
   cart:any;
+  categoryType:any;
   constructor(public navCtrl: NavController,
      public modalCtrl: ModalController,
      public inAppService: AuthService,
@@ -108,7 +109,7 @@ export class FoodcenterPage implements OnInit {
         queryParams: {
           restaurant_id: item.id,
           restaurant_name: item.name,
-          callback: this.callbackcartLength
+          image: item.image
         }
       };
       this.router.navigate(['foodstore'], navigationExtras );
@@ -155,12 +156,8 @@ export class FoodcenterPage implements OnInit {
     this.router.navigateByUrl('cart');
   }
 
-  async notifications(){
-    this.router.navigateByUrl('notification');
-  }
-
   category(keyword) {
-
+    this.categoryType = keyword;
     let postData = new FormData();
     postData.append('search', keyword);
 

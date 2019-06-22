@@ -45,7 +45,7 @@ export class EditProfilePage implements OnInit {
       firstname: this.userInfo.userinfo.firstname,
       lastname: this.userInfo.userinfo.lastname,
       email: this.userInfo.user.email,
-      type: this.userType,
+      type: this.userInfo.user.type,
       phonenumber: this.userInfo.userinfo.phonenumber,
       address: this.userInfo.userinfo.address,
       province: this.userInfo.userinfo.province,
@@ -69,7 +69,7 @@ export class EditProfilePage implements OnInit {
       });
 
       toast.present();
-      this.router.navigateByUrl('customerprofile');
+      this.router.navigateByUrl('customertabs/ctabs/customerprofile');
     });
   }
 

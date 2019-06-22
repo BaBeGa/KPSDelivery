@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, ToastController } from "@ionic/angular";
+import { AlertController, ToastController, LoadingController } from "@ionic/angular";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { CartService } from "../../services/cart.service";
 import { OrderService } from "src/app/services/order.service";
@@ -17,9 +17,12 @@ export class CartPage implements OnInit {
   items = [];
   lat: any;
   lon: any;
+  loading:any;
+  cost:any;
   constructor(
     private cartService: CartService,
     public alertController: AlertController,
+    private loadingCtrl:LoadingController,
     public toastCtrl: ToastController,
     private geolocation: Geolocation,
     private authService: AuthService,
@@ -27,19 +30,17 @@ export class CartPage implements OnInit {
     private orderService: OrderService
     ) { }
 
-  ngOnInit() {
-    this.initialCart();
-    this.geolocation.getCurrentPosition().then((resp)=>{
+  async ngOnInit() {
+    await this.geolocation.getCurrentPosition().then((resp)=>{
       this.lat= resp.coords.latitude, 
       this.lon = resp.coords.longitude 
     });
+    this.initialCart();
   }
 
-  ionViewWillEnter() {
-    this.geolocation.getCurrentPosition().then((resp)=>{
-      this.lat= resp.coords.latitude, 
-      this.lon = resp.coords.longitude 
-    });
+  async ionViewWillEnter() {
+    //this.loading = await this.loadingCtrl.create();
+    //await this.loading.present();
   }
 
   initialCart(){
@@ -68,6 +69,20 @@ export class CartPage implements OnInit {
     console.log('cart page resItems',this.resItems);
     console.log('cart page resobj',resObj);
     this.totalPrice = this.selectedItems.reduce((a, b) => a + (b.food_qty * b.food_price), 0);//a mean oldresult of func
+    this.initialCost();
+  }
+
+  initialCost(){
+    let body = {
+      customer_lat_value:this.lat,
+      customer_lon_value:this.lon,
+      restaurant_id:this.selectedItems[0].restaurant_id
+    }
+    this.authService.apiGetCost(body).then(res=>{
+      this.cost = res;
+      console.log(this.cost);
+      //this.loading.dismiss();
+    })
   }
 
   increaseItem(item){
@@ -121,11 +136,12 @@ export class CartPage implements OnInit {
   async sendOrder() {
     let alert = await this.alertController.create({
       header: 'การยืนยัน',
-      message: "ยืนยันที่จะสั่งซื้อหรือไม่",
+      message: "ยืนยันที่จะสั่งซื้อหรือไม่<br/><br/>ระยะการค้นหาคนส่งอาหาร",
       inputs: [{
         name: 'limit',
         placeholder: 'ใส่ระยะการค้นหา(กิโลเมตร)',
         type: 'number',
+        value: 5,
         min: 1,
         max: 20
       }],
@@ -216,7 +232,7 @@ export class CartPage implements OnInit {
         position: 'bottom'
       });
       toast.present();
-      this.router.navigateByUrl('customerorder')
+      //this.router.navigateByUrl('customerorder')
       console.log('Find Driver Success');
       console.log('Find driver service result :',result);
     });

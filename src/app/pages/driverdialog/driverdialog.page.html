@@ -102,14 +102,14 @@
             <ion-item>
                 <ion-label>ค่าส่งอาหาร</ion-label>
                 <ion-text color="medium">
-                  <h5 *ngIf="this.result.totalPrice != null">{{this.result.totalPrice-this.result.foodPrice}} บาท</h5>
+                  <h5 *ngIf="this.result.totalPrice != null">{{this.result.totalPrice}} บาท</h5>
                   <h5 *ngIf="this.result.totalPrice == null">รอการคำนวณ</h5>
                 </ion-text>
             </ion-item>
             <ion-item>
               <ion-label>ราคารวม</ion-label>
               <ion-text color="medium">
-                <h5 *ngIf="this.result.totalPrice != null">{{this.result.totalPrice}} บาท</h5>
+                <h5 *ngIf="this.result.totalPrice != null">{{this.result.totalPrice+this.result.foodPrice}} บาท</h5>
                 <h5 *ngIf="this.result.totalPrice == null">รอการคำนวณ</h5>
               </ion-text>
             </ion-item>

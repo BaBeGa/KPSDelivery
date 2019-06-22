@@ -9,7 +9,7 @@
     <ion-buttons slot="end">
         <ion-button id="button" shape="round" color="medium" (click)="openCart()">
           <ion-icon name="cart"></ion-icon>
-          <ion-badge id="notifications-badge"  slot="end" *ngIf="this.cartLength > 0">{{ this.cartLength }}</ion-badge>
+          <ion-badge id="notifications-badge"  slot="end" *ngIf="this.cartLength > 0">!</ion-badge>
         </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -19,7 +19,7 @@
 
 <ion-content class="bg">
   <ion-item >
-    <img src="assets/imgs/breakfast001.jpg">
+    <img src="http://158.108.207.4/delivery/public/images/restaurants/{{this.image}}">
   </ion-item>
   
   <ion-list>
