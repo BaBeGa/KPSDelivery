@@ -26,7 +26,7 @@ export class CustomerorderPage implements OnInit {
   ngOnInit() {
     console.log('ionViewDidLoad CustomerorderPage');
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    this.orders = JSON.parse(localStorage.getItem('inprocessOrders'));
+    //this.orders = JSON.parse(localStorage.getItem('inprocessOrders'));
     this.userType = JSON.parse(localStorage.getItem('userType'));
     console.log(this.orders)
   }
@@ -56,6 +56,44 @@ export class CustomerorderPage implements OnInit {
       }
     };
     this.router.navigate(['raterestaurant'], navigationExtras);
+  }
+
+  async Dofinish(orderId){
+    const alert = await this.alertCtrl.create({
+      header: 'เสร็จสิ้นการสั่งซื้อ',
+      message: 'คุณต้องการยืนยัน การเสร็จสิ้นรายการสั่งซื้อนี้ หรือไม่?',
+      buttons: [
+        {
+          text: 'ยืนยัน',
+          handler: async () => {
+            let postData = new FormData();
+            postData.append('_method', 'put');
+            postData.append('status', 'finish');
+            await this.userService.apiPostDataService('orders/'+orderId,postData).then(async res=>{
+              const toast = await this.toastCtrl.create({
+                message: 'ยืนยันเสร็จสิ้นรายการสั่งซื้อเรียบร้อยแล้ว.',
+                duration: 2000
+              });
+              toast.present();
+            })
+            if(this.userType == 'customer'){
+              this.router.navigateByUrl('customertabs/ctabs/history')
+            }else{
+              this.router.navigateByUrl('history')
+            }
+          }
+        },{
+          text: 'ยกเลิก',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   async cancelOrder(orderId){

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,9 @@ export class CartService {
   private cart = [];
   loading: any;
   constructor(
-    private loadingCtrl:LoadingController
+    private loadingCtrl:LoadingController,
+    private alertController:AlertController,
+    private router:Router
   ) { }
 
   getCart(){
@@ -20,9 +23,26 @@ export class CartService {
     }
   }
 
-  addProduct(product){
-    this.cart.push(product);
-    this.saveCart();
+  async addProduct(product){
+    if(product.restaurant_id != this.cart[0].restaurant_id){
+      const alert = await this.alertController.create({
+        header: 'ไม่สารมารถเพิ่มอาหารได้',
+        message: 'กรุณาเลือกอาหารที่อยู่ในร้านเดียวกัน',
+        buttons: [
+          {
+            text: 'ตกลง',
+            handler: async () => {
+              console.log('Confirm Okay');
+              this.router.navigateByUrl('customertabs/ctabs/foodcenter')
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }else{
+      this.cart.push(product);
+      this.saveCart();
+    }
   }
 
   increaseItem(item){
@@ -62,7 +82,13 @@ export class CartService {
     if(JSON.parse(localStorage.getItem('cart'))!=null){
       this.cart = JSON.parse(localStorage.getItem('cart'));
     }
-    return this.cart.length;
+    let length=0;
+    for (let obj of this.cart) {
+      length += obj.food_qty;
+    }
+    console.log(this.cart)
+    console.log("cart length = "+length)
+    return length;
   }
   
   clearCart(){

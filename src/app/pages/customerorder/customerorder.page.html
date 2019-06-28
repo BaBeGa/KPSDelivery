@@ -19,7 +19,7 @@
         <ion-item button="true" (click)="hide(i)">
             <ion-label>รายการสั่งซื้อที่ {{order.id}}</ion-label>
             <ion-text color="medium">
-                <h5>{{order.order_date}}</h5>
+                <h5>{{order.order_date.slice(8)}}-{{order.order_date.slice(5,-3)}}-{{order.order_date.slice(0,-6)}}</h5>
             </ion-text>
             <ion-icon *ngIf="order.hidden" name="arrow-dropdown" slot="end"></ion-icon>
             <ion-icon *ngIf="!order.hidden" name="arrow-dropup" slot="end"></ion-icon>
@@ -41,51 +41,67 @@
                   <ion-col>{{order.restaurant.name}}</ion-col>
               </ion-item>
               <ion-item>
+                <ion-label color="dark" position="stacked">เบอร์โทรร้าน:</ion-label>
+                <ion-col>{{order.restaurant.phonenumber}}</ion-col>
+            </ion-item>
+              <ion-item>
                   <ion-label color="dark" position="stacked">ที่ตั้งร้าน:</ion-label>
                   <ion-col>{{order.restaurant.address}}</ion-col>
               </ion-item>
               <ion-item>
                 <ion-label color="dark" position="stacked">สั่งเมื่อ:</ion-label>
-                <ion-col>{{order.created_at}}</ion-col>
+                <ion-col>
+                    {{order.required_time.slice(8, -9)}}/{{order.required_time.slice(5, -12)}}/{{order.required_time.slice(0, -15)}}  {{order.required_time.slice(11, -3)}}
+                </ion-col>
               </ion-item>
               <ion-item>
                 <ion-label color="dark" position="stacked">ส่งเมื่อ:</ion-label>
-                <ion-col *ngIf="order.shipped_time != null">{{order.shipped_time}}</ion-col>
+                <ion-col *ngIf="order.shipped_time != null">
+                    {{order.shipped_time.slice(8, -9)}}/{{order.shipped_time.slice(5, -12)}}/{{order.shipped_time.slice(0, -15)}}  {{order.shipped_time.slice(11, -3)}}
+                </ion-col>
                 <ion-col *ngIf="order.shipped_time == null">รอการจัดส่ง</ion-col>
               </ion-item>
               <ion-item>
                 <ion-label color="dark" position="stacked">เวลาที่รอ:</ion-label>
-                <ion-col *ngIf="order.total_time != null">{{order.total_time}} นาที</ion-col>
+                <ion-col *ngIf="order.total_time != null">{{order.total_time.slice(0, -3)}} ชั่วโมง</ion-col>
                 <ion-col *ngIf="order.total_time == null">รอการคำนวณ</ion-col>
               </ion-item>
-              <ion-item>
-                <ion-label color="dark" position="stacked">ผู้ส่ง:</ion-label>
-                <ion-col *ngIf="order.driver != null">{{order.driver.name}} หมายเลข: {{order.driver.id}}</ion-col>
+              <ion-item lines="none">
+                  <ion-label color="dark" position="stacked">ผู้ส่ง:</ion-label>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-avatar slot="start" *ngIf="order.driver != null">
+                    <img src="http://158.108.207.4/delivery/public/images/profiles/{{order.driver.image}}">
+                </ion-avatar>
+                <ion-col *ngIf="order.driver != null">{{order.driver.name}}</ion-col>
                 <ion-col *ngIf="order.driver == null">รอการตอบรับ</ion-col>
               </ion-item>
-              
+              <ion-item *ngIf="order.driver != null">
+                  <ion-label color="dark" position="stacked">เบอร์โทรผู้ส่ง:</ion-label>
+                  <ion-col *ngIf="order.total_time != null">{{order.driver.userinfo.phonenumber}}</ion-col>
+              </ion-item>             
               <ion-item lines="none">
                 <ion-label color="dark" position="stacked">รายการอาหาร:</ion-label>
               </ion-item>
               <ion-item *ngFor="let menu of order.orderdetails" lines="none">
                 <ion-col>{{menu.quantity}}x{{menu.menu.name}}</ion-col>
                 <ion-text color="medium">
-                  <h5>{{ menu.menu.price }} บาท</h5>
+                  <h5>{{ menu.menu.price*menu.quantity }} บาท</h5>
                 </ion-text>
               </ion-item>
               <ion-item>
                 <ion-label color="dark" position="stacked">ระยะทางทั้งหมด:</ion-label>
-                <ion-col *ngIf="order.total_lenght != null">{{order.total_lenght}}</ion-col>
-                <ion-col *ngIf="order.total_lenght == null">รอการคำนวณ</ion-col>
+                <ion-col *ngIf="order.total_length != null">{{order.total_length}} กิโลเมตร</ion-col>
+                <ion-col *ngIf="order.total_length == null">รอการคำนวณ</ion-col>
               </ion-item>
               <ion-item>
                   <ion-label color="dark" position="stacked">ค่าส่งอาหาร:</ion-label>
-                  <ion-col *ngIf="order.total_price != null">{{order.total_price-order.food_price}}</ion-col>
+                  <ion-col *ngIf="order.total_price != null">{{order.total_price-order.food_price}} บาท</ion-col>
                   <ion-col *ngIf="order.total_price == null">รอการคำนวณ</ion-col>
               </ion-item>
               <ion-item>
                 <ion-label color="dark" position="stacked">ราคารวมค่าส่ง:</ion-label>
-                <ion-col *ngIf="order.total_price != null">{{order.total_price}}</ion-col>
+                <ion-col *ngIf="order.total_price != null">{{order.total_price}} บาท</ion-col>
                 <ion-col *ngIf="order.total_price == null">รอการคำนวณ</ion-col>
               </ion-item>
               <ion-item>
@@ -94,14 +110,169 @@
                 <ion-col *ngIf="order.status == 'assigned'">คนขับกำลังเดินทางไปที่ร้าน</ion-col>
                 <ion-col *ngIf="order.status == 'waiting'">รอการนำส่ง</ion-col>
                 <ion-col *ngIf="order.status == 'shipped'">ส่งแล้ว</ion-col>
-                <ion-button *ngIf="order.status == 'shipped'" color="warning" slot="end" size="small" (click)="Ratings(order)">ให้คะแนน</ion-button>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label color="dark" position="stacked">การให้คะแนน:</ion-label>
+                <ion-col *ngIf="order.restaurant_rating != null">ร้านค้า:
+                  <div class="star">
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating >=0.5 && order.driver_rating < 1" text-right >
+                      <ion-icon size="small" name="star-half" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating == 1" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating >=1.5 && order.restaurant_rating < 2" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-half" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating == 2" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating >=2.5 && order.restaurant_rating < 3" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-half" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating == 3" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating >=3.5 && order.restaurant_rating < 4" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-half" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating == 4" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating >=4.5 && order.restaurant_rating < 5" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-half" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating == 5" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                    </ion-col>
+                  </div>
+                </ion-col>
+                <br/>
+              </ion-item>
+              <ion-item>
+                <ion-col *ngIf="order.driver_rating != null">ผู้ส่ง:
+                  <div class="star">
+                    <ion-col *ngIf=" order.driver_rating >=0.5 && order.driver_rating < 1" text-right >
+                      <ion-icon size="small" name="star-half" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf=" order.driver_rating == 1" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf=" order.driver_rating >=1.5 && order.driver_rating < 2" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-half" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf=" order.driver_rating == 2" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf=" order.driver_rating >=2.5 && order.driver_rating < 3" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-half" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf=" order.driver_rating == 3" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf=" order.driver_rating >=3.5 && order.driver_rating < 4" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-half" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf=" order.driver_rating == 4" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-outline" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf=" order.driver_rating >=4.5 && order.driver_rating < 5" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star-half" ></ion-icon>
+                    </ion-col>
+                    <ion-col *ngIf=" order.driver_rating == 5" text-right >
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                      <ion-icon size="small" name="star" ></ion-icon>
+                    </ion-col>
+                  </div>
+                </ion-col>
+                <ion-col *ngIf="order.restaurant_rating == null && order.driver_rating == null">ยังไม่ได้ให้คะแนน</ion-col>
+                <!-- <ion-button *ngIf="order.status == 'shipped' && order.restaurant_rating == null && order.driver_rating == null" color="warning" slot="end" size="small" (click)="Ratings(order)">ให้คะแนน</ion-button> -->
               </ion-item>
             </ion-list>
           </ion-col>
         </ion-row>
       </ion-grid>
       <ion-button *ngIf="order.status == 'ordering'" color="warning" expand="full" (click)="cancelOrder(order.id)">ยกเลิกคำสั่งซื้อ</ion-button>
-      <ion-button *ngIf="order.status == 'shipped'" color="success" expand="full" (click)="Ratings(order)">เสร็จสิ้น</ion-button>
+      <ion-button *ngIf="order.status == 'shipped'" color="success" expand="full" (click)="Dofinish(order.id)">เสร็จสิ้น</ion-button>
       </div>
     </ion-card>
     </div>

@@ -62,7 +62,7 @@
       <ion-buttons slot="end">
           <ion-button size="small" shape="round" color="medium" (click)="openCart()">
             <ion-icon name="cart"></ion-icon>
-            <ion-badge slot="end" *ngIf="cartLength > 0">!</ion-badge>
+            <ion-badge slot="end" *ngIf="cartLength > 0">{{ cartLength }}</ion-badge>
           </ion-button>
       </ion-buttons>
   </ion-toolbar>
@@ -72,7 +72,7 @@
         <ion-icon name="gift"></ion-icon>
         <ion-label>ที่ต้องได้รับ</ion-label>
       </ion-segment-button>
-      <ion-segment-button (click)=openMyhistory()>
+      <ion-segment-button (click)=openMyorderhistory()>
           <ion-icon name="clipboard"></ion-icon>
           <ion-label>ประวัติการสั่งซื้อ</ion-label>
       </ion-segment-button>
@@ -86,7 +86,7 @@
           <ion-icon name="gift"></ion-icon>
           <ion-label>ที่ต้องได้รับ</ion-label>
         </ion-segment-button>
-        <ion-segment-button (click)=openMyhistory()>
+        <ion-segment-button (click)=openMyorderhistory()>
             <ion-icon name="clipboard"></ion-icon>
             <ion-label>ประวัติการสั่งซื้อ</ion-label>
         </ion-segment-button>
@@ -114,14 +114,14 @@
           <ion-col>{{this.userInfo.userinfo.firstname+' '+this.userInfo.userinfo.lastname}}</ion-col>
       </ion-item>
       <ion-item>
-          <ion-label color="dark" position="stacked">วันเกิด:(ปี-เดือน-วัน)</ion-label>
-          <ion-col>{{this.userInfo.userinfo.dob}}</ion-col>
+          <ion-label color="dark" position="stacked">วันเกิด:</ion-label>
+          <ion-col>{{this.userInfo.userinfo.dob.slice(8)}}/{{this.userInfo.userinfo.dob.slice(5,-3)}}/{{this.userInfo.userinfo.dob.slice(0,-6)}}</ion-col>
       </ion-item>
       <ion-item lines="none">
           <ion-label color="dark" position="stacked">ที่อยู่:</ion-label>
       </ion-item>
       <ion-item lines="none">
-          <ion-label>{{this.userInfo.userinfo.address+'  ตำบล.'+this.userInfo.userinfo.subdistrict}}</ion-label>
+          <ion-label>{{this.userInfo.userinfo.address+'  ตำบล '+this.userInfo.userinfo.subdistrict}}</ion-label>
       </ion-item>
       <ion-item lines="none">
           <ion-label>{{'อำเภอ '+this.userInfo.userinfo.district +'  จังหวัด '+this.userInfo.userinfo.province}}</ion-label>
@@ -133,9 +133,10 @@
           <ion-label color="dark" position="stacked">เบอร์โทร:</ion-label>
           <ion-col>{{this.userInfo.userinfo.phonenumber}}</ion-col>
       </ion-item>
-      <ion-item>
+      <ion-item *ngIf="this.userType == 'driver'">
           <ion-label color="dark" position="stacked">คะแนน:</ion-label>
-          <ion-col>{{this.userInfo.user.avg_rating}}</ion-col>
+          <ion-col *ngIf="this.userInfo.user.avg_rating != null">{{this.userInfo.user.avg_rating}}</ion-col>
+          <ion-col *ngIf="this.userInfo.user.avg_rating == null">ยังไม่มีคะแนน</ion-col>
       </ion-item>
     </ion-list>
   </ion-card-content>
@@ -147,9 +148,9 @@
       <ion-item>
           <ion-label button=true color="dark" (click)="changePass()">เปลี่ยนรหัสผ่าน</ion-label>
       </ion-item>
-      <ion-item>
+      <!-- <ion-item>
           <ion-label button=true color="dark" (click)="helpcenter()">ศูนย์ช่วยเหลือ</ion-label>
-      </ion-item>
+      </ion-item> -->
   </ion-list>
   <ion-button color="danger" expand="block" (click)="logout()" *ngIf="userInfo != null">
     ออกจากระบบ

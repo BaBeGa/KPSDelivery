@@ -91,14 +91,14 @@
             
                 <ion-item>
                   <ion-label color="primary">ลูกค้า</ion-label>
-                  <ion-radio *ngIf="this.userInfo.user.type == 'customer'" slot="start" (ionSelect)="settype('customer')" checked></ion-radio>
-                  <ion-radio *ngIf="this.userInfo.user.type != 'customer'" slot="start" (ionSelect)="settype('driver')" checked></ion-radio>
+                  <ion-radio *ngIf="this.userType == 'customer'" slot="start" (ionSelect)="settype('customer')" checked></ion-radio>
+                  <ion-radio *ngIf="this.userType != 'customer'" slot="start" (ionSelect)="settype('customer')"></ion-radio>
                 </ion-item>
             
                 <ion-item>
                   <ion-label color="primary">ผู้ส่งอาหาร</ion-label>
-                  <ion-radio *ngIf="this.userInfo.user.type == 'driver'" slot="start" checked></ion-radio>
-                  <ion-radio *ngIf="this.userInfo.user.type != 'driver'" slot="start" (ionSelect)="settype('driver')" ></ion-radio>
+                  <ion-radio *ngIf="this.userType == 'driver'" slot="start" (ionSelect)="settype('driver')" checked></ion-radio>
+                  <ion-radio *ngIf="this.userType != 'driver'" slot="start" (ionSelect)="settype('driver')" ></ion-radio>
                 </ion-item>
               </ion-radio-group>
 

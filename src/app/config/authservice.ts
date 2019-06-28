@@ -381,7 +381,6 @@ export class AuthService {
               }
             ]
           });
-      
           await alert.present();
         }else if(errhandle.status == 404){
           const alert = await this.alertController.create({

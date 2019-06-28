@@ -22,7 +22,7 @@ export class HistoryPage implements OnInit {
 
   ngOnInit() {
     console.log('ionViewDidLoad HistoryPage');
-    this.orderHistory = JSON.parse(localStorage.getItem('historyOrders'));
+    //this.orderHistory = JSON.parse(localStorage.getItem('historyOrders'));
     this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
   }
 
@@ -37,6 +37,15 @@ export class HistoryPage implements OnInit {
 
   hide(index){
     this.orderHistory[index].hidden = !this.orderHistory[index].hidden
+  }
+
+  Ratings(order){
+    let navigationExtras: NavigationExtras = {
+      state: {
+        order: order
+      }
+    };
+    this.router.navigate(['raterestaurant'], navigationExtras);
   }
 
   delHistory(index){

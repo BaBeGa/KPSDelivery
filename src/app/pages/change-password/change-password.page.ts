@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class ChangePasswordPage implements OnInit {
 
   public onChangeForm: FormGroup;
+  userType:any;
   constructor(
     private userService: AuthService,
     private formBuilder: FormBuilder,
@@ -21,6 +22,7 @@ export class ChangePasswordPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.userType = JSON.parse(localStorage.getItem('userType'));
     console.log('ngOnit changePass');
     this.onChangeForm = this.formBuilder.group({
       'oldpassword': [null, Validators.compose([
@@ -62,6 +64,11 @@ export class ChangePasswordPage implements OnInit {
               duration: 3000
             });
             toast.present();
+            if(this.userType == 'driver'){
+              this.router.navigateByUrl('tabs-controller/tabs/customerprofile');
+            }else{
+              this.router.navigateByUrl('customertabs/ctabs/customerprofile');
+            }
           }
         })
       }

@@ -13,10 +13,9 @@ export class FoodAddRemovePage implements OnInit {
   product: any;
   quantity = 1;
   noProduct = null;
+
   constructor(
-    public navCtrl: NavController,  
     private cartService: CartService,
-    private route: ActivatedRoute,
     private router: Router,
     private navParams: NavParams,
     private popoverCtrl: PopoverController,
@@ -31,7 +30,7 @@ export class FoodAddRemovePage implements OnInit {
   }
 
   //เพิ่มอาหารลงตะกร้า
-  addToCart() {
+  async addToCart() {
     var newProduct = {
       restaurant_id: this.product.restaurant_id,
       restaurant_name: this.product.restaurant_name,

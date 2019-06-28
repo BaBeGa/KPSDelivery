@@ -9,7 +9,7 @@
     <ion-buttons slot="end">
         <ion-button id="button" shape="round" color="medium" (click)="openCart()">
           <ion-icon name="cart"></ion-icon>
-          <ion-badge id="notifications-badge"  slot="end" *ngIf="this.cartLength > 0">!</ion-badge>
+          <ion-badge id="notifications-badge"  slot="end" *ngIf="this.cartLength > 0">{{ this.cartLength }}</ion-badge>
         </ion-button>
     </ion-buttons>
   </ion-toolbar>

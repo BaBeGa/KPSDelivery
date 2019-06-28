@@ -31,6 +31,11 @@ export class CartPage implements OnInit {
     ) { }
 
   async ngOnInit() {
+    this.loading = await this.loadingCtrl.create({
+      message: 'กำลังคำนวณค่าส่งอาหาร กรุณารอสักครู่...',
+      translucent: true,
+    });
+    await this.loading.present();
     await this.geolocation.getCurrentPosition().then((resp)=>{
       this.lat= resp.coords.latitude, 
       this.lon = resp.coords.longitude 
@@ -78,10 +83,11 @@ export class CartPage implements OnInit {
       customer_lon_value:this.lon,
       restaurant_id:this.selectedItems[0].restaurant_id
     }
+    console.log(body)
     this.authService.apiGetCost(body).then(res=>{
       this.cost = res;
       console.log(this.cost);
-      //this.loading.dismiss();
+      this.loading.dismiss();
     })
   }
 
@@ -160,11 +166,12 @@ export class CartPage implements OnInit {
             console.log('form data: ' +this.lat);
             console.log('form data: ' +this.lon);
             const result: any = await this.authService.apiPostDataService('orders', postData);
+            console.log(result)
             for(let product of this.selectedItems){
-              await this.putMenu(result.data.order.id, product.food_id, product.food_qty);
+              await this.putMenu(result.data.id, product.food_id, product.food_qty);
             }
             //console.log('finddriver'+result.data.order.id+'<br>'+ data.limit*1000);
-            await this.findDriver(result.data.order.id,data.limit*1000);
+            await this.findDriver(result.data.id,data.limit*1000);
             await this.orderService.initializeOrders();
             }else if(data.limit <= 0){
               const toast = await this.toastCtrl.create({

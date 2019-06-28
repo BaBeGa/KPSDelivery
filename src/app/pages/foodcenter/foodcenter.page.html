@@ -4,7 +4,7 @@
       <ion-buttons slot="end">
           <ion-button id="button" size="small" shape="round" color="medium" (click)="openCart()">
             <ion-icon name="cart"></ion-icon>
-            <ion-badge id="notifications-badge"  slot="end" *ngIf="this.cartLength > 0">!</ion-badge>
+            <ion-badge id="notifications-badge"  slot="end" *ngIf="this.cartLength > 0">{{ this.cartLength }}</ion-badge>
           </ion-button>
       </ion-buttons>
   </ion-toolbar>
@@ -212,10 +212,10 @@
             </ion-col>
             <ion-col *ngIf="item.num_rating != null && item.num_rating == 5" text-right >
               <ion-icon size="small" name="star" ></ion-icon>
-              <ion-icon size="small" name="star-outline" ></ion-icon>
-              <ion-icon size="small" name="star-outline" ></ion-icon>
-              <ion-icon size="small" name="star-outline" ></ion-icon>
-              <ion-icon size="small" name="star-outline" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
+              <ion-icon size="small" name="star" ></ion-icon>
             </ion-col>
           </div>
           

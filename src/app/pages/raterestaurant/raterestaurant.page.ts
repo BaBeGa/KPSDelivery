@@ -47,13 +47,12 @@ export class RaterestaurantPage implements OnInit {
   }
 
   rate() {
-    
     this.confirmationAlert('ยืนยันการให้คะแนน').then(async confirm => {
       if (confirm) {
         
         let postData = new FormData();
         postData.append('_method', 'put');
-        postData.append('status', 'finish');
+        postData.append('status', 'rating');
         if(this.rate_d != 0 || this.rate_d != 0){
           postData.append('restaurant_rating', this.rate_r);
           postData.append('driver_rating', this.rate_d);
@@ -64,7 +63,7 @@ export class RaterestaurantPage implements OnInit {
             duration: 3000
           });
           toast.present();
-          this.router.navigateByUrl('customerorder');
+          this.router.navigateByUrl('customerprofile');
           console.log(res);
         })
         
@@ -82,7 +81,7 @@ export class RaterestaurantPage implements OnInit {
       resolveFunction = resolve;
     });
     let alert = await this.alertCtrl.create({
-      header: 'คุณต้องการที่จะให้คะแนนคำสั่งชื้อนี้หรือไม่',
+      header: 'คุณต้องการที่จะให้คะแนนคำสั่งซื้อนี้หรือไม่',
       message: message,
       buttons: [ {
         text: 'ตกลง',

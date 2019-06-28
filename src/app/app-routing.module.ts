@@ -31,7 +31,6 @@ const routes: Routes = [
   { path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule' },
   { path: 'restaurants', loadChildren: './pages/restaurants/restaurants.module#RestaurantsPageModule' },
   { path: 'tabs-controller', loadChildren: './pages/tabs-controller/tabs-controller.module#TabsControllerPageModule' },
-  { path: 'notification', loadChildren: './pages/notification/notification.module#NotificationPageModule' },
   { path: 'menu', loadChildren: './pages/menu/menu.module#MenuPageModule' },
   { path: 'edit-profile', loadChildren: './pages/edit-profile/edit-profile.module#EditProfilePageModule' },
   { path: 'setting', loadChildren: './pages/setting/setting.module#SettingPageModule' },
