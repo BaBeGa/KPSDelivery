@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="success">
       <ion-buttons slot="start">
         <ion-back-button></ion-back-button>
       </ion-buttons>
@@ -12,13 +12,15 @@
       กรุณาเข้าสู่ระบบ
     </div>
 
-    <div *ngIf="this.historyList">
+    <div *ngIf="this.historyList != null">
     <ion-card *ngFor="let history of this.historyList; let i = index">
       <ion-card-content>
         <ion-item button="true" (click)="hide(i)">
             <ion-label>รายการสั่งชื้อที่ {{history.id}}</ion-label>
             <ion-text color="medium">
-                <h5>{{history.order_date}}</h5>
+                <h5>
+                    {{history.order_date.slice(8)}}-{{history.order_date.slice(5,-3)}}-{{history.order_date.slice(0,-6)}}
+                </h5>
             </ion-text>
             <ion-icon *ngIf="history.hidden" name="arrow-dropdown" slot="end"></ion-icon>
             <ion-icon *ngIf="!history.hidden" name="arrow-dropup" slot="end"></ion-icon>
@@ -43,16 +45,20 @@
               </ion-item>
               <ion-item>
                 <ion-label color="dark" position="stacked">สั่งเมื่อ:</ion-label>
-                <ion-col>{{history.created_at}}</ion-col>
+                <ion-col>
+                  {{history.required_time.slice(8, -9)}}/{{history.required_time.slice(5, -12)}}/{{history.required_time.slice(0, -15)}}  {{history.required_time.slice(11, -3)}}
+                </ion-col>
               </ion-item>
               <ion-item>
                 <ion-label color="dark" position="stacked">ส่งเมื่อ:</ion-label>
-                <ion-col *ngIf="history.shipped_time != null">{{history.shipped_time}}</ion-col>
+                <ion-col *ngIf="history.shipped_time != null">
+                  {{history.shipped_time.slice(8, -9)}}/{{history.shipped_time.slice(5, -12)}}/{{history.shipped_time.slice(0, -15)}}  {{history.shipped_time.slice(11, -3)}}
+                </ion-col>
                 <ion-col *ngIf="history.shipped_time == null">รอการจัดส่ง</ion-col>
               </ion-item>
               <ion-item>
-                <ion-label color="dark" position="stacked">เวลาที่รอ:</ion-label>
-                <ion-col *ngIf="history.total_time != null">{{history.total_time}} นาที</ion-col>
+                <ion-label color="dark" position="stacked">เวลาในการส่ง:</ion-label>
+                <ion-col *ngIf="history.total_time != null">{{history.total_time.slice(0,-3)}} ชั่วโมง</ion-col>
                 <ion-col *ngIf="history.total_time == null">รอการคำนวณ</ion-col>
               </ion-item>
               <ion-item>
@@ -67,12 +73,12 @@
               <ion-item *ngFor="let menu of history.orderdetails" lines="none">
                 <ion-col>{{menu.quantity}}x{{menu.menu.name}}</ion-col>
                 <ion-text color="medium">
-                  <h5>{{ menu.menu.price }} บาท</h5>
+                  <h5>{{ menu.menu.price*menu.quantity }} บาท</h5>
                 </ion-text>
               </ion-item>
               <ion-item>
                 <ion-label color="dark" position="stacked">ระยะทางทั้งหมด:</ion-label>
-                <ion-col *ngIf="history.total_length != null">{{history.total_length}}</ion-col>
+                <ion-col *ngIf="history.total_length != null">{{history.total_length}} กิโลเมตร</ion-col>
                 <ion-col *ngIf="history.total_length == null">รอการคำนวณ</ion-col>
               </ion-item>
               <ion-item>
