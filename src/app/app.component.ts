@@ -303,14 +303,13 @@ export class AppComponent {
   }
 
   async customerAlert(message:any) {
-    
-    let msg = 'ชื่อผู้ส่ง :'+message.driverName+'<br/>โทร :'+message.driverPhone
+    let msg = 'คำสั่งซื้อของคุณถูกรับโดย:'+message.driverName+'<br/>โทร :'+message.driverPhone
     const alert = await this.alertCtrl.create({
       header: message.title,
       message: msg,
       buttons: [
         {
-          text: 'รับทราบ',
+          text: 'ดูรายละเอียด',
           role: 'cancel',
           cssClass: 'cancel',
           handler: (blah) => {

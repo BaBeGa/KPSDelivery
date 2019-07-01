@@ -115,14 +115,14 @@
                 <ion-label color="dark" position="stacked">การให้คะแนน:</ion-label>
                 <ion-col *ngIf="order.restaurant_rating != null">ร้านค้า:
                   <div class="star">
-                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating >=0.5 && order.driver_rating < 1" text-right >
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating >=0.5 && order.restaurant_rating < 1" text-right >
                       <ion-icon size="small" name="star-half" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                     </ion-col>
-                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating == 1" text-right >
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating >= 1 && order.restaurant_rating < 1.5" text-right >
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
@@ -136,7 +136,7 @@
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                     </ion-col>
-                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating == 2" text-right >
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating >= 2 && order.restaurant_rating < 2.5" text-right >
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
@@ -150,7 +150,7 @@
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                     </ion-col>
-                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating == 3" text-right >
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating >= 3 && order.restaurant_rating < 3.5" text-right >
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star" ></ion-icon>
@@ -164,7 +164,7 @@
                       <ion-icon size="small" name="star-half" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                     </ion-col>
-                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating == 4" text-right >
+                    <ion-col *ngIf="order.restaurant_rating != null && order.restaurant_rating >= 4 && order.restaurant_rating < 4.5" text-right >
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star" ></ion-icon>
@@ -199,21 +199,21 @@
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                     </ion-col>
-                    <ion-col *ngIf=" order.driver_rating == 1" text-right >
+                    <ion-col *ngIf=" order.driver_rating >= 1 && order.driver_rating < 1.5" text-right >
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                     </ion-col>
-                    <ion-col *ngIf=" order.driver_rating >=1.5 && order.driver_rating < 2" text-right >
+                    <ion-col *ngIf=" order.driver_rating >= 1.5 && order.driver_rating < 2" text-right >
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star-half" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                     </ion-col>
-                    <ion-col *ngIf=" order.driver_rating == 2" text-right >
+                    <ion-col *ngIf=" order.driver_rating >= 2 && order.driver_rating < 2.5" text-right >
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
@@ -227,7 +227,7 @@
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                     </ion-col>
-                    <ion-col *ngIf=" order.driver_rating == 3" text-right >
+                    <ion-col *ngIf=" order.driver_rating >= 3 && order.driver_rating < 3.5" text-right >
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star" ></ion-icon>
@@ -241,7 +241,7 @@
                       <ion-icon size="small" name="star-half" ></ion-icon>
                       <ion-icon size="small" name="star-outline" ></ion-icon>
                     </ion-col>
-                    <ion-col *ngIf=" order.driver_rating == 4" text-right >
+                    <ion-col *ngIf=" order.driver_rating >= 4 && order.driver_rating < 4.5" text-right >
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star" ></ion-icon>
                       <ion-icon size="small" name="star" ></ion-icon>

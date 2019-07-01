@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="medium">
     <ion-title>เครดิตของฉัน</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -8,8 +8,8 @@
     <ion-card >
       <ion-list>
         <ion-item-sliding>
-          <ion-item color="dark">
-            <ion-icon name="person" item-left></ion-icon>
+          <ion-item color="medium">
+              <ion-icon name="person" item-left></ion-icon>
               {{ userInfo.user.name }}
           </ion-item>
         </ion-item-sliding>
@@ -41,4 +41,63 @@
         </ion-item>
       </ion-list>
     </ion-card>
+
+    <ion-card *ngIf="allowAccept">
+        <ion-list>
+          <ion-item-sliding>
+            <ion-item color="success">
+              เติมเครดิต
+              <ion-button slot="end" fill="clear" color="medium" *ngIf="this.currentImage == null || this.credittopup == null" >
+                  <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
+              </ion-button>
+              <ion-button slot="end" fill="clear" (click)="uploadPhoto()" *ngIf="this.currentImage != null && this.credittopup > 0">
+                  <ion-icon slot="icon-only" name="cloud-upload"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-item-sliding> 
+          <ion-item>
+            <ion-label color="dark" position="stacked">จำนวนเครดิตที่เติม:</ion-label>
+            <ion-input inputmode="numeric" placeholder="กรุณากรอกเครดิตที่ต้องการเติม" [(ngModel)]="this.credittopup"></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+              <ion-label color="dark" position="stacked">อัพโหลดรูปภาพ:</ion-label>
+              <ion-button icon-left color="secondary" *ngIf="this.currentImage == null" (click)="addimage()" >
+                <ion-icon name="photos"></ion-icon> 
+                เลือกรูปภาพ
+              </ion-button>
+          </ion-item>
+          <ion-item lines="none" *ngIf="this.currentImage != null">
+            <ion-thumbnail slot="start">
+              <ion-img [src]="this.currentImage"></ion-img>
+            </ion-thumbnail>
+          </ion-item>
+          
+        </ion-list>
+      </ion-card>
+      <ion-card *ngIf="allowAccept">
+        <ion-list>
+          <ion-item-sliding>
+            <ion-item color="medium">
+              ประวัติการเติมเครดิต
+            </ion-item>
+          </ion-item-sliding> 
+          <div *ngFor="let item of this.toppuphist" text-wrap>
+            <ion-item lines="none">
+                <ion-label color="dark" position="stacked">สถานะการเติม:</ion-label>
+                <ion-col>{{item.action}}</ion-col>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label color="dark" position="stacked">วันที่:</ion-label>
+              <ion-col>
+                  {{item.date_of_detail.slice(8, -9)}}/{{item.date_of_detail.slice(5, -12)}}/{{item.date_of_detail.slice(0, -15)}}  {{item.date_of_detail.slice(11, -3)}}
+              </ion-col>
+            </ion-item>
+            <ion-item >
+                <ion-label color="dark" position="stacked">จำนวนเครดิตที่เติม:</ion-label>
+                <ion-col>{{item.value}}</ion-col>
+            </ion-item>
+          </div>
+        </ion-list> 
+    </ion-card>
   </ion-content>
+  

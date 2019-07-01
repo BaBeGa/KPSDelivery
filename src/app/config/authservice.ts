@@ -1,8 +1,10 @@
-import { ToastController, AlertController } from "@ionic/angular";
+import { ToastController, AlertController, LoadingController } from "@ionic/angular";
 import { Router } from "@angular/router";
 import { Http, Headers, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class AuthService {
@@ -18,8 +20,46 @@ export class AuthService {
     public router: Router,
     public toastCtrl: ToastController,
     public alertController: AlertController,
+    private loadingCtrl:LoadingController,
+    private chttp:HttpClient
     ) {
 
+  }
+
+  async uploadImageData(formData: FormData,path) {
+    this.getToken = await JSON.parse(localStorage.getItem('userToken'));
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.getToken);
+    let loading = await this.loadingCtrl.create({
+      message: 'กำลังอัพโหลดภาพ...'
+    });
+
+    loading.present();
+    await this.http.post(this.apiUrl+path, formData, { headers: headers })
+      .pipe(
+          finalize(() => {
+              loading.dismiss();
+          })
+      )
+      .subscribe(res => {
+        console.log(res)
+          if (res.ok) {
+              this.presentToast('อัพโหลดภาพเสร็จสมบูรณ์.')
+              this.reloaduserInfo();
+          } else {
+              this.presentToast('อัพโหลดภาพพขัดข้อง.')
+              loading.dismiss();
+          }
+      });
+  }
+  async reloaduserInfo(){
+    this.getToken = JSON.parse(localStorage.getItem('userToken'));
+    let headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + this.getToken);
+    await this.http.get(this.apiUrl + 'api/users', { headers: headers }).pipe(map(res => res.json())).subscribe(data => {
+      this.userInfo = data;
+      localStorage.setItem('userInfo', JSON.stringify(this.userInfo));   
+    });
   }
 
   postData(type, user) {
@@ -140,6 +180,56 @@ export class AuthService {
     })
   }
 
+  apiGethistService(type) {
+    this.getToken = JSON.parse(localStorage.getItem('userToken'));
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', 'Bearer ' + this.getToken);
+    return new Promise((resolve) => {
+      this.http.get(this.apiUrl + 'api/' + type, { headers: headers }).pipe(map(res => res.json())).subscribe(data => {
+        console.log(data);
+        resolve(data);
+      }, async err =>{
+        console.log(err)
+        let errhandle:any = err
+        console.log(errhandle._body)
+        const toast = await this.toastCtrl.create({
+          showCloseButton: true,
+          message: 'ข้อผิดพลาด '+errhandle.status,
+          duration: 4000,
+          position: 'bottom'
+        });
+        toast.present();
+        if(errhandle.status == 401){
+          const alert = await this.alertController.create({
+            header: 'Unauthorized',
+            message: 'กรุณาเข้าสู่ระบบใหม่อีกครั้ง',
+            buttons: [
+              {
+                text: 'ตกลง',
+                handler: async () => {
+                  console.log('Confirm Okay');
+                  localStorage.clear();
+                  this.router.navigateByUrl('login')
+                }
+              },
+              {
+                text: 'ยกเลิก',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: (blah) => {
+                  console.log('Confirm Cancel: blah');
+                }
+              }
+            ]
+          });
+      
+          await alert.present();
+        }
+      })
+    })
+  }
+
   apiGetDataService(type) {
     this.getToken = JSON.parse(localStorage.getItem('userToken'));
     let headers = new Headers();
@@ -190,12 +280,13 @@ export class AuthService {
   }
 
   async apiGetOrder(orderId){
-    this.getToken = await JSON.parse(localStorage.getItem('userToken'));
+    this.getToken = JSON.parse(localStorage.getItem('userToken'));
     let headers = new Headers();
+    headers.append('Accept', 'application/json');
     headers.append('Authorization', 'Bearer ' + this.getToken);
     return new Promise((resolve) => {
       this.http.get(this.apiUrl + 'api/orders/' + orderId, { headers: headers }).pipe(map(res => res.json())).subscribe(data => {
-        console.log(data);
+        //console.log(data);
         resolve(data);
       }, async err =>{
         console.log(err)
@@ -447,6 +538,7 @@ export class AuthService {
     header.append('token',accessToken);
     return new Promise((resolve) => {
       this.http.patch(this.apiDriverUrl+'/user',body,{ headers:header }).pipe(map(res => res.json())).subscribe(data => {
+        this.reloaduserInfo();
         resolve(data);
       }, async err =>{
         console.log(err)
@@ -693,6 +785,15 @@ export class AuthService {
         toast.present();
       })
     })
+  }
+
+  async presentToast(text) {
+    const toast = await this.toastCtrl.create({
+        message: text,
+        position: 'bottom',
+        duration: 3000
+    });
+    toast.present();
   }
 
 }

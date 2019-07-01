@@ -48,16 +48,90 @@
             <p id="firstText">{{ userInfo.user.name }}<span>  {{this.userType}}</span></p>
           </ion-text>
           <ion-text color="danger">
-              <h3>
-                {{userInfo.user.email}}
-              </h3>
+            <h3>
+              {{userInfo.user.email}}
+            </h3>
           </ion-text>
-          <ion-menu-toggle class="mto" auto-hide="false">
+          <ion-text *ngIf="this.userType == 'driver' && this.userInfo.user.avg_rating != null">
+              <div class="star" >
+                <ion-col *ngIf="this.userInfo.user.avg_rating != null && this.userInfo.user.avg_rating >=0.5 && this.userInfo.user.avg_rating < 1" text-right >
+                  <ion-icon size="small" name="star-half" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                </ion-col>
+                <ion-col *ngIf="this.userInfo.user.avg_rating != null && this.userInfo.user.avg_rating == 1" text-right >
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                </ion-col>
+                <ion-col *ngIf="this.userInfo.user.avg_rating != null && this.userInfo.user.avg_rating >=1.5 && this.userInfo.user.avg_rating < 2" text-right >
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star-half" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                </ion-col>
+                <ion-col *ngIf="this.userInfo.user.avg_rating != null && this.userInfo.user.avg_rating >= 2 && this.userInfo.user.avg_rating < 2.5" text-right >
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                </ion-col>
+                <ion-col *ngIf="this.userInfo.user.avg_rating != null && this.userInfo.user.avg_rating >=2.5 && this.userInfo.user.avg_rating < 3" text-right >
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star-half" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                </ion-col>
+                <ion-col *ngIf="this.userInfo.user.avg_rating != null && this.userInfo.user.avg_rating >= 3 && this.userInfo.user.avg_rating < 3.5" text-right >
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                </ion-col>
+                <ion-col *ngIf="this.userInfo.user.avg_rating != null && this.userInfo.user.avg_rating >=3.5 && this.userInfo.user.avg_rating < 4" text-right >
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star-half" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                </ion-col>
+                <ion-col *ngIf="this.userInfo.user.avg_rating != null && this.userInfo.user.avg_rating >= 4 && this.userInfo.user.avg_rating < 4.5" text-right >
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star-outline" ></ion-icon>
+                </ion-col>
+                <ion-col *ngIf="this.userInfo.user.avg_rating != null && this.userInfo.user.avg_rating >=4.5 && this.userInfo.user.avg_rating < 5" text-right >
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star-half" ></ion-icon>
+                </ion-col>
+                <ion-col *ngIf="this.userInfo.user.avg_rating != null && this.userInfo.user.avg_rating == 5" text-right >
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                  <ion-icon size="small" name="star" ></ion-icon>
+                </ion-col>
+              </div>
+          </ion-text>
+          <!-- <ion-menu-toggle class="mto" auto-hide="false">
             <ion-button icon-left size="small" shape="round" color="dark" (click)="editProfile()">
                 <ion-icon name="contact"></ion-icon>
                 เปลี่ยนรูปโปรไฟล์
               </ion-button>
-          </ion-menu-toggle>
+          </ion-menu-toggle> -->
         </ion-label>
       <ion-buttons slot="end">
           <ion-button size="small" shape="round" color="medium" (click)="openCart()">
@@ -134,7 +208,7 @@
           <ion-col>{{this.userInfo.userinfo.phonenumber}}</ion-col>
       </ion-item>
       <ion-item *ngIf="this.userType == 'driver'">
-          <ion-label color="dark" position="stacked">คะแนน:</ion-label>
+          <ion-label color="dark" position="stacked">คะแนนเฉลี่ย:</ion-label>
           <ion-col *ngIf="this.userInfo.user.avg_rating != null">{{this.userInfo.user.avg_rating}}</ion-col>
           <ion-col *ngIf="this.userInfo.user.avg_rating == null">ยังไม่มีคะแนน</ion-col>
       </ion-item>

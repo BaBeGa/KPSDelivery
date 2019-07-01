@@ -139,78 +139,77 @@
   <ion-row>
     <ion-list padding>
       <ion-item button=true *ngFor="let item of items" (click)="goInRestaurant(item)" no-padding>
-        <ion-row no-padding >
-          <ion-col col-3 no-padding class="img">
-            <img src="http://158.108.207.4/delivery/public/images/restaurants/{{item.image}}" />
-          </ion-col>
-          <ion-col col-6 align-self-center>
+        <ion-thumbnail slot="start">
+            <ion-img src="http://158.108.207.4/delivery/public/images/restaurants/{{item.image}}"></ion-img>
+        </ion-thumbnail>  
+          
             {{item.name}}
-          </ion-col>
-          <div class="star">
-            <ion-col *ngIf="item.num_rating != null && item.num_rating >=0.5 && item.num_rating < 1" text-right >
+          
+          <div class="star" slot="end">
+            <ion-col *ngIf="item.avg_rating != null && item.avg_rating >=0.5 && item.avg_rating < 1" text-right >
               <ion-icon size="small" name="star-half" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
             </ion-col>
-            <ion-col *ngIf="item.num_rating != null && item.num_rating == 1" text-right >
+            <ion-col *ngIf="item.avg_rating != null && item.avg_rating >= 1 && item.avg_rating < 1.5" text-right >
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
             </ion-col>
-            <ion-col *ngIf="item.num_rating != null && item.num_rating >=1.5 && item.num_rating < 2" text-right >
+            <ion-col *ngIf="item.avg_rating != null && item.avg_rating >=1.5 && item.avg_rating < 2" text-right >
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star-half" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
             </ion-col>
-            <ion-col *ngIf="item.num_rating != null && item.num_rating == 2" text-right >
+            <ion-col *ngIf="item.avg_rating != null && item.avg_rating >= 2 && item.avg_rating < 2.5" text-right >
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
             </ion-col>
-            <ion-col *ngIf="item.num_rating != null && item.num_rating >=2.5 && item.num_rating < 3" text-right >
+            <ion-col *ngIf="item.avg_rating != null && item.avg_rating >=2.5 && item.avg_rating < 3" text-right >
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star-half" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
             </ion-col>
-            <ion-col *ngIf="item.num_rating != null && item.num_rating == 3" text-right >
+            <ion-col *ngIf="item.avg_rating != null && item.avg_rating >= 3 && item.avg_rating < 3.5" text-right >
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
             </ion-col>
-            <ion-col *ngIf="item.num_rating != null && item.num_rating >=3.5 && item.num_rating < 4" text-right >
+            <ion-col *ngIf="item.avg_rating != null && item.avg_rating >=3.5 && item.avg_rating < 4" text-right >
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star-half" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
             </ion-col>
-            <ion-col *ngIf="item.num_rating != null && item.num_rating == 4" text-right >
+            <ion-col *ngIf="item.avg_rating != null && item.avg_rating >= 4 && item.avg_rating < 4.5" text-right >
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star-outline" ></ion-icon>
             </ion-col>
-            <ion-col *ngIf="item.num_rating != null && item.num_rating >=4.5 && item.num_rating < 5" text-right >
+            <ion-col *ngIf="item.avg_rating != null && item.avg_rating >=4.5 && item.avg_rating < 5" text-right >
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star-half" ></ion-icon>
             </ion-col>
-            <ion-col *ngIf="item.num_rating != null && item.num_rating == 5" text-right >
+            <ion-col *ngIf="item.avg_rating != null && item.avg_rating == 5" text-right >
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
               <ion-icon size="small" name="star" ></ion-icon>
@@ -219,10 +218,9 @@
             </ion-col>
           </div>
           
-          <ion-col *ngIf="item.num_rating == null" text-right col-3 align-self-center>
+          <div *ngIf="item.avg_rating == null" slot="end">
             ยังไม่มีคะแนน
-          </ion-col>
-        </ion-row>
+          </div>
       </ion-item>
     </ion-list>
   </ion-row>

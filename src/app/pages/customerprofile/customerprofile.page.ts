@@ -39,7 +39,7 @@ export class CustomerprofilePage implements OnInit {
   ngOnInit() {
     // console.log('ionViewDidLoad customerProfilePage');
     // this.userType = JSON.parse(localStorage.getItem('userType'));
-    // this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
     // this.cartLength = this.cartService.getCartLength();
   }
 
