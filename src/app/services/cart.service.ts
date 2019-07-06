@@ -24,25 +24,31 @@ export class CartService {
   }
 
   async addProduct(product){
-    if(product.restaurant_id != this.cart[0].restaurant_id){
-      const alert = await this.alertController.create({
-        header: 'ไม่สารมารถเพิ่มอาหารได้',
-        message: 'กรุณาเลือกอาหารที่อยู่ในร้านเดียวกัน',
-        buttons: [
-          {
-            text: 'ตกลง',
-            handler: async () => {
-              console.log('Confirm Okay');
-              this.router.navigateByUrl('customertabs/ctabs/foodcenter')
+    if(this.cart.length > 0){
+      if(product.restaurant_id != this.cart[0].restaurant_id){
+        const alert = await this.alertController.create({
+          header: 'ไม่สารมารถเพิ่มอาหารได้',
+          message: 'กรุณาเลือกอาหารที่อยู่ในร้านเดียวกัน',
+          buttons: [
+            {
+              text: 'ตกลง',
+              handler: async () => {
+                console.log('Confirm Okay');
+                this.router.navigateByUrl('customertabs/ctabs/foodcenter')
+              }
             }
-          }
-        ]
-      });
-      await alert.present();
+          ]
+        });
+        await alert.present();
+      }else{
+        this.cart.push(product);
+        this.saveCart();
+      }
     }else{
       this.cart.push(product);
       this.saveCart();
     }
+    
   }
 
   increaseItem(item){
@@ -83,12 +89,16 @@ export class CartService {
       this.cart = JSON.parse(localStorage.getItem('cart'));
     }
     let length=0;
-    for (let obj of this.cart) {
-      length += obj.food_qty;
+    if(this.cart.length > 0){
+      for (let obj of this.cart) {
+        length += obj.food_qty;
+      }
+      console.log(this.cart)
+      console.log("cart length = "+length)
+      return length;
+    }else{
+      return null
     }
-    console.log(this.cart)
-    console.log("cart length = "+length)
-    return length;
   }
   
   clearCart(){

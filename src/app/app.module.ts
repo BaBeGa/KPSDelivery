@@ -33,32 +33,17 @@ import { AuthService } from 'src/app/config/authservice';
 import { FirebaseMessaging } from "@ionic-native/firebase-messaging/ngx";
 
 //---Customer---//
-import { CustomeraddressPage } from 'src/app/pages/customeraddress/customeraddress.page';
-import { CustomeravatarPage } from 'src/app/pages/customeravatar/customeravatar.page';
-import { DriverregisterPage } from 'src/app/pages/driverregister/driverregister.page';
 import { FoodAddRemovePage } from 'src/app/pages/food-add-remove/food-add-remove.page';
-import { LegalntermPage } from 'src/app/pages/legalnterm/legalnterm.page';
-import { MainPage } from 'src/app/pages/main/main.page';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CustomeraddressPage,
-    CustomeravatarPage,
-    DriverregisterPage,
     FoodAddRemovePage,
-    LegalntermPage,
-    MainPage,
     CheckPasswordDirective
   ],
   entryComponents: [
     AppComponent,
-    CustomeraddressPage,
-    CustomeravatarPage,
-    DriverregisterPage,
-    FoodAddRemovePage,
-    LegalntermPage,
-    MainPage
+    FoodAddRemovePage
   ],
   imports: [
     BrowserModule,

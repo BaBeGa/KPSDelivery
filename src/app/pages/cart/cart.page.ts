@@ -31,11 +31,6 @@ export class CartPage implements OnInit {
     ) { }
 
   async ngOnInit() {
-    this.loading = await this.loadingCtrl.create({
-      message: 'กำลังคำนวณค่าส่งอาหาร กรุณารอสักครู่...',
-      translucent: true,
-    });
-    await this.loading.present();
     await this.geolocation.getCurrentPosition().then((resp)=>{
       this.lat= resp.coords.latitude, 
       this.lon = resp.coords.longitude 
@@ -45,7 +40,7 @@ export class CartPage implements OnInit {
 
   async ionViewWillEnter() {
     //this.loading = await this.loadingCtrl.create();
-    //await this.loading.present();
+    //this.initialCart();
   }
 
   initialCart(){
@@ -72,12 +67,19 @@ export class CartPage implements OnInit {
     }
     this.resItems = Object.keys(resObj).map(key => resObj[key]);
     console.log('cart page resItems',this.resItems);
-    console.log('cart page resobj',resObj);
+    console.log('cart page resobj',this.items.length);
     this.totalPrice = this.selectedItems.reduce((a, b) => a + (b.food_qty * b.food_price), 0);//a mean oldresult of func
-    this.initialCost();
+    if(this.items.length > 0){
+      this.initialCost();
+    }
   }
 
-  initialCost(){
+  async initialCost(){
+    this.loading = await this.loadingCtrl.create({
+      message: 'กำลังคำนวณค่าส่งอาหาร กรุณารอสักครู่...',
+      translucent: true,
+    });
+    await this.loading.present();
     let body = {
       customer_lat_value:this.lat,
       customer_lon_value:this.lon,

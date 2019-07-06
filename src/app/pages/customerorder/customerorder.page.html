@@ -78,7 +78,7 @@
               </ion-item>
               <ion-item *ngIf="order.driver != null">
                   <ion-label color="dark" position="stacked">เบอร์โทรผู้ส่ง:</ion-label>
-                  <ion-col *ngIf="order.total_time != null">{{order.driver.userinfo.phonenumber}}</ion-col>
+                  <ion-col *ngIf="order.driver.userinfo.phonenumber != null">{{order.driver.userinfo.phonenumber}}</ion-col>
               </ion-item>             
               <ion-item lines="none">
                 <ion-label color="dark" position="stacked">รายการอาหาร:</ion-label>

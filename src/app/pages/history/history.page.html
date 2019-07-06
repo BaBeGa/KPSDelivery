@@ -74,7 +74,7 @@
                     <img src="http://158.108.207.4/delivery/public/images/profiles/{{order.driver.image}}">
                   </ion-avatar>
                   <ion-col *ngIf="order.driver != null">ชื่อผู้ส่ง: {{order.driver.name}}</ion-col>
-                  <ion-col *ngIf="order.total_time != null">เบอร์โทร: {{order.driver.userinfo.phonenumber}}</ion-col>
+                  <ion-col *ngIf="order.driver.userinfo.phonenumber != null">เบอร์โทร: {{order.driver.userinfo.phonenumber}}</ion-col>
                   <ion-col *ngIf="order.driver == null">รอการตอบรับ</ion-col>
                 </ion-item>             
                 <ion-item lines="none">
